@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
+import sys
 import bs4
 import requests
 
@@ -7,7 +8,8 @@ import requests
 def crawl_search(search_keyword):
     list_of_url = []
 
-    search_keyword = search_keyword.replace(' ', '+')
+    if ' ' in search_keyword:
+        search_keyword = search_keyword.replace(' ', '+')
 
     url = 'https://www.youtube.com/results?search_query='
     url += search_keyword
@@ -38,7 +40,8 @@ def crawl_search(search_keyword):
 
 
 if __name__ == '__main__':
+    search_keyword = '+'.join(sys.argv[1:])
 
-    for i in crawl_search('hitman'):
+    for i in crawl_search(search_keyword):
         print i
 
