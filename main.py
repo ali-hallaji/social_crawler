@@ -11,8 +11,8 @@ def crawl_search(search_keyword):
     if ' ' in search_keyword:
         search_keyword = search_keyword.replace(' ', '+')
 
-    url = 'https://www.youtube.com/results?search_sort=video_view_count&max_results=44&search_query='
-    url += search_keyword
+    url = 'https://www.youtube.com/results?search_sort=video_view_count'
+    url += '&search_query=' + search_keyword
 
     text = requests.get(url).text
     soup = bs4.BeautifulSoup(text, "lxml")
