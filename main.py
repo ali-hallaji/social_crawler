@@ -12,7 +12,10 @@ def crawl_search(search_keyword):
         search_keyword = search_keyword.replace(' ', '+')
 
     url = 'https://www.youtube.com/results?search_sort=video_view_count'
+    url += '&filters=today'
     url += '&search_query=' + search_keyword
+    url += '&page=1'
+    # url += '&max_results=2'
 
     text = requests.get(url).text
     soup = bs4.BeautifulSoup(text, "lxml")
