@@ -1,0 +1,6 @@
+# Specifies only dev-specific requirements
+# But imports the common ones too
+-r common.txt
+ipython==2.4.1
+watchdog==0.8.3
+pre-commit

@@ -1,4 +1,2 @@
-bs4
-requests
-gdata
-google-api-python-client
+# Mirrors dev
+-r requirements/dev.txt

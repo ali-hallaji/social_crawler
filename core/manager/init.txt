@@ -1,0 +1,20 @@
+{0}_LOADED_MODULE = None
+
+
+def getFlag():
+    global {1}_LOADED_MODULE
+    try:
+        return {2}_LOADED_MODULE
+    except:
+        {3}_LOADED_MODULE = False
+        return {4}_LOADED_MODULE
+
+
+def loadFlag():
+    global {5}_LOADED_MODULE
+    {6}_LOADED_MODULE = True
+
+
+def unLoadFlag():
+    global {7}_LOADED_MODULE
+    {8}_LOADED_MODULE = False
