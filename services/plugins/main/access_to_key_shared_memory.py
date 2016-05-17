@@ -2,7 +2,7 @@
 from bson.json_util import dumps
 
 # Core Services import
-from core.db import cursor_self
+from core.db import cursor
 from services.libs.async_call import asynchronous
 from services.libs.register import register
 
@@ -32,7 +32,7 @@ class FetchSharedMem:
     def run(self, key):
 
         criteria = {'_type': key}
-        obj = cursor_self.definitions.find_one(criteria)
+        obj = cursor.definitions.find_one(criteria)
 
         if obj:
             return dumps(obj['value'])

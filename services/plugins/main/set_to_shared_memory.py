@@ -3,7 +3,7 @@ from bson.json_util import loads
 from bson.json_util import dumps
 
 # Core Services import
-from core.db import cursor_self
+from core.db import cursor
 from services.libs.async_call import asynchronous
 from services.libs.register import register
 
@@ -34,7 +34,7 @@ class SetSharedMem:
     def run(self, key, data):
 
         doc = {'_type': key, 'value': loads(data)}
-        insert = cursor_self.definitions.insert(doc)
+        insert = cursor.definitions.insert(doc)
 
         return dumps(insert)
 
