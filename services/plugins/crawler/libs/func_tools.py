@@ -10,10 +10,8 @@ from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
-from core.patterns.class_singleton import singleton
 
 
-@singleton
 def build_youtube_api():
     youtube = build(
         YOUTUBE_API_SERVICE_NAME,
