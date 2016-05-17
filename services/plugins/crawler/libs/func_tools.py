@@ -1,5 +1,10 @@
 # Python Import
+import bs4
 import datetime
+import requests
+import urlparse
+
+from pymongo.errors import DuplicateKeyError
 
 from apiclient.discovery import build
 
@@ -60,7 +65,6 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
     # matching videos, channels, and playlists.
     for search_result in search_response.get("items", []):
         _video = {'created_date': datetime.datetime.now()}
-        update = None
 
         if search_result["kind"] == "youtube#video":
             _video['href'] = 'https://www.youtube.com/watch?v='
@@ -79,13 +83,15 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
                 _video['href'] += search_result['id']['videoId']
                 _video['id'] = search_result['id']['videoId']
 
-            _criteria = {'id': {'$ne': _video['id']}}
-            _update = {'$set': _video}
-            update = cursor.refined_data.update_one(
-                _criteria,
-                _update,
-                upsert=True
-            )
+            try:
+                result = cursor.refined_data.insert(_video)
+
+            except DuplicateKeyError:
+                result = True
+                toLog("Crawling Error: It can't be save record", 'error')
+
+            if not result:
+                toLog("Crawling Error: It can't be save record", 'error')
 
         elif search_result["kind"] == "youtube#searchResult":
             _video['href'] = 'https://www.youtube.com/watch?v='
@@ -104,19 +110,20 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
                 _video['href'] += search_result['id']['videoId']
                 _video['id'] = search_result['id']['videoId']
 
-            _criteria = {'id': {'$ne': _video['id']}}
-            _update = {'$set': _video}
-            update = cursor.refined_data.update_one(
-                _criteria,
-                _update,
-                upsert=True
-            )
+            try:
+                result = cursor.refined_data.insert(_video)
+
+            except DuplicateKeyError:
+                result = True
+                toLog("Crawling Error: It can't be save record", 'error')
+
+            if not result:
+                toLog("Crawling Error: It can't be save record", 'error')
 
         else:
             toLog("UnHandled Crawling: {0}".format(search_result), 'debug')
 
-        break
-        if not update.raw_result['updatedExisting']:
+        if not result:
             toLog("Crawling Error: It can't be save record", 'error')
 
     # Create Next Page
@@ -161,3 +168,56 @@ def execute_batch(_from, _to, criteria):
             print e
             toLog(str(e), 'jobs')
             flag = False
+
+
+def crawl_search(keyword, page):
+    if ' ' in keyword:
+        keyword = keyword.replace(' ', '+')
+
+    url = 'https://www.youtube.com/results?search_sort=video_view_count'
+    # url += '&filters=today'
+    url += '&search_query=' + keyword
+    url += '&page={0}'.format(page)
+
+    text = requests.get(url).text
+    soup = bs4.BeautifulSoup(text, "lxml")
+
+    div = []
+
+    for d in soup.find_all('div'):
+
+        if d.has_attr('class') and 'yt-lockup-dismissable' in d['class']:
+            div.append(d)
+
+    for d in div:
+        doc = {'created_date': datetime.datetime.now()}
+        img0 = d.find_all('img')[0]
+        a0 = d.find_all('a')[0]
+
+        if not img0.has_attr('data-tumb'):
+            doc['img'] = img0['src']
+
+        else:
+            doc['img'] = img0['data-tumb']
+
+        a0 = [x for x in d.find_all('a') if x.has_attr('title')][0]
+        doc['title'] = a0['title']
+        doc['href'] = 'https://www.youtube.com' + a0['href']
+        doc['id'] = get_video_id(doc['href'])
+
+        try:
+            result = cursor.refined_data.insert(doc)
+
+        except DuplicateKeyError:
+            result = True
+            toLog("Crawling Error: It can't be save record", 'error')
+
+        if not result:
+            toLog("Crawling Error: It can't be save record", 'error')
+
+
+def get_video_id(url):
+    url_data = urlparse.urlparse(url)
+    query = urlparse.parse_qs(url_data.query)
+    video = query["v"][0]
+    return video

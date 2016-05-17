@@ -1,0 +1,1097 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"gen",
+				"gen_time	statement"
+			],
+			[
+				"lis",
+				"list_path	statement"
+			],
+			[
+				"fina",
+				"final_path	statement"
+			],
+			[
+				"Te",
+				"TextInput	class"
+			],
+			[
+				"Mu",
+				"MultipleChoiceField	class"
+			],
+			[
+				"publi",
+				"publish_data	statement"
+			],
+			[
+				"loca",
+				"location"
+			],
+			[
+				"dele",
+				"delete_article	function"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"add",
+				"add_exhibition"
+			],
+			[
+				"upda",
+				"update_one"
+			],
+			[
+				"ex",
+				"exhibition"
+			],
+			[
+				"delete_c",
+				"delete_research"
+			],
+			[
+				"res",
+				"research"
+			],
+			[
+				"Ar",
+				"ArticleForm	class"
+			],
+			[
+				"dj",
+				"django_user	statement"
+			],
+			[
+				"pas",
+				"Password"
+			],
+			[
+				"H",
+				"HomeForm	class"
+			],
+			[
+				"BA",
+				"BASE_DIR	statement"
+			],
+			[
+				"ima",
+				"image_path	statement"
+			],
+			[
+				"ma",
+				"mail_funcs	module"
+			],
+			[
+				"B",
+				"BASE_DIR	statement"
+			],
+			[
+				"ON",
+				"ON_PYSOCIAL_HOST	statement"
+			],
+			[
+				"Htt",
+				"HttpResponse	class"
+			],
+			[
+				"utc",
+				"utc_date	statement"
+			],
+			[
+				"lo",
+				"local_tz	import"
+			],
+			[
+				"get",
+				"get_scheduler	function"
+			],
+			[
+				"fetc",
+				"fetch_airlines	statement"
+			],
+			[
+				"fetch",
+				"fetch_cities	statement"
+			],
+			[
+				"cur",
+				"cursor_self	statement"
+			],
+			[
+				"fe",
+				"fetch	statement"
+			],
+			[
+				"cu",
+				"cursor_self	statement"
+			],
+			[
+				"def",
+				"definitions"
+			],
+			[
+				"ut",
+				"utc_date	statement"
+			],
+			[
+				"_date",
+				"_date_localize	statement"
+			],
+			[
+				"local",
+				"local_tz"
+			],
+			[
+				"mem",
+				"memory	function"
+			],
+			[
+				"aps",
+				"path_apscheduler"
+			],
+			[
+				"rou",
+				"route_to_all	import"
+			],
+			[
+				"CO",
+				"CORE_PORT	statement"
+			],
+			[
+				"FAd",
+				"FaDigit	class"
+			],
+			[
+				"fli",
+				"flight_num	statement"
+			],
+			[
+				"Re",
+				"ResourceDigit	class"
+			],
+			[
+				"bas",
+				"base_list	statement"
+			],
+			[
+				"ser",
+				"services	module"
+			],
+			[
+				"fligh",
+				"flight_num"
+			],
+			[
+				"ge",
+				"get_flight_num	function"
+			],
+			[
+				"Fa",
+				"FaDigit"
+			],
+			[
+				"En",
+				"EnDigit"
+			],
+			[
+				"cot",
+				"context_name	param"
+			],
+			[
+				"di",
+				"digit	statement"
+			],
+			[
+				"con",
+				"context_name	param"
+			],
+			[
+				"clas",
+				"classobj	statement"
+			],
+			[
+				"branch",
+				"branches"
+			],
+			[
+				"cal",
+				"callInThread"
+			],
+			[
+				"AIRP",
+				"AIRPORT_CODE	statement"
+			],
+			[
+				"conf",
+				"confirm_destination"
+			],
+			[
+				"bu",
+				"bulk_data"
+			],
+			[
+				"fu",
+				"func_tools	module"
+			],
+			[
+				"pr",
+				"projection	statement"
+			],
+			[
+				"re",
+				"relation_major	statement"
+			],
+			[
+				"rel",
+				"relation_minor	statement"
+			],
+			[
+				"rela",
+				"relations"
+			],
+			[
+				"CL",
+				"CL_ID	statement"
+			],
+			[
+				"time",
+				"timedelta	class"
+			],
+			[
+				"che",
+				"check_projection	statement"
+			],
+			[
+				"remove",
+				"remove_destination	statement"
+			],
+			[
+				"AI",
+				"AIRPORT_CODE	statement"
+			],
+			[
+				"chec",
+				"check_projection	statement"
+			],
+			[
+				"Ins",
+				"InsertBulkDestinationForm	class"
+			],
+			[
+				"set",
+				"settings	module"
+			],
+			[
+				"InsertB",
+				"InsertBulkDestinationForm	class"
+			],
+			[
+				"for",
+				"for_addtoset	statement"
+			],
+			[
+				"date",
+				"datetime	module"
+			],
+			[
+				"AIR",
+				"AIRPORT_CODE	statement"
+			],
+			[
+				"se",
+				"settings	module"
+			],
+			[
+				"exp",
+				"excepted	statement"
+			],
+			[
+				"act",
+				"actual_time	statement"
+			],
+			[
+				"actu",
+				"actual_time"
+			],
+			[
+				"Cho",
+				"ChoiceField	class"
+			],
+			[
+				"colle",
+				"collection_name"
+			],
+			[
+				"col",
+				"coll_name"
+			],
+			[
+				"find",
+				"find_one"
+			],
+			[
+				"Bas",
+				"BaseForm	class"
+			],
+			[
+				"ori",
+				"origin_id	statement"
+			],
+			[
+				"fin",
+				"find_one"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"cri",
+				"criteria_destinations	statement"
+			],
+			[
+				"update",
+				"update_one	function"
+			],
+			[
+				"des",
+				"destinations"
+			],
+			[
+				"cr",
+				"criteria	statement"
+			],
+			[
+				"cle",
+				"cleaned_data"
+			],
+			[
+				"In",
+				"IntegerField	class"
+			],
+			[
+				"air",
+				"air_time	statement"
+			],
+			[
+				"Ke",
+				"KeyError	class"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"si",
+				"sig_list	statement"
+			],
+			[
+				"enc",
+				"enc_list	statement"
+			],
+			[
+				"pro",
+				"process_exists	function"
+			],
+			[
+				"sub",
+				"subprocess	module"
+			],
+			[
+				"sys",
+				"system	function"
+			],
+			[
+				"ref",
+				"refinary_loop_arr	function"
+			],
+			[
+				"airpo",
+				"airport_dict	function"
+			],
+			[
+				"stat",
+				"status_list	function"
+			],
+			[
+				"PO",
+				"POST"
+			],
+			[
+				"la",
+				"label"
+			],
+			[
+				"max",
+				"max_length	param"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 160.0,
+		"last_filter": "dja",
+		"selected_items":
+		[
+			[
+				"dja",
+				"Set Syntax: HTML (Django)"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
+			[
+				"",
+				"Anaconda: Vagrant Reload"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 440.0
+	},
+	"console":
+	{
+		"height": 174.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/ali/Public/Projects/crawler/youtube_crawler",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs"
+	],
+	"file_history":
+	[
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs/test.py",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/show_documents.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/research.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/publication.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/magazine.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/catalog.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/exhibition.html",
+		"/home/ali/Public/PySocial/bamdad/templates/base.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/book.html",
+		"/home/ali/Public/PySocial/bamdad/entry/urls.py",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/thesis.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/person.html",
+		"/home/ali/Public/PySocial/bamdad/static/admin/img/tooltag-arrowright.svg",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/culture.html",
+		"/home/ali/Public/PySocial/bamdad/templates/entry/article.html",
+		"/home/ali/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/ali/Public/PySocial/bamdad/bamdad/views.py",
+		"/home/ali/Public/pysocial/pysocial/templates/manager/base.html",
+		"/home/ali/Public/pysocial/pysocial/templates/manager/edit_home.html",
+		"/home/ali/Public/pysocial/pysocial/README.md",
+		"/home/ali/Public/pysocial/pysocial/manager/views.py",
+		"/home/ali/Public/pysocial/pysocial/pysocial/settings_local.py",
+		"/home/ali/Public/pysocial/pysocial/templates/base.html",
+		"/home/ali/Public/pysocial/pysocial/users/views.py",
+		"/home/ali/Public/pysocial/pysocial/core/mail_functions.py",
+		"/home/ali/Public/pysocial/pysocial/pysocial/settings.ini",
+		"/home/ali/Public/pysocial/pysocial/pysocial/views.py",
+		"/home/ali/Public/pysocial/pysocial/core/query_handler.py",
+		"/home/ali/Public/pysocial/pysocial/requirements.txt",
+		"/home/ali/Public/pysocial/pysocial/.gitignore",
+		"/home/ali/Dropbox/PySocial/Data/pysocial.json",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/delete_rpl.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/edit_status.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/get_rpl_by_id.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/libs/func_tools.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/libs/task.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/insert_destinations_rpl.py",
+		"/home/ali/Public/Projects/common/flight_list/core_flight_list/services/plugins/entry/update_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/generals/scheduler.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/libs/data_cache.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/pa/create_context.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/clear_flight_list_filter.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/stop_server.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/print_jobs.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/manager/initialize_functions.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/insert_destinations_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/flight_list_arrival.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/flight_list_departure.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/libs/func_tools.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/rpl_list.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/raspberry/libs/raspberry_directory.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/set_flight_list_filter.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/libs/jobs.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/libs/tasks.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/get_flight_list_filter.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/db/mongo_drivers.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/db/__init__.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/access_to_key_shared_memory.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/set_to_shared_memory.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/resource/libs/tasks.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/delete_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/log_manager/main_log.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/libs/task.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/pa/context_list.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/pa/event_call.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/get_rpl_by_id.py",
+		"/home/ali/Public/Projects/common/core/core_services/config/settings_local.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/insert_departure.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/insert_arrival.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/departure_time_status.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/arrival_time_status.py",
+		"/home/ali/Public/Projects/common/core/core_services/core_services.sublime-workspace",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/insert_origins_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/pa/libs/func_tools.py",
+		"/home/ali/Public/Projects/common/core/core_services/config/settings.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/shared_memory/shared_memory.py",
+		"/home/ali/Public/Projects/common/core/core_services/config/installed_component.json",
+		"/home/ali/Public/Projects/common/core/core_services/manage.py",
+		"/home/ali/Public/Projects/common/core/core_services/config/settings_local.txt",
+		"/home/ali/Public/Projects/common/core/core_services/core/__init__.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/set_cache_middleware.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/get_cache_middleware.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/rpc_core/query_handler.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/router/router.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/create_cache.py",
+		"/home/ali/Public/Projects/common/core/core_services/txjsonrpc/web/jsonrpc.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/log_manager/log_levels.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/run_emergency_or_ads.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/flight_list_jobs.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/restart_not_availables.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/weather.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/manage_resource.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/check_playlists_expiry.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/dump_filters.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/archive_jobs.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/resource/libs/resources.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/rpc_core/run_rpc.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/component/component_generator.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/main/fetch_activity_logs.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/pa/libs/__init__.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/api/update_definitions.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/resource/test.py",
+		"/home/ali/Desktop/csv/schflight.csv",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/api/libs/tasks.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/api/libs/__init__.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/rpc_core/main_json_rpc.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/get_job_by_id.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/update_arrival_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/update_departure_rpl.py",
+		"/home/ali/Public/Projects/common/core/core_services/core/threading_pool/core_thread.py",
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/libs/__init__.py",
+		"/home/ali/Public/Projects/bank/maskan/core/query_handler.py",
+		"/home/ali/Public/Projects/bank/maskan/core/class_singleton.py",
+		"/home/ali/Public/Projects/bank/maskan/core/defs.py",
+		"/home/ali/Public/Projects/bank/maskan/core/__init__.py",
+		"/run/user/1000/gvfs/sftp:host=77.104.126.132,port=9595,user=auth/usr/local/core_services/services/libs/params_filtering.py",
+		"/run/user/1000/gvfs/sftp:host=77.104.126.132,port=9595,user=auth/usr/local/core_services/services/services/rpc_core/main_json_rpc.py",
+		"/run/user/1000/gvfs/sftp:host=77.104.126.132,port=9595,user=auth/usr/local/core_services/services/services/__init__.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/templates/base.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/data_entry/views.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/fids/context_processor.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/templates/data_entry/flight_list_domestic.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/data_entry/func_tools.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/templates/data_entry/remove_rpl.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/fids/settings_local.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/fids/settings.py",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/templates/data_entry/flight_list_international.html",
+		"/run/user/1000/gvfs/sftp:host=192.168.64.50,user=app01/usr/local/FIDS/FIDS/fids/templatetags/breadcrumbs.py"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 143.0,
+		"where_history":
+		[
+			"",
+			"/home/ali/Public/Projects/common/core/core_services/services/plugins",
+			"/home/ali/Public/Projects/common/core/core_services/",
+			"/home/ali/Public/Projects/common",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"-#!/",
+			"-",
+			"thesis",
+			"exhibition",
+			"add_sign",
+			"sign_writer",
+			"sign.html",
+			"\"\"",
+			"عکس",
+			"''",
+			"kind_select",
+			"designer",
+			"publish_location",
+			"ChoiceField",
+			"desinger",
+			"نحوه",
+			"upload_document_picture",
+			"edit_person",
+			"writer",
+			"language_doc",
+			"translate",
+			"repair",
+			"writer",
+			"magazines",
+			"writer",
+			"name",
+			"magazine",
+			"publication",
+			"publish",
+			"multiplechoice",
+			"multichoice",
+			"multiplechoice",
+			"person_data",
+			"repair_select",
+			"location",
+			"subject",
+			"publish_way",
+			"research",
+			"document",
+			"research",
+			"catalog",
+			"date",
+			"responsible",
+			"publication",
+			"Publication",
+			"publication",
+			"Publication",
+			"publication",
+			"magezine",
+			"Publication",
+			"publication",
+			"Publication",
+			"publication",
+			"location",
+			"book",
+			"publication",
+			"translator",
+			"writer",
+			"title",
+			"publication",
+			"translator",
+			"responsible",
+			"writer",
+			"title",
+			"person",
+			"research",
+			"thesis",
+			"Thesis",
+			"thesis",
+			"Thesis",
+			"thesis",
+			"Thesis",
+			"thesis",
+			"Thesis",
+			"thesis",
+			"Thesis",
+			"thesis",
+			"responsible",
+			"degree_thesis",
+			"research",
+			"book",
+			"article",
+			"culture",
+			"article",
+			"Article",
+			"article",
+			"Article",
+			"article",
+			"catalog",
+			"Catalog",
+			"catalog",
+			"book",
+			"Book",
+			"book",
+			"Book",
+			"book",
+			"research",
+			"Research",
+			"research",
+			"Research",
+			"research",
+			"exhibition",
+			"Exhibition",
+			"exhibition",
+			"Exhibition",
+			"exhibition",
+			"document",
+			"edit_document",
+			"document",
+			"edit_doc",
+			"document",
+			"_document",
+			"degree_thesis",
+			"publication",
+			"translator",
+			"CultrualForm",
+			"add_culture",
+			"Cultrual",
+			"add_catalog",
+			"counter",
+			"publication",
+			"translator",
+			"writer",
+			"title",
+			"ArticleForm",
+			"add_catalog",
+			"translator",
+			"CatalogForm"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"case.lower():",
+			"minute_out",
+			"hour_out",
+			",",
+			"",
+			"register",
+			"shard6_",
+			"shard5_",
+			"shard4_",
+			"    ",
+			"status_num ==",
+			".status"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 63.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "crawler.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"doc",
+				"templates/entry/documents.html"
+			],
+			[
+				"cata",
+				"templates/entry/catalog.html"
+			],
+			[
+				"base",
+				"templates/base.html"
+			],
+			[
+				"boo",
+				"templates/entry/book.html"
+			],
+			[
+				"the",
+				"templates/entry/thesis.html"
+			],
+			[
+				"exh",
+				"templates/entry/exhibition.html"
+			],
+			[
+				"sh",
+				"templates/entry/show_documents.html"
+			],
+			[
+				"view",
+				"entry/views.py"
+			],
+			[
+				"form",
+				"entry/forms.py"
+			],
+			[
+				"bas",
+				"templates/manager/base.html"
+			],
+			[
+				"se",
+				"pysocial/settings_local.py"
+			],
+			[
+				"que",
+				"core/query_handler.py"
+			],
+			[
+				"edit_status.py",
+				"core_flight_list/services/plugins/entry/edit_status.py"
+			],
+			[
+				"get_rpl_by_id.py",
+				"core_flight_list/services/plugins/entry/get_rpl_by_id.py"
+			],
+			[
+				"rpl",
+				"core_flight_list/services/plugins/entry/insert_destinations_rpl.py"
+			],
+			[
+				"delete_rpl",
+				"core_flight_list/services/plugins/entry/delete_rpl.py"
+			],
+			[
+				"sch",
+				"core/generals/scheduler.py"
+			],
+			[
+				"set",
+				"config/settings_local.py"
+			],
+			[
+				"inser",
+				"services/plugins/entry/insert_origins_rpl.py"
+			],
+			[
+				"main",
+				"core/log_manager/main_log.py"
+			],
+			[
+				"dele",
+				"services/plugins/entry/delete_rpl.py"
+			],
+			[
+				"in",
+				"core/manager/initialize_functions.py"
+			],
+			[
+				"ins",
+				"config/installed_component.json"
+			],
+			[
+				"mongo",
+				"core/db/mongo_drivers.py"
+			],
+			[
+				"core/db/",
+				"core/db/__init__.py"
+			],
+			[
+				"core/",
+				"core/__init__.py"
+			],
+			[
+				"ma",
+				"manage.py"
+			],
+			[
+				"s",
+				"config/settings_local.txt"
+			],
+			[
+				"sett",
+				"config/settings_local.py"
+			],
+			[
+				"init",
+				"core/manager/initialize_functions.py"
+			],
+			[
+				"func",
+				"services/plugins/entry/libs/func_tools.py"
+			],
+			[
+				"jso",
+				"txjsonrpc/web/jsonrpc.py"
+			],
+			[
+				"q",
+				"services/rpc_core/query_handler.py"
+			],
+			[
+				"log",
+				"core/log_manager/main_log.py"
+			],
+			[
+				"log_",
+				"core/log_manager/log_levels.py"
+			],
+			[
+				"initia",
+				"core/manager/initialize_functions.py"
+			],
+			[
+				"filter",
+				"services/plugins/main/set_flight_list_filter.py"
+			],
+			[
+				"crea",
+				"services/plugins/main/create_cache.py"
+			],
+			[
+				"rpc_",
+				"services/rpc_core/run_rpc.py"
+			],
+			[
+				"conte",
+				"fids/context_processor.py"
+			],
+			[
+				"brea",
+				"fids/templatetags/breadcrumbs.py"
+			],
+			[
+				"contex",
+				"fids/context_processor.py"
+			],
+			[
+				"inset",
+				"templates/data_entry/insert_arrival.html"
+			],
+			[
+				"fun",
+				"core/functions_tools.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 438.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Public/PySocial/pysocial/pysocial.sublime-project"
+			]
+		],
+		"width": 333.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 234.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

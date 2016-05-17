@@ -4,8 +4,8 @@ jsonrpclib
 pymongo
 jdatetime
 twisted
-cerberus
-bcrypt
+# cerberus
+# bcrypt
 apscheduler
 # cryptography
 python-dateutil
