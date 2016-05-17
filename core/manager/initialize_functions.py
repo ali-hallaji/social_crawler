@@ -17,28 +17,30 @@ def initial_executer():
 
     # Run crawler with api
     # create_bulk_jobs_from_dates()
-    try:
-        scheduler.add_job(
-            create_bulk_jobs_from_dates,
-            'interval',
-            hours=24,
-            id='youtube_api'
-        )
+    create_bulk_jobs_from_dates()
+    # try:
+    #     scheduler.add_job(
+    #         create_bulk_jobs_from_dates,
+    #         'interval',
+    #         hours=24,
+    #         id='youtube_api'
+    #     )
 
-    except ConflictingIdError:
-        pass
+    # except ConflictingIdError as e:
+    #     print e
 
-    # Run crawler without api
-    try:
-        scheduler.add_job(
-            create_crawl_job,
-            'interval',
-            hours=24,
-            id='youtube_without_api'
-        )
+    # # Run crawler without api
+    # try:
+    #     scheduler.add_job(
+    #         create_crawl_job,
+    #         'interval',
+    #         hours=24,
+    #         id='youtube_without_api'
+    #     )
+    create_crawl_job()
 
-    except ConflictingIdError:
-        pass
+    # except ConflictingIdError as e:
+    #     print e
 
 
 def create_bulk_jobs_from_dates():
