@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import datetime
 from pprint import pprint
 

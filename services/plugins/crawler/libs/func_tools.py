@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Python Import
 import datetime
 
@@ -26,6 +25,9 @@ def build_youtube_api():
 
 
 def executor_crawl(_to, _from, criteria, next_page_token=None):
+    msg = 'Start executer:---> start: {0} | end: {1}'.format(_from, _to)
+    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
+    toLog(msg, 'jobs')
 
     youtube = build_youtube_api()
 
@@ -120,6 +122,10 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
 
     # Create Next Page
     next_page_token = search_response.get("nextPageToken")
+
+    msg = 'End executer:---> start: {0} | end: {1}'.format(_from, _to)
+    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
+    toLog(msg, 'jobs')
 
     return next_page_token
 
