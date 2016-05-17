@@ -1,17 +1,44 @@
 # Python import
+from apscheduler.jobstores.base import ConflictingIdError
 from bson.json_util import dumps
 
 # Core Import
-from core import toLog
+from config.settings import keyword_list
+from config.settings import max_page_crawl
 from config.settings import period_years
+from core import toLog
+from core.generals.scheduler import scheduler
+from services.plugins.crawler.libs.func_tools import crawl_search
 from services.plugins.crawler.libs.func_tools import divide_datetime
 from services.rpc_core.query_handler import send_request
 
 
 def initial_executer():
 
-    # Run crawler
-    create_bulk_jobs_from_dates()
+    # Run crawler with api
+    # create_bulk_jobs_from_dates()
+    try:
+        scheduler.add_job(
+            create_bulk_jobs_from_dates,
+            'interval',
+            hours=24,
+            id='youtube_api'
+        )
+
+    except ConflictingIdError:
+        pass
+
+    # Run crawler without api
+    try:
+        scheduler.add_job(
+            create_crawl_job,
+            'interval',
+            hours=24,
+            id='youtube_without_api'
+        )
+
+    except ConflictingIdError:
+        pass
 
 
 def create_bulk_jobs_from_dates():
@@ -24,3 +51,16 @@ def create_bulk_jobs_from_dates():
         msg = "Crawler jobs from: {0} | to: {1}".format(item[1], item[0])
         msg += "{0}".format(str(result))
         toLog(msg, 'jobs')
+
+
+def create_crawl_job():
+    msg = "start crawler jobs"
+    toLog(msg, 'jobs')
+
+    for i in range(1, max_page_crawl + 1):
+
+        for case in keyword_list:
+            crawl_search(case, i)
+
+    msg = "end crawler jobs"
+    toLog(msg, 'jobs')
