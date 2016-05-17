@@ -18,9 +18,9 @@ def create_bulk_jobs_from_dates():
     tuple_month_list = divide_datetime(period_years)
 
     for item in tuple_month_list:
-        args = (dumps(item[0]), dumps(item[1]))
+        args = (dumps(item[1]), dumps(item[0]))
         result = send_request('crawler.main_robot', args)
 
-        msg = "Crawler jobs from: {0} | to: {1}".format(item[0], item[1])
+        msg = "Crawler jobs from: {0} | to: {1}".format(item[1], item[0])
         msg += "{0}".format(str(result))
         toLog(msg, 'jobs')
