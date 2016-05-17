@@ -1,2 +1,2 @@
 # Mirrors dev
--r requirements/dev.txt
+-r requirments/dev.txt
