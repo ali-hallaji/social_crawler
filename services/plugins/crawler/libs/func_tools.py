@@ -158,5 +158,6 @@ def execute_batch(_from, _to, criteria):
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
 
-        except:
+        except Exception as e:
+            toLog(str(e), 'jobs')
             flag = False
