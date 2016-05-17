@@ -87,41 +87,6 @@ def main():
             except error:
                 print 'Core Services shutdown \t\t\t\t\t\t[OK]'
 
-        elif sys.argv[1] == 'command_ras':
-            from jsonrpclib import Server
-            from socket import error
-            from core.db import cursor_local
-            from config.settings import CORE_PORT
-
-            try:
-
-                conn = Server('http://localhost:{0}'.format(CORE_PORT))
-
-                if len(sys.argv) == 4:
-                    raspberries = [
-                        cursor_local.raspberries.find_one(
-                            {
-                                'hostname': sys.argv[3],
-                                'enabled': True
-                            })['_id']
-                    ]
-
-                else:
-                    raspberries = cursor_local.raspberries.distinct(
-                                        '_id', {'enabled': True}
-                                    )
-
-                for raspberry in raspberries:
-                    r = str(raspberry)
-                    result = getattr(conn.raspberry, sys.argv[2])(r)
-                    pretty(result)
-
-                else:
-                    print 'No raspberries'
-
-            except error:
-                print 'Core Services shutdown \t\t\t\t\t\t[OK]'
-
         elif sys.argv[1] == 'logs':
             from os import system
             from config.settings import CORE_ID
@@ -150,39 +115,6 @@ def main():
             gen = BASE_DIR + '/config/settings_local.py'
 
             copyfile(raw, gen)
-
-        elif sys.argv[1] == 'dump_filter':
-            from jsonrpclib import Server
-            import shelve
-            from config.settings import BASE_DIR
-            from bson.json_util import loads
-            from socket import error
-            from config.settings import CORE_PORT
-
-            try:
-                store = shelve.open(BASE_DIR + '/cache/filters.so')
-                conn = Server('http://localhost:{0}'.format(CORE_PORT))
-                data = conn.main.access_shared_memory('flight_list_filter')
-                data = loads(data)
-                store['data'] = data
-                store.close()
-                print "Dump \t\t\t\t\t\t[OK]"
-
-            except error:
-                print 'Core Services shutdown \t\t\t\t\t\t[OK]'
-
-        elif sys.argv[1] == 'restore_filter':
-            from socket import error
-            from jsonrpclib import Server
-            from config.settings import CORE_PORT
-
-            try:
-                conn = Server('http://localhost:{0}'.format(CORE_PORT))
-                conn.jobs.restore_filters()
-                print "Restore \t\t\t\t\t\t[OK]"
-
-            except error:
-                print 'Core Services shutdown \t\t\t\t\t\t[OK]'
 
         elif sys.argv[1] == 'plugin':
             from jsonrpclib import Server
