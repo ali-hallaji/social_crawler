@@ -10,10 +10,8 @@ from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
-from core.patterns.class_singleton import singleton
 
 
-@singleton
 def build_youtube_api():
     youtube = build(
         YOUTUBE_API_SERVICE_NAME,
@@ -117,6 +115,7 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
         else:
             toLog("UnHandled Crawling: {0}".format(search_result), 'debug')
 
+        break
         if not update.raw_result['updatedExisting']:
             toLog("Crawling Error: It can't be save record", 'error')
 
@@ -159,5 +158,6 @@ def execute_batch(_from, _to, criteria):
             next_page = executor_crawl(_to, _from, criteria, next_page)
 
         except Exception as e:
+            print e
             toLog(str(e), 'jobs')
             flag = False

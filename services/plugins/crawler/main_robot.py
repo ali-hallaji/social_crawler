@@ -35,6 +35,7 @@ class MainRobot:
     def run(self, _from, _to, keyword=''):
         _from = loads(_from)
         _to = loads(_to)
+
         criteria = {'max_results': 50, 'q': keyword}
 
         reactor.callInThread(execute_batch, _from, _to, criteria)
