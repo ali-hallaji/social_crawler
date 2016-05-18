@@ -1,4 +1,6 @@
 # Python import
+import time
+import random
 from apscheduler.jobstores.base import ConflictingIdError
 from bson.json_util import dumps
 
@@ -17,7 +19,7 @@ def initial_executer():
 
     # Run crawler with api
     # create_bulk_jobs_from_dates()
-    create_bulk_jobs_from_dates()
+    # create_bulk_jobs_from_dates()
     # try:
     #     scheduler.add_job(
     #         create_bulk_jobs_from_dates,
@@ -56,12 +58,14 @@ def create_bulk_jobs_from_dates():
 
 
 def create_crawl_job():
+    time_list = [1, 2, 3, 1.2, 1.5, 1.6, 1.1, 2.5, 2.5]
     msg = "start crawler jobs"
     toLog(msg, 'jobs')
 
     for i in range(1, max_page_crawl + 1):
 
         for case in keyword_list:
+            time.sleep(random.choice(time_list))
             crawl_search(case, i)
 
     msg = "end crawler jobs"
