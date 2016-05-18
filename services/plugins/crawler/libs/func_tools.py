@@ -189,8 +189,6 @@ def crawl_search(keyword, page):
         if d.has_attr('class') and 'yt-lockup-dismissable' in d['class']:
             div.append(d)
 
-    toLog("Text crawling : {0}".format(soup), 'debug')
-
     for d in div:
         doc = {'created_date': datetime.datetime.now()}
         img0 = d.find_all('img')[0]
