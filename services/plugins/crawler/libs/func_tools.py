@@ -17,7 +17,7 @@ from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
-from services.plugins.crawler.crawler import Crawler
+from services.plugins.crawler.libs.crawl_video_history.crawler import Crawler
 
 
 def build_youtube_api():
