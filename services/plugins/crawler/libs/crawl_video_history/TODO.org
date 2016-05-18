@@ -1,3 +1,0 @@
-* complete the readme file
-* optimize the structure
-* format into a perfessional python package
