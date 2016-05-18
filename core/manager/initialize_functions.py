@@ -58,7 +58,7 @@ def create_bulk_jobs_from_dates():
 
 
 def create_crawl_job():
-    time_list = [1, 2, 3, 1.2, 1.5, 1.6, 1.1, 2.5, 2.5]
+    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5]
     msg = "start crawler jobs"
     toLog(msg, 'jobs')
 
