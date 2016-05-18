@@ -253,7 +253,7 @@ def get_video_info(url):
 
 
 def today_yesterday_data(_id, url):
-    video_doc = cursor.refined_data.find_one({'id': id})
+    video_doc = cursor.refined_data.find_one({'id': _id})
 
     video = get_video_info(url)
 
