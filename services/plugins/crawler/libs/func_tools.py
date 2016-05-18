@@ -271,22 +271,26 @@ def start_updating_jobs():
 
     count = 0
     for doc in all_videos:
-        url = doc['href']
-        _id = doc['id']
 
-        criteria = {'_id': doc['_id']}
-        new_data = today_yesterday_data(_id, url)
-        _update = {'$set': new_data}
+        try:
+            url = doc['href']
+            _id = doc['id']
 
-        update = cursor.refined_data.update_one(criteria, _update)
+            criteria = {'_id': doc['_id']}
+            new_data = today_yesterday_data(_id, url)
+            _update = {'$set': new_data}
 
-        if not update.raw_result.get('updatedExisting', None):
-            msg = "The video with this id '{0}' can't be updated".format(_id)
-            toLog(msg, 'db')
+            update = cursor.refined_data.update_one(criteria, _update)
 
-        if (count % 6) == 0:
-            time.sleep(random.choice(time_list))
+            if not update.raw_result.get('updatedExisting', None):
+                msg = "The video with this id '{0}' can't be updated".format(_id)
+                toLog(msg, 'db')
 
+            if (count % 6) == 0:
+                time.sleep(random.choice(time_list))
+
+        except Exception as e:
+            toLog(str(e), 'error')
 
 # def max_views_count():
 #     videos = cursor.refined_data.find({}, {'id': 1})
