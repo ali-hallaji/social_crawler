@@ -14,5 +14,6 @@ pytz
 pjson
 bs4
 requests
+requests[security]
 gdata
 google-api-python-client
