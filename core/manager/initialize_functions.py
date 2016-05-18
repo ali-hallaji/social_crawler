@@ -18,7 +18,7 @@ from services.rpc_core.query_handler import send_request
 def initial_executer():
 
     # Run crawler with api
-    # create_bulk_jobs_from_dates()
+    create_bulk_jobs_from_dates()
     # create_bulk_jobs_from_dates()
     # try:
     #     scheduler.add_job(
@@ -39,7 +39,7 @@ def initial_executer():
     #         hours=24,
     #         id='youtube_without_api'
     #     )
-    create_crawl_job()
+    # create_crawl_job()
 
     # except ConflictingIdError as e:
     #     print e

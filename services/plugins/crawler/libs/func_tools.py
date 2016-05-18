@@ -2,6 +2,8 @@
 import bs4
 import datetime
 import requests
+import time
+import random
 import urlparse
 
 from pymongo.errors import DuplicateKeyError
@@ -158,11 +160,13 @@ def execute_batch(_from, _to, criteria):
 
     flag = True
     next_page = None
+    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5]
 
     while flag:
 
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
+            time.sleep(random.choice(time_list))
 
         except Exception as e:
             print e
