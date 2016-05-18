@@ -1,3 +1,6 @@
+from services.plugins.crawler.libs import crawl_video_history
+
+
 CRAWLER_LOADED_MODULE = None
 
 
