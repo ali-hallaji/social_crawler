@@ -65,8 +65,8 @@ def create_crawl_job():
     for i in range(1, max_page_crawl + 1):
 
         for case in keyword_list:
-            time.sleep(random.choice(time_list))
             crawl_search(case, i)
+            time.sleep(random.choice(time_list))
 
     msg = "end crawler jobs"
     toLog(msg, 'jobs')

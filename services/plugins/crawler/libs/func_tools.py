@@ -179,7 +179,7 @@ def crawl_search(keyword, page):
     url += '&search_query=' + keyword
     url += '&page={0}'.format(page)
 
-    text = requests.get(url).text
+    text = requests.get(url, headers={'host': 'example.com'}).text
     soup = bs4.BeautifulSoup(text, "lxml")
 
     div = []
