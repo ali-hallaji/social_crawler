@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 ########################################################################
 
 # Local Time ###########################################################
-local_tz = pytz.timezone('Asia/Tehran')        # use your local timezone
+local_tz = pytz.timezone('America/New_York')   # use your local timezone
 ########################################################################
 
 
