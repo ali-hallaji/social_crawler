@@ -183,12 +183,13 @@ def crawl_search(keyword, page):
     soup = bs4.BeautifulSoup(text, "html.parser")
 
     div = []
-    toLog("Crawling ready for div", 'debug')
 
     for d in soup.find_all('div'):
 
         if d.has_attr('class') and 'yt-lockup-dismissable' in d['class']:
             div.append(d)
+
+    toLog("Div crawling : {0}".format(div), 'debug')
 
     for d in div:
         doc = {'created_date': datetime.datetime.now()}
