@@ -13,7 +13,7 @@ pytz
 #txjsonrpc
 pjson
 bs4
-requests
 requests[security]
+pafy
 gdata
 google-api-python-client

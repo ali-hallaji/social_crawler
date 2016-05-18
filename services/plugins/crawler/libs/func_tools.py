@@ -4,6 +4,7 @@ import datetime
 import random
 import requests
 import time
+import pafy
 import urlparse
 
 from pymongo.errors import DuplicateKeyError
@@ -17,7 +18,6 @@ from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
-from services.plugins.crawler.libs.crawl_video_history.crawler import Crawler
 
 
 def build_youtube_api():
@@ -228,29 +228,89 @@ def get_video_id(url):
     return video
 
 
-def max_views_count():
-    videos = cursor.refined_data.find({}, {'id': 1})
-    time_list = [3, 4, 2, 3, 4, 3, 3, 3]
-    c = Crawler()
+def get_video_info(url):
+    doc = {}
+    video = pafy.new(url)
+
+    doc['author'] = video.author
+    doc['big_thumb_hd'] = video.bigthumbhd
+    doc['category'] = video.category
+    doc['description'] = video.description
+    doc['dislikes'] = video.dislikes
+    doc['duration'] = video.duration
+    doc['keywords'] = video.keywords
+    doc['likes'] = video.likes
+    doc['published'] = video.published
+    doc['rating'] = video.rating
+    doc['thumb'] = video.thumb
+    doc['title'] = video.title
+    doc['username'] = video.username
+    doc['all_views'] = video.viewcount
+    doc['has_yesterday'] = True
+    doc['update_video_data'] = datetime.datetime.now()
+
+    return doc
+
+
+def today_yesterday_data(_id, url):
+    video_doc = cursor.refined_data.find_one({'id': id})
+
+    video = get_video_info(url)
+
+    video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
+    today_views = video['all_views'] - video_doc.get('all_views', 0)
+    video['daily_views_today'] = today_views
+
+    return video
+
+
+def start_updating_jobs():
+    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5, 3.4]
+
+    all_videos = cursor.refined_data.find()
 
     count = 0
-    for doc in videos:
-        doc['modified_date'] = datetime.datetime.now()
+    for doc in all_videos:
+        url = doc['href']
+        _id = doc['id']
 
-        crawling = c.single_crawl(doc['id'])
-        doc['max_daily_views'] = max(crawling['dailyViewcount'])
-        upload_date = datetime.datetime.combine(
-            crawling['uploadDate'],
-            datetime.time(0, 0)
-        )
-        doc['uploadDate'] = upload_date
-        _update = {'$set': doc}
+        criteria = {'_id': doc['_id']}
+        new_data = today_yesterday_data(_id, url)
+        _update = {'$set': new_data}
 
-        cursor.refined_data.update_one(
-            {'_id': doc['_id']},
-            _update
-        )
+        update = cursor.refined_data.update_one(criteria, _update)
 
-        count += 1
-        if (count % 8) == 0:
+        if not update.raw_result.get('updatedExisting', None):
+            msg = "The video with this id '{0}' can't be updated".format(_id)
+            toLog(msg, 'db')
+
+        if (count % 6) == 0:
             time.sleep(random.choice(time_list))
+
+
+# def max_views_count():
+#     videos = cursor.refined_data.find({}, {'id': 1})
+#     time_list = [3, 4, 2, 3, 4, 3, 3, 3]
+#     c = Crawler()
+
+#     count = 0
+#     for doc in videos:
+#         doc['modified_date'] = datetime.datetime.now()
+
+#         crawling = c.single_crawl(doc['id'])
+#         doc['max_daily_views'] = max(crawling['dailyViewcount'])
+#         upload_date = datetime.datetime.combine(
+#             crawling['uploadDate'],
+#             datetime.time(0, 0)
+#         )
+#         doc['uploadDate'] = upload_date
+#         _update = {'$set': doc}
+
+#         cursor.refined_data.update_one(
+#             {'_id': doc['_id']},
+#             _update
+#         )
+
+#         count += 1
+#         if (count % 8) == 0:
+#             time.sleep(random.choice(time_list))
