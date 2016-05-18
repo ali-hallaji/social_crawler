@@ -1,9 +1,9 @@
 # Python Import
 import bs4
 import datetime
+import random
 import requests
 import time
-import random
 import urlparse
 
 from pymongo.errors import DuplicateKeyError
@@ -17,6 +17,7 @@ from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
+from services.plugins.crawler.crawler import Crawler
 
 
 def build_youtube_api():
@@ -225,3 +226,31 @@ def get_video_id(url):
     query = urlparse.parse_qs(url_data.query)
     video = query["v"][0]
     return video
+
+
+def max_views_count():
+    videos = cursor.refined_data.find({}, {'id': 1})
+    time_list = [3, 4, 2, 3, 4, 3, 3, 3]
+    c = Crawler()
+
+    count = 0
+    for doc in videos:
+        doc['modified_date'] = datetime.datetime.now()
+
+        crawling = c.single_crawl(doc['id'])
+        doc['max_daily_views'] = max(crawling['dailyViewcount'])
+        upload_date = datetime.datetime.combine(
+            crawling['uploadDate'],
+            datetime.time(0, 0)
+        )
+        doc['uploadDate'] = upload_date
+        _update = {'$set': doc}
+
+        cursor.refined_data.update_one(
+            {'_id': doc['_id']},
+            _update
+        )
+
+        count += 1
+        if (count % 8) == 0:
+            time.sleep(random.choice(time_list))

@@ -18,8 +18,12 @@ from services.rpc_core.query_handler import send_request
 def initial_executer():
 
     # Run crawler with api
-    create_bulk_jobs_from_dates()
     # create_bulk_jobs_from_dates()
+    # create_bulk_jobs_from_dates()
+    result = send_request('crawler.max_count', '')
+    msg = "Max view crawling jobs"
+    msg += " {0}".format(str(result))
+    toLog(msg, 'jobs')
     # try:
     #     scheduler.add_job(
     #         create_bulk_jobs_from_dates,

@@ -21,11 +21,12 @@ class MainRobot:
         Fetch your data from shared_memory
 
         e.g:
-        main.main_robot(key, data) > bool
+        main.main_robot(_from, _to, keyword='') > bool
 
         Keyword arguments:
-        data         -- Dumps of dict
-        key          -- String
+        _from         -- datetime
+        _to           -- datetime
+        Keyword       -- string
 
         ACL:
             TODO:
