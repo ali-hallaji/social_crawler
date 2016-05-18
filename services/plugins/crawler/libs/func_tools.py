@@ -183,6 +183,7 @@ def crawl_search(keyword, page):
     soup = bs4.BeautifulSoup(text, "html.parser")
 
     div = []
+    toLog("Crawling ready for div", 'debug')
 
     for d in soup.find_all('div'):
 
