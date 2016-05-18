@@ -1,7 +1,7 @@
 # Python import
 import time
 import random
-from apscheduler.jobstores.base import ConflictingIdError
+# from apscheduler.jobstores.base import ConflictingIdError
 from bson.json_util import dumps
 
 # Core Import
@@ -9,7 +9,7 @@ from config.settings import keyword_list
 from config.settings import max_page_crawl
 from config.settings import period_years
 from core import toLog
-from core.generals.scheduler import scheduler
+# from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import crawl_search
 from services.plugins.crawler.libs.func_tools import divide_datetime
 from services.rpc_core.query_handler import send_request
