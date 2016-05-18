@@ -4,6 +4,7 @@ import datetime
 import random
 import requests
 import time
+import pafy
 import urlparse
 
 from pymongo.errors import DuplicateKeyError
@@ -225,6 +226,66 @@ def get_video_id(url):
     query = urlparse.parse_qs(url_data.query)
     video = query["v"][0]
     return video
+
+
+def get_video_info(url):
+    doc = {}
+    video = pafy.new(url)
+
+    doc['author'] = video.author
+    doc['big_thumb_hd'] = video.bigthumbhd
+    doc['category'] = video.category
+    doc['description'] = video.description
+    doc['dislikes'] = video.dislikes
+    doc['duration'] = video.duration
+    doc['keywords'] = video.keywords
+    doc['likes'] = video.likes
+    doc['published'] = video.published
+    doc['rating'] = video.rating
+    doc['thumb'] = video.thumb
+    doc['title'] = video.title
+    doc['username'] = video.username
+    doc['all_views'] = video.viewcount
+    doc['has_yesterday'] = True
+    doc['update_video_data'] = datetime.datetime.now()
+
+    return doc
+
+
+def today_yesterday_data(_id, url):
+    video_doc = cursor.refined_data.find_one({'id': id})
+
+    video = get_video_info(url)
+
+    video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
+    today_views = video['all_views'] - video_doc.get('all_views', 0)
+    video['daily_views_today'] = today_views
+
+    return video
+
+
+def start_updating_jobs():
+    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5, 3.4]
+
+    all_videos = cursor.refined_data.find()
+
+    count = 0
+    for doc in all_videos:
+        url = doc['href']
+        _id = doc['id']
+
+        criteria = {'_id': doc['_id']}
+        new_data = today_yesterday_data(_id, url)
+        _update = {'$set': new_data}
+
+        update = cursor.refined_data.update_one(criteria, _update)
+
+        if not update.raw_result.get('updatedExisting', None):
+            msg = "The video with this id '{0}' can't be updated".format(_id)
+            toLog(msg, 'db')
+
+        if (count % 6) == 0:
+            time.sleep(random.choice(time_list))
 
 
 # def max_views_count():
