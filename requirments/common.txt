@@ -11,6 +11,7 @@ apscheduler
 python-dateutil
 pytz
 #txjsonrpc
+youtube_dl
 pjson
 bs4
 requests[security]
