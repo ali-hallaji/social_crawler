@@ -307,10 +307,8 @@ def start_updating_jobs():
 
     for i in range(1, retry_update_count + 1):
         count = cursor.refined_data.count(_criteria)
-        print _criteria
-        print count
 
-        if not count:
+        if count:
             all_videos = cursor.refined_data.find(_criteria)
 
             for doc in all_videos:
