@@ -35,9 +35,8 @@ def open_url_api(video_id):
 
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
-    all_data = data['items']
 
-    return all_data
+    return data
 
 
 def build_youtube_api():
