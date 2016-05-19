@@ -27,7 +27,7 @@ api_key = "AIzaSyCIM4EzNqi1in22f4Z3Ru3iYvLaY8tc3bo"
 user_agent = "My User Agent 1.0"
 lifespan = 60 * 60 * 5  # 5 hours
 opener = build_opener()
-opener.addheaders = [('User-Agent', user_agent), ('From', 'info@domain.com')]
+opener.addheaders = [('User-Agent', user_agent)]
 cache = {}
 def_ydl_opts = {'quiet': True, 'prefer_insecure': True, 'no_warnings': True}
 
