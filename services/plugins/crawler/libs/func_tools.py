@@ -249,28 +249,33 @@ def get_video_id(url):
 
 def get_video_info(video_id):
     doc = {}
-    video = open_url_api(video_id)
-    snippet = video.get('items', [])[0].get('snippet', {})
-    statistics = video.get('items', [])[0].get('statistics', {})
 
-    doc['thumbnails'] = snippet.get('thumbnails', '')
-    doc['title'] = snippet.get('title', '')
-    doc['channel_id'] = snippet.get('channelId', '')
-    doc['category_id'] = snippet.get('categoryId', '')
-    doc['published'] = snippet.get('publishedAt', '')
-    doc['channel_title'] = snippet.get('channelTitle', '')
-    doc['description'] = snippet.get('description', '')
+    try:
+        video = open_url_api(video_id)
+        snippet = video.get('items', [])[0].get('snippet', {})
+        statistics = video.get('items', [])[0].get('statistics', {})
 
-    doc['comment_count'] = int(statistics.get('commentCount', 0))
-    doc['dislikes'] = int(statistics.get('dislikeCount', 0))
-    doc['favorite_count'] = int(statistics.get('favoriteCount', 0))
-    doc['all_views'] = int(statistics.get('viewCount', 0))
-    doc['likes'] = int(statistics.get('likeCount', 0))
+        doc['thumbnails'] = snippet.get('thumbnails', '')
+        doc['title'] = snippet.get('title', '')
+        doc['channel_id'] = snippet.get('channelId', '')
+        doc['category_id'] = snippet.get('categoryId', '')
+        doc['published'] = snippet.get('publishedAt', '')
+        doc['channel_title'] = snippet.get('channelTitle', '')
+        doc['description'] = snippet.get('description', '')
 
-    doc['has_yesterday'] = True
-    doc['update_video_data'] = datetime.datetime.now()
+        doc['comment_count'] = int(statistics.get('commentCount', 0))
+        doc['dislikes'] = int(statistics.get('dislikeCount', 0))
+        doc['favorite_count'] = int(statistics.get('favoriteCount', 0))
+        doc['all_views'] = int(statistics.get('viewCount', 0))
+        doc['likes'] = int(statistics.get('likeCount', 0))
 
-    return doc
+        doc['has_yesterday'] = True
+        doc['update_video_data'] = datetime.datetime.now()
+
+        return doc
+
+    except Exception as e:
+        toLog(e, 'error')
 
 
 def today_yesterday_data(_id):
@@ -278,11 +283,14 @@ def today_yesterday_data(_id):
 
     video = get_video_info(_id)
 
-    video['daily_views_yesterday'] = int(video_doc.get('daily_views_today', 0))
-    today_views = video['all_views'] - int(video_doc.get('all_views', 0))
-    video['daily_views_today'] = today_views
+    if video:
+        video['daily_views_yesterday'] = int(
+            video_doc.get('daily_views_today', 0)
+        )
+        today_views = video['all_views'] - int(video_doc.get('all_views', 0))
+        video['daily_views_today'] = today_views
 
-    return video
+        return video
 
 
 def start_updating_jobs():
@@ -298,6 +306,11 @@ def start_updating_jobs():
 
             criteria = {'_id': doc['_id']}
             new_data = today_yesterday_data(_id)
+
+            if not new_data:
+                count += 1
+                continue
+
             _update = {'$set': new_data}
 
             update = cursor.refined_data.update_one(criteria, _update)
@@ -309,6 +322,8 @@ def start_updating_jobs():
 
             if (count % 6) == 0:
                 time.sleep(random.choice(time_list))
+
+            count += 1
 
         except Exception as e:
             toLog(str(e), 'error')
