@@ -29,15 +29,8 @@ class CycleUpdate:
     """
 
     @asynchronous
-    def run(self, criteria=None):
-
-        if criteria:
-            criteria = loads(criteria)
-
-        else:
-            criteria = None
-
-        reactor.callInThread(start_updating_jobs, criteria)
+    def run(self):
+        reactor.callInThread(start_updating_jobs, )
 
         return dumps(True)
 
