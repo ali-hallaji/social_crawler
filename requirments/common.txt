@@ -10,11 +10,9 @@ apscheduler
 # cryptography
 python-dateutil
 pytz
-#txjsonrpc
 youtube_dl
 pjson
 bs4
 requests[security]
-pafy
 gdata
 google-api-python-client
