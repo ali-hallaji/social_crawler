@@ -182,13 +182,12 @@ def execute_batch(_from, _to, criteria):
 
     flag = True
     next_page = None
-    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5]
 
     while flag:
 
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
-            time.sleep(random.choice(time_list))
+            time.sleep(1)
 
         except Exception as e:
             print e
