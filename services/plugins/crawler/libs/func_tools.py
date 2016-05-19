@@ -297,11 +297,12 @@ def today_yesterday_data(_id):
 
 
 def start_updating_jobs():
-    today = datetime.datetime.now()
+    less_today = datetime.datetime.now().replace(hour=0, minute=30, second=0)
     _criteria = {
-        'update_video_data': {
-            '$lte': today.replace(hour=0, minute=30, second=0),
-        }
+        '$or': [
+            {'update_video_data': {'$lte': less_today}},
+            {'all_views': {'$exists': False}}
+        ]
     }
 
     for i in range(1, retry_update_count + 1):
