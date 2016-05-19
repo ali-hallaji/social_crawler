@@ -24,7 +24,6 @@ from core.db import cursor
 
 
 def open_url_api(video_id):
-    tl = [0.5, 0.6, 0.3, 0.4, 0.8]
     api_key = [
         DEVELOPER_KEY,
         DEVELOPER_KEY2
@@ -34,7 +33,7 @@ def open_url_api(video_id):
     base_url += "&key=" + random.choice(api_key)
     base_url += "&part=statistics,snippet"
 
-    time.sleep(random.choice(tl))
+    time.sleep(1)
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
 
@@ -182,12 +181,13 @@ def execute_batch(_from, _to, criteria):
 
     flag = True
     next_page = None
+    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5]
 
     while flag:
 
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
-            time.sleep(1)
+            time.sleep(random.choice(time_list))
 
         except Exception as e:
             print e
