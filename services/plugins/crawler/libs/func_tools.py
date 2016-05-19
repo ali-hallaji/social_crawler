@@ -250,8 +250,8 @@ def get_video_id(url):
 def get_video_info(video_id):
     doc = {}
     video = open_url_api(video_id)
-    snippet = video['items'][0]['snippet']
-    statistics = video['items'][0]['statistics']
+    snippet = video.get('items', [])[0].get('snippet', {})
+    statistics = video.get('items', [])[0].get('statistics', {})
 
     doc['thumbnails'] = snippet.get('thumbnails', '')
     doc['title'] = snippet.get('title', '')
@@ -261,11 +261,11 @@ def get_video_info(video_id):
     doc['channel_title'] = snippet.get('channelTitle', '')
     doc['description'] = snippet.get('description', '')
 
-    doc['comment_count'] = statistics.get('commentCount', '')
-    doc['dislikes'] = statistics.get('dislikeCount', '')
-    doc['favorite_count'] = statistics.get('favoriteCount', '')
-    doc['all_views'] = statistics.get('viewCount', '')
-    doc['likes'] = statistics.get('likeCount', '')
+    doc['comment_count'] = int(statistics.get('commentCount', 0))
+    doc['dislikes'] = int(statistics.get('dislikeCount', 0))
+    doc['favorite_count'] = int(statistics.get('favoriteCount', 0))
+    doc['all_views'] = int(statistics.get('viewCount', 0))
+    doc['likes'] = int(statistics.get('likeCount', 0))
 
     doc['has_yesterday'] = True
     doc['update_video_data'] = datetime.datetime.now()
@@ -278,8 +278,8 @@ def today_yesterday_data(_id):
 
     video = get_video_info(_id)
 
-    video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
-    today_views = video['all_views'] - video_doc.get('all_views', 0)
+    video['daily_views_yesterday'] = int(video_doc.get('daily_views_today', 0))
+    today_views = video['all_views'] - int(video_doc.get('all_views', 0))
     video['daily_views_today'] = today_views
 
     return video
