@@ -24,16 +24,11 @@ from core.db import cursor
 
 
 def open_url_api(video_id):
-    api_key = [
-        DEVELOPER_KEY,
-        DEVELOPER_KEY2
-    ]
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + random.choice(api_key)
+    base_url += "&key=" + DEVELOPER_KEY
     base_url += "&part=statistics,snippet"
 
-    time.sleep(1)
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
 
