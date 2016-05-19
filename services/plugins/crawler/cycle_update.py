@@ -5,26 +5,23 @@ from twisted.internet import reactor
 # Core Services import
 from services.libs.async_call import asynchronous
 from services.libs.register import register
-from services.plugins.crawler.libs.func_tools import max_views_count
+from services.plugins.crawler.libs.func_tools import start_updating_jobs
 
 
 @register
-class GetMaxViews:
+class CycleUpdate:
     """
-        GetMaxViews
+        CycleUpdate
     """
-    __name__ = 'max_count'
+    __name__ = 'cycle_update'
     __namespace__ = 'CrawlerComponent'
-    __full_name__ = 'crawler.max_count'
+    __full_name__ = 'crawler.cycle_update'
     documentation = """
-        Fetch your data from shared_memory
 
         e.g:
-        main.max_count() > bool
+        main.cycle_update() > bool
 
         Keyword arguments:
-        data         -- Dumps of dict
-        key          -- String
 
         ACL:
             TODO:
@@ -32,8 +29,10 @@ class GetMaxViews:
 
     @asynchronous
     def run(self):
-        reactor.callInThread(max_views_count, )
+
+        reactor.callInThread(start_updating_jobs, )
+
         return dumps(True)
 
 
-GetMaxViews()
+CycleUpdate()
