@@ -1,10 +1,10 @@
 # Python Import
 import bs4
 import datetime
+import pafy
 import random
 import requests
 import time
-import pafy
 import urlparse
 
 from pymongo.errors import DuplicateKeyError
@@ -13,11 +13,21 @@ from apiclient.discovery import build
 
 # YouTube Crawler Import
 from config.settings import DEVELOPER_KEY
+from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
+
+
+def get_pafy(id):
+    api_key = [
+        DEVELOPER_KEY,
+        DEVELOPER_KEY2
+    ]
+    pafy.set_api_key(random.choice(api_key))
+    return pafy.new(url)
 
 
 def build_youtube_api():
@@ -228,9 +238,9 @@ def get_video_id(url):
     return video
 
 
-def get_video_info(url):
+def get_video_info(_id):
     doc = {}
-    video = pafy.new(url)
+    video = get_pafy(_id)
 
     doc['author'] = video.author
     doc['big_thumb_hd'] = video.bigthumbhd
@@ -255,7 +265,7 @@ def get_video_info(url):
 def today_yesterday_data(_id, url):
     video_doc = cursor.refined_data.find_one({'id': _id})
 
-    video = get_video_info(url)
+    video = get_video_info(_id)
 
     video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
     today_views = video['all_views'] - video_doc.get('all_views', 0)
