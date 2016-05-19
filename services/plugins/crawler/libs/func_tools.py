@@ -21,7 +21,7 @@ from core import toLog
 from core.db import cursor
 
 
-def get_pafy(id):
+def get_pafy(url):
     api_key = [
         DEVELOPER_KEY,
         DEVELOPER_KEY2
@@ -238,9 +238,9 @@ def get_video_id(url):
     return video
 
 
-def get_video_info(_id):
+def get_video_info(url):
     doc = {}
-    video = get_pafy(_id)
+    video = get_pafy(url)
 
     doc['author'] = video.author
     doc['big_thumb_hd'] = video.bigthumbhd
@@ -265,7 +265,7 @@ def get_video_info(_id):
 def today_yesterday_data(_id, url):
     video_doc = cursor.refined_data.find_one({'id': _id})
 
-    video = get_video_info(_id)
+    video = get_video_info(url)
 
     video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
     today_views = video['all_views'] - video_doc.get('all_views', 0)
