@@ -26,7 +26,7 @@ from core.db import cursor
 def open_url_api(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + DEVELOPER_KEY
+    base_url += "&key=" + DEVELOPER_KEY2
     base_url += "&part=statistics,snippet"
 
     response = urllib.urlopen(base_url).read()
@@ -176,13 +176,11 @@ def execute_batch(_from, _to, criteria):
 
     flag = True
     next_page = None
-    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5]
 
     while flag:
 
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
-            time.sleep(random.choice(time_list))
 
         except Exception as e:
             print e
@@ -255,7 +253,7 @@ def get_video_info(video_id):
         doc['title'] = snippet.get('title', '')
         doc['channel_id'] = snippet.get('channelId', '')
         doc['category_id'] = snippet.get('categoryId', '')
-        doc['published'] = snippet.get('publishedAt', '')
+        doc['published_at'] = snippet.get('publishedAt', '')
         doc['channel_title'] = snippet.get('channelTitle', '')
         doc['description'] = snippet.get('description', '')
         doc['keywords'] = snippet.get('tags', '')
@@ -296,22 +294,17 @@ def today_yesterday_data(_id):
         return video
 
 
-def start_updating_jobs():
-    time_list = [2, 2.12, 3, 2.2, 2.75, 2.6, 1.1, 2.31, 2.5, 3.4]
+def start_updating_jobs(criteria):
+    all_videos = cursor.refined_data.find(criteria)
 
-    all_videos = cursor.refined_data.find()
-
-    count = 0
     for doc in all_videos:
 
         try:
             _id = doc['id']
-
             criteria = {'_id': doc['_id']}
             new_data = today_yesterday_data(_id)
 
             if not new_data:
-                count += 1
                 continue
 
             _update = {'$set': new_data}
@@ -322,11 +315,6 @@ def start_updating_jobs():
                 msg = "The video with this id"
                 msg += " '{0}' can't be updated".format(_id)
                 toLog(msg, 'db')
-
-            if (count % 6) == 0:
-                time.sleep(random.choice(time_list))
-
-            count += 1
 
         except Exception as e:
             toLog(str(e), 'error')

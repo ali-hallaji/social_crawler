@@ -12,7 +12,7 @@ CORE_PORT = 7085
 #   https://cloud.google.com/console
 # Please ensure that you have enabled the YouTube Data API for your project.
 DEVELOPER_KEY = "AIzaSyD9O5FIwU3V1teLw0UcssN8TxL7Zl15erA"
-DEVELOPER_KEY2 = "AIzaSyBMuW4Nejy8llUmjnqtGOxUQE4QeoY0u5k"
+DEVELOPER_KEY2 = "AIzaSyAV1WWrct68Fj4fIoGrb89nY5RwdUgU0Ak"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 ########################################################################

@@ -1,5 +1,6 @@
 # python import
 from bson.json_util import dumps
+from bson.json_util import loads
 from twisted.internet import reactor
 
 # Core Services import
@@ -28,9 +29,15 @@ class CycleUpdate:
     """
 
     @asynchronous
-    def run(self):
+    def run(self, criteria=None):
 
-        reactor.callInThread(start_updating_jobs, )
+        if criteria:
+            criteria = loads(criteria)
+
+        else:
+            criteria = None
+
+        reactor.callInThread(start_updating_jobs, criteria)
 
         return dumps(True)
 
