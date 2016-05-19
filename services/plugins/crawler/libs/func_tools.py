@@ -24,6 +24,7 @@ from core.db import cursor
 
 
 def open_url_api(video_id):
+    tl = [0.5, 0.6, 0.3, 0.4, 0.8]
     api_key = [
         DEVELOPER_KEY,
         DEVELOPER_KEY2
@@ -33,6 +34,7 @@ def open_url_api(video_id):
     base_url += "&key=" + random.choice(api_key)
     base_url += "&part=statistics,snippet"
 
+    time.sleep(random.choice(tl))
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
 
@@ -262,6 +264,7 @@ def get_video_info(video_id):
         doc['published'] = snippet.get('publishedAt', '')
         doc['channel_title'] = snippet.get('channelTitle', '')
         doc['description'] = snippet.get('description', '')
+        doc['keywords'] = snippet.get('tags', '')
 
         doc['comment_count'] = int(statistics.get('commentCount', 0))
         doc['dislikes'] = int(statistics.get('dislikeCount', 0))
@@ -275,7 +278,13 @@ def get_video_info(video_id):
         return doc
 
     except Exception as e:
-        toLog(e, 'error')
+
+        if 'list index out of range' in str(e):
+            msg = "Video Id: {0} can't be fetch".format(video_id)
+            toLog(msg, 'error')
+
+        else:
+            toLog(e, 'error')
 
 
 def today_yesterday_data(_id):
