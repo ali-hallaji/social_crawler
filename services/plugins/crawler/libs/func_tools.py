@@ -305,31 +305,31 @@ def start_updating_jobs():
         ]
     }
 
-    for i in range(1, retry_update_count + 1):
+    count = True
+    while count:
+
         count = cursor.refined_data.count(_criteria)
+        all_videos = cursor.refined_data.find(_criteria)
 
-        if count:
-            all_videos = cursor.refined_data.find(_criteria)
+        for doc in all_videos:
+            try:
+                _id = doc['id']
+                criteria = {'_id': doc['_id']}
+                new_data = today_yesterday_data(_id)
 
-            for doc in all_videos:
-                try:
-                    _id = doc['id']
-                    criteria = {'_id': doc['_id']}
-                    new_data = today_yesterday_data(_id)
+                if not new_data:
+                    continue
 
-                    if not new_data:
-                        continue
+                _update = {'$set': new_data}
+                update = cursor.refined_data.update_one(criteria, _update)
 
-                    _update = {'$set': new_data}
-                    update = cursor.refined_data.update_one(criteria, _update)
+                if not update.raw_result.get('updatedExisting', None):
+                    msg = "The video with this id"
+                    msg += " '{0}' can't be updated".format(_id)
+                    toLog(msg, 'db')
 
-                    if not update.raw_result.get('updatedExisting', None):
-                        msg = "The video with this id"
-                        msg += " '{0}' can't be updated".format(_id)
-                        toLog(msg, 'db')
-
-                except Exception as e:
-                    toLog(str(e), 'error')
+            except Exception as e:
+                toLog(str(e), 'error')
 
 # def max_views_count():
 #     videos = cursor.refined_data.find({}, {'id': 1})
