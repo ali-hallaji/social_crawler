@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 # Python Import
 import bs4
 import datetime
-import pafy
+import json
+import urllib
 import random
 import requests
 import time
@@ -21,13 +23,21 @@ from core import toLog
 from core.db import cursor
 
 
-def get_pafy(url):
+def open_url_api(video_id):
     api_key = [
         DEVELOPER_KEY,
         DEVELOPER_KEY2
     ]
-    pafy.set_api_key(random.choice(api_key))
-    return pafy.new(url)
+    base_url = "https://www.googleapis.com/youtube/v3/videos?id="
+    base_url += video_id
+    base_url += "&key=" + random.choice(api_key)
+    base_url += "&part=statistics,snippet"
+
+    response = urllib.urlopen(base_url).read()
+    data = json.loads(response)
+    all_data = data['items']
+
+    return all_data
 
 
 def build_youtube_api():
@@ -238,34 +248,36 @@ def get_video_id(url):
     return video
 
 
-def get_video_info(url):
+def get_video_info(video_id):
     doc = {}
-    video = get_pafy(url)
+    video = open_url_api(video_id)
+    snippet = video['items'][0]['snippet']
+    statistics = video['items'][0]['statistics']
 
-    doc['author'] = video.author
-    doc['big_thumb_hd'] = video.bigthumbhd
-    doc['category'] = video.category
-    doc['description'] = video.description
-    doc['dislikes'] = video.dislikes
-    doc['duration'] = video.duration
-    doc['keywords'] = video.keywords
-    doc['likes'] = video.likes
-    doc['published'] = video.published
-    doc['rating'] = video.rating
-    doc['thumb'] = video.thumb
-    doc['title'] = video.title
-    doc['username'] = video.username
-    doc['all_views'] = video.viewcount
+    doc['thumbnails'] = snippet.get('thumbnails', '')
+    doc['title'] = snippet.get('title', '')
+    doc['channel_id'] = snippet.get('channelId', '')
+    doc['category_id'] = snippet.get('categoryId', '')
+    doc['published'] = snippet.get('publishedAt', '')
+    doc['channel_title'] = snippet.get('channelTitle', '')
+    doc['description'] = snippet.get('description', '')
+
+    doc['comment_count'] = statistics.get('commentCount', '')
+    doc['dislikes'] = statistics.get('dislikeCount', '')
+    doc['favorite_count'] = statistics.get('favoriteCount', '')
+    doc['all_views'] = statistics.get('viewCount', '')
+    doc['likes'] = statistics.get('likeCount', '')
+
     doc['has_yesterday'] = True
     doc['update_video_data'] = datetime.datetime.now()
 
     return doc
 
 
-def today_yesterday_data(_id, url):
+def today_yesterday_data(_id):
     video_doc = cursor.refined_data.find_one({'id': _id})
 
-    video = get_video_info(url)
+    video = get_video_info(_id)
 
     video['daily_views_yesterday'] = video_doc.get('daily_views_today', 0)
     today_views = video['all_views'] - video_doc.get('all_views', 0)
@@ -283,17 +295,17 @@ def start_updating_jobs():
     for doc in all_videos:
 
         try:
-            url = doc['href']
             _id = doc['id']
 
             criteria = {'_id': doc['_id']}
-            new_data = today_yesterday_data(_id, url)
+            new_data = today_yesterday_data(_id)
             _update = {'$set': new_data}
 
             update = cursor.refined_data.update_one(criteria, _update)
 
             if not update.raw_result.get('updatedExisting', None):
-                msg = "The video with this id '{0}' can't be updated".format(_id)
+                msg = "The video with this id"
+                msg += " '{0}' can't be updated".format(_id)
                 toLog(msg, 'db')
 
             if (count % 6) == 0:
