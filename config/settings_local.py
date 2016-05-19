@@ -21,6 +21,7 @@ YOUTUBE_API_VERSION = "v3"
 period_days = 120
 period_years = 1
 max_page_crawl = 100000
+retry_update_count = 15
 ########################################################################
 
 # Debug mode ###########################################################
