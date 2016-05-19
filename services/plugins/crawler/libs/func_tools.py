@@ -3,15 +3,12 @@
 import bs4
 import datetime
 import json
-import urllib
-import random
 import requests
-import time
+import urllib
 import urlparse
 
-from pymongo.errors import DuplicateKeyError
-
 from apiclient.discovery import build
+from pymongo.errors import DuplicateKeyError
 
 # YouTube Crawler Import
 from config.settings import DEVELOPER_KEY
@@ -19,6 +16,7 @@ from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
+from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
 
@@ -173,12 +171,10 @@ def divide_datetime(period_years):
 
 
 def execute_batch(_from, _to, criteria):
-
     flag = True
     next_page = None
 
     while flag:
-
         try:
             next_page = executor_crawl(_to, _from, criteria, next_page)
 
@@ -203,7 +199,6 @@ def crawl_search(keyword, page):
     div = []
 
     for d in soup.find_all('div'):
-
         if d.has_attr('class') and 'yt-lockup-dismissable' in d['class']:
             div.append(d)
 
@@ -270,13 +265,20 @@ def get_video_info(video_id):
         return doc
 
     except Exception as e:
+        data_log = {'video_id': video_id}
+        data_log['type'] = 'update_data'
+        data_log['date'] = datetime.datetime.now()
 
         if 'list index out of range' in str(e):
             msg = "Video Id: {0} can't be fetch".format(video_id)
+            data_log['reason'] = msg
             toLog(msg, 'error')
 
         else:
             toLog(e, 'error')
+
+        data_log['reason'] = str(e)
+        cursor.logs.insert(data_log)
 
 
 def today_yesterday_data(_id):
@@ -294,30 +296,39 @@ def today_yesterday_data(_id):
         return video
 
 
-def start_updating_jobs(criteria):
-    all_videos = cursor.refined_data.find(criteria)
+def start_updating_jobs():
+    today = datetime.datetime.now()
+    _criteria = {
+        'update_video_data': {
+            '$lte': today.replace(hour=0, minute=30, second=0),
+        }
+    }
 
-    for doc in all_videos:
+    for i in range(1, retry_update_count + 1):
+        count = cursor.refined_data.count(_criteria)
 
-        try:
-            _id = doc['id']
-            criteria = {'_id': doc['_id']}
-            new_data = today_yesterday_data(_id)
+        if not count:
+            all_videos = cursor.refined_data.find(_criteria)
 
-            if not new_data:
-                continue
+            for doc in all_videos:
+                try:
+                    _id = doc['id']
+                    criteria = {'_id': doc['_id']}
+                    new_data = today_yesterday_data(_id)
 
-            _update = {'$set': new_data}
+                    if not new_data:
+                        continue
 
-            update = cursor.refined_data.update_one(criteria, _update)
+                    _update = {'$set': new_data}
+                    update = cursor.refined_data.update_one(criteria, _update)
 
-            if not update.raw_result.get('updatedExisting', None):
-                msg = "The video with this id"
-                msg += " '{0}' can't be updated".format(_id)
-                toLog(msg, 'db')
+                    if not update.raw_result.get('updatedExisting', None):
+                        msg = "The video with this id"
+                        msg += " '{0}' can't be updated".format(_id)
+                        toLog(msg, 'db')
 
-        except Exception as e:
-            toLog(str(e), 'error')
+                except Exception as e:
+                    toLog(str(e), 'error')
 
 # def max_views_count():
 #     videos = cursor.refined_data.find({}, {'id': 1})
