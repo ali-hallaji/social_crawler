@@ -82,4 +82,3 @@ def event_code_translator(code):
     return event_dict.get(code, None)
 
 scheduler.add_listener(job_logger, events.EVENT_ALL)
-

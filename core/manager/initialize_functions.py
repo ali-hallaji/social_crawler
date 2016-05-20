@@ -10,8 +10,6 @@ from config.settings import max_page_crawl
 from config.settings import period_years
 from core import toLog
 # from core.generals.scheduler import scheduler
-from config.settings import update_crawling_interval
-from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import crawl_search
 from services.plugins.crawler.libs.func_tools import divide_datetime
 from services.rpc_core.query_handler import send_request
@@ -22,17 +20,10 @@ def initial_executer():
     # Run crawler with api
     # create_bulk_jobs_from_dates()
     # create_bulk_jobs_from_dates()
-    # result = send_request('crawler.cycle_update', '')
-    # msg = "Start Cycle update jobs"
-    # msg += " {0}".format(str(result))
-    # toLog(msg, 'jobs')
-    scheduler.add_job(
-        send_request,
-        'interval',
-        minutes=update_crawling_interval,
-        args=['crawler.cycle_update', ''],
-        id='main_process_update_crawling'
-    )
+    result = send_request('crawler.cycle_update', '')
+    msg = "Start Cycle update jobs"
+    msg += " {0}".format(str(result))
+    toLog(msg, 'jobs')
     # try:
     #     scheduler.add_job(
     #         create_bulk_jobs_from_dates,
