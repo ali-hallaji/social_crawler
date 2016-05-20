@@ -304,7 +304,8 @@ def start_updating_jobs():
             {'all_views': {'$exists': False}}
         ]
     }
-    toLog('asdsadsad', 'jobs')
+    toLog('Start updating jobs criteria: {0}'.formt(str(_criteria)), 'jobs')
+
     count = True
     while count:
 
