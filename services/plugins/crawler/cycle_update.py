@@ -1,13 +1,12 @@
 # python import
 from bson.json_util import dumps
-
+from bson.json_util import loads
+from twisted.internet import reactor
 
 # Core Services import
-from config.settings import update_crawling_interval
-from core.generals.scheduler import scheduler
 from services.libs.async_call import asynchronous
 from services.libs.register import register
-from services.plugins.crawler.libs.func_tools import update_crawl
+from services.plugins.crawler.libs.func_tools import start_updating_jobs
 
 
 @register
@@ -31,14 +30,7 @@ class CycleUpdate:
 
     @asynchronous
     def run(self):
-
-        scheduler.add_job(
-            update_crawl,
-            'interval',
-            minutes=update_crawling_interval,
-            args=[],
-            id='main_process_update_crawling'
-        )
+        reactor.callInThread(start_updating_jobs, )
 
         return dumps(True)
 
