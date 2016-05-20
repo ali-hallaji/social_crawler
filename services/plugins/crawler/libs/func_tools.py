@@ -6,7 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
-from twisted.internet import reactor
+
 from apiclient.discovery import build
 from pymongo.errors import DuplicateKeyError
 
@@ -16,6 +16,7 @@ from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
+from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
 
@@ -329,7 +330,3 @@ def start_updating_jobs():
 
             except Exception as e:
                 toLog(str(e), 'error')
-
-
-def update_crawl():
-    reactor.callInThread(start_updating_jobs, )
