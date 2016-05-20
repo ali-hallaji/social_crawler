@@ -6,7 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
-
+from twisted.internet import reactor
 from apiclient.discovery import build
 from pymongo.errors import DuplicateKeyError
 
@@ -329,3 +329,7 @@ def start_updating_jobs():
 
             except Exception as e:
                 toLog(str(e), 'error')
+
+
+def update_crawl():
+    reactor.callInThread(start_updating_jobs, )
