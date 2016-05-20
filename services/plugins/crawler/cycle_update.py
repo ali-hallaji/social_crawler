@@ -1,6 +1,5 @@
 # python import
 from bson.json_util import dumps
-from twisted.internet import reactor
 
 # Core Services import
 from config.settings import update_crawling_interval
@@ -32,11 +31,8 @@ class CycleUpdate:
     @asynchronous
     def run(self):
 
-        def main_process():
-            reactor.callInThread(start_updating_jobs, )
-
         scheduler.add_job(
-            main_process,
+            start_updating_jobs,
             'interval',
             minutes=update_crawling_interval,
             id='main_process_update_crawling'
