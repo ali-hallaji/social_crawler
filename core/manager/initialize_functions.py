@@ -20,10 +20,7 @@ def initial_executer():
     # Run crawler with api
     # create_bulk_jobs_from_dates()
     # create_bulk_jobs_from_dates()
-    # result = send_request('crawler.max_count', '')
-    # msg = "Max view crawling jobs"
-    # msg += " {0}".format(str(result))
-    # toLog(msg, 'jobs')
+    update_crawl_data()
     # try:
     #     scheduler.add_job(
     #         create_bulk_jobs_from_dates,
@@ -47,7 +44,6 @@ def initial_executer():
 
     # except ConflictingIdError as e:
     #     print e
-    pass
 
 
 def create_bulk_jobs_from_dates():
@@ -74,4 +70,11 @@ def create_crawl_job():
             time.sleep(random.choice(time_list))
 
     msg = "end crawler jobs"
+    toLog(msg, 'jobs')
+
+
+def update_crawl_data():
+    result = send_request('crawler.cycle_update', '')
+    msg = "Start new jobs for update crawling data."
+    msg += " {0}".format(str(result))
     toLog(msg, 'jobs')

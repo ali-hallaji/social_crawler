@@ -1,9 +1,11 @@
 # python import
+import datetime
 from bson.json_util import dumps
-from bson.json_util import loads
-from twisted.internet import reactor
+# from twisted.internet import reactor
 
 # Core Services import
+from config.settings import local_tz
+from core.generals.scheduler import scheduler
 from services.libs.async_call import asynchronous
 from services.libs.register import register
 from services.plugins.crawler.libs.func_tools import start_updating_jobs
@@ -30,7 +32,14 @@ class CycleUpdate:
 
     @asynchronous
     def run(self):
-        reactor.callInThread(start_updating_jobs, )
+
+        scheduler.add_job(
+            start_updating_jobs,
+            'interval',
+            seconds=60,
+            timezone=local_tz
+        )
+        # reactor.callInThread(start_updating_jobs, )
 
         return dumps(True)
 

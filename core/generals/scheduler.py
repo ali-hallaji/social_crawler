@@ -28,7 +28,7 @@ job_defaults = {
     'coalesce': coalesce,
     'max_instances': max_instances
 }
-
+global scheduler
 scheduler = TwistedScheduler(timezone=local_tz)
 scheduler.add_jobstore(
     'mongodb',
