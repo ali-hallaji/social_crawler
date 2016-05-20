@@ -507,7 +507,7 @@
 			"file": "services/plugins/crawler/libs/func_tools.py",
 			"settings":
 			{
-				"buffer_size": 11706,
+				"buffer_size": 11611,
 				"line_ending": "Unix"
 			}
 		},
@@ -909,7 +909,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1049,15 +1049,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11706,
+						"buffer_size": 11611,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10128,
-								10128
+								10156,
+								10156
 							]
 						],
 						"settings":
@@ -1070,10 +1070,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7834.0,
+						"translation.y": 8060.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1105,7 +1105,7 @@
 						"translation.y": 156.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
