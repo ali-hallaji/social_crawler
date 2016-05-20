@@ -29,8 +29,8 @@ def initial_executer():
     scheduler.add_job(
         send_request,
         'interval',
-        args=('crawler.cycle_update', ''),
         minutes=update_crawling_interval,
+        args=['crawler.cycle_update', ''],
         id='main_process_update_crawling'
     )
     # try:
