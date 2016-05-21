@@ -1,10 +1,12 @@
 # python import
 import datetime
+
 from bson.json_util import dumps
 # from twisted.internet import reactor
 
 # Core Services import
 from config.settings import local_tz
+from config.settings import update_crawling_interval
 from core.generals.scheduler import scheduler
 from services.libs.async_call import asynchronous
 from services.libs.register import register
@@ -36,7 +38,7 @@ class CycleUpdate:
         scheduler.add_job(
             start_updating_jobs,
             'interval',
-            seconds=60,
+            minutes=update_crawling_interval,
             timezone=local_tz
         )
         # reactor.callInThread(start_updating_jobs, )
