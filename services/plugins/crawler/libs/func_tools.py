@@ -16,7 +16,7 @@ from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import period_days
-from config.settings import retry_update_count
+# from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
 
