@@ -15,14 +15,11 @@ from config.settings import DEVELOPER_KEY
 from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
+from config.settings import api_key_update
 from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
-
-
-global api_key_update
-api_key_update = DEVELOPER_KEY2
 
 
 def open_url_api(video_id):
@@ -42,6 +39,14 @@ def open_url_api(video_id):
 
         elif api_key_update == DEVELOPER_KEY:
             api_key_update = DEVELOPER_KEY2
+
+        base_url = "https://www.googleapis.com/youtube/v3/videos?id="
+        base_url += video_id
+        base_url += "&key=" + api_key_update
+        base_url += "&part=statistics,snippet"
+
+        response = urllib.urlopen(base_url).read()
+        data = json.loads(response)
 
     return data
 
