@@ -29,6 +29,7 @@ def open_url_api(video_id):
 
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
+    toLog(data, 'debug')
 
     return data
 
