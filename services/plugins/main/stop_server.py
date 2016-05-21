@@ -36,7 +36,6 @@ class StopServer:
         print scheduler.print_jobs(out=None)
         scheduler.shutdown(
             wait=False,
-            shutdown_threadpool=True,
             close_jobstores=True
         )
         reactor.callFromThread(reactor.stop)
