@@ -16,40 +16,28 @@ from config.settings import DEVELOPER_KEY
 from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
-from config.settings import api_key_update
 from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
 
 
-def running_update_crawl():
-    reactor.callInThread(start_updating_jobs, )
+def create_base_url(video_id, api_key):
+    base_url = "https://www.googleapis.com/youtube/v3/videos?id="
+    base_url += video_id
+    base_url += "&key=" + api_key
+    base_url += "&part=statistics,snippet"
+
+    return base_url
 
 
 def open_url_api(video_id):
-    base_url = "https://www.googleapis.com/youtube/v3/videos?id="
-    base_url += video_id
-    base_url += "&key=" + api_key_update
-    base_url += "&part=statistics,snippet"
-
+    base_url = create_base_url(video_id, DEVELOPER_KEY)
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
 
     if ('error' in data) and data['error']['code'] == 403:
-        global api_key_update
-
-        if api_key_update == DEVELOPER_KEY2:
-            api_key_update = DEVELOPER_KEY
-
-        elif api_key_update == DEVELOPER_KEY:
-            api_key_update = DEVELOPER_KEY2
-
-        base_url = "https://www.googleapis.com/youtube/v3/videos?id="
-        base_url += video_id
-        base_url += "&key=" + api_key_update
-        base_url += "&part=statistics,snippet"
-
+        base_url = create_base_url(video_id, DEVELOPER_KEY2)
         response = urllib.urlopen(base_url).read()
         data = json.loads(response)
 
@@ -358,6 +346,7 @@ def start_updating_jobs():
                 new_data = today_yesterday_data(_id)
 
                 if not new_data:
+                    toLog('Unsuccessful update: {0}'.format(_id), 'jobs')
                     continue
 
                 _update = {'$set': new_data}
