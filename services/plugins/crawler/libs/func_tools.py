@@ -15,14 +15,11 @@ from config.settings import DEVELOPER_KEY
 from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
+from config.settings import api_key_update
 from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
-
-
-global api_key_update
-api_key_update = DEVELOPER_KEY2
 
 
 def open_url_api(video_id):
