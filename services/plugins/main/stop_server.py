@@ -33,10 +33,9 @@ class StopServer:
         from twisted.internet import reactor
         print "Core Services shutdown       \t\t\t\t\t   [OK]"
 
-        print scheduler.print_jobs(out=None)
+        print "Jobs store: ", scheduler.print_jobs(out=None)
         scheduler.shutdown(
-            wait=False,
-            close_jobstores=True
+            wait=False
         )
         reactor.callFromThread(reactor.stop)
 
