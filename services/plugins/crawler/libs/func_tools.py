@@ -29,6 +29,7 @@ def open_url_api(video_id):
 
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
+    toLog(data, 'debug')
 
     return data
 
@@ -304,13 +305,16 @@ def start_updating_jobs():
             {'all_views': {'$exists': False}}
         ]
     }
+    _projection = {
+        'id': 1
+    }
     toLog('Start updating jobs criteria: {0}'.format(str(_criteria)), 'jobs')
 
     count = True
     while count:
 
         count = cursor.refined_data.count(_criteria)
-        all_videos = cursor.refined_data.find(_criteria)
+        all_videos = cursor.refined_data.find(_criteria, _projection)
 
         for doc in all_videos:
             try:
