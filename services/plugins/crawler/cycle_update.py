@@ -39,8 +39,8 @@ class CycleUpdate:
             start_updating_jobs,
             'interval',
             minutes=update_crawling_interval,
-            args=[]
-            # timezone=local_tz
+            args=[],
+            timezone=local_tz
         )
         # reactor.callInThread(start_updating_jobs, )
 
