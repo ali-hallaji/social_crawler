@@ -35,6 +35,7 @@ def open_url_api(video_id):
     data = json.loads(response)
 
     if ('error' in data) and data['error']['code'] == 403:
+        global api_key_update
 
         if api_key_update == DEVELOPER_KEY2:
             api_key_update = DEVELOPER_KEY
