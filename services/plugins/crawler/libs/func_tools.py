@@ -341,6 +341,7 @@ def start_updating_jobs():
 
     count = True
     while count:
+        toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
 
         count = cursor.refined_data.count(_criteria)
         all_videos = cursor.refined_data.find(_criteria, _projection)

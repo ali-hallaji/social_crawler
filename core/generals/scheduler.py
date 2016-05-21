@@ -28,7 +28,7 @@ job_defaults = {
     'coalesce': coalesce,
     'max_instances': max_instances
 }
-global scheduler
+
 scheduler = TwistedScheduler(timezone=local_tz)
 scheduler.add_jobstore(
     'mongodb',
@@ -54,10 +54,16 @@ def job_logger(event):
             event.job_id, event_code_translator(event.code)), 'jobs')
 
     elif event > 64:
-        toLog('Event {} for job {} happenend'.format(event_code_translator(event.code), event.job_id), 'jobs')
+        toLog('Event {} for job {} happenend'.format(
+            event_code_translator(event.code),
+            event.job_id
+        ), 'jobs')
 
     else:
-        toLog('Event {} happenend'.format(event_code_translator(event.code)), 'jobs')
+        toLog('Event {} happenend'.format(
+            event_code_translator(event.code)),
+            'jobs'
+        )
 
 
 def event_code_translator(code):
