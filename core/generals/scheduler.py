@@ -31,10 +31,7 @@ job_defaults = {
 
 scheduler = TwistedScheduler(timezone=local_tz)
 scheduler.add_jobstore(
-    'mongodb',
-    host=MONGO_HOST_SELF,
-    port=MONGO_PORT_SELF,
-    collection=CORE_ID
+    'mongodb'
 )
 
 scheduler.add_executor(
@@ -85,4 +82,4 @@ def event_code_translator(code):
 
     return event_dict.get(code, None)
 
-# scheduler.add_listener(job_logger, events.EVENT_ALL)
+scheduler.add_listener(job_logger, events.EVENT_ALL)
