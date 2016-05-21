@@ -28,11 +28,7 @@ api_key_update = DEVELOPER_KEY2
 def open_url_api(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-<<<<<<< HEAD
-    base_url += "&key=" + DEVELOPER_KEY
-=======
     base_url += "&key=" + api_key_update
->>>>>>> 3dccae9c8719d4189d18d13cb3f2f8b0edfc9844
     base_url += "&part=statistics,snippet"
 
     response = urllib.urlopen(base_url).read()
