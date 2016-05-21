@@ -30,7 +30,7 @@ def running_update_crawl():
 def open_url_api(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + DEVELOPER_KEY
+    base_url += "&key=" + api_key_update
     base_url += "&part=statistics,snippet"
 
     response = urllib.urlopen(base_url).read()
@@ -346,9 +346,9 @@ def start_updating_jobs():
 
     count = True
     while count:
-        toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
 
         count = cursor.refined_data.count(_criteria)
+        toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
         all_videos = cursor.refined_data.find(_criteria, _projection)
 
         for doc in all_videos:
