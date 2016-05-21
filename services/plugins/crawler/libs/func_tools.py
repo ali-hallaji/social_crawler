@@ -40,6 +40,14 @@ def open_url_api(video_id):
         elif api_key_update == DEVELOPER_KEY:
             api_key_update = DEVELOPER_KEY2
 
+        base_url = "https://www.googleapis.com/youtube/v3/videos?id="
+        base_url += video_id
+        base_url += "&key=" + api_key_update
+        base_url += "&part=statistics,snippet"
+
+        response = urllib.urlopen(base_url).read()
+        data = json.loads(response)
+
     return data
 
 
