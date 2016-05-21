@@ -25,7 +25,7 @@ from core.db import cursor
 def open_url_api(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + api_key_update
+    base_url += "&key=" + DEVELOPER_KEY
     base_url += "&part=statistics,snippet"
 
     response = urllib.urlopen(base_url).read()
