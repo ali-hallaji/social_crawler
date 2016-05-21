@@ -31,7 +31,10 @@ job_defaults = {
 
 scheduler = TwistedScheduler(timezone=local_tz)
 scheduler.add_jobstore(
-    'mongodb'
+    'mongodb',
+    host=MONGO_HOST_SELF,
+    port=MONGO_PORT_SELF,
+    collection=CORE_ID
 )
 
 scheduler.add_executor(

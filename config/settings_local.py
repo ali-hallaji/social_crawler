@@ -22,7 +22,7 @@ period_days = 120
 period_years = 1
 max_page_crawl = 100000
 retry_update_count = 40
-update_crawling_interval = 60
+update_crawling_interval = 50
 api_key_update = DEVELOPER_KEY2
 ########################################################################
 
