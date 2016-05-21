@@ -259,6 +259,14 @@ def get_video_info(video_id):
 
     try:
         video = open_url_api(video_id)
+
+        if 'items' in video:
+            if video['items'] == []:
+                doc['private'] = True
+                doc['update_video_data'] = datetime.datetime.now()
+
+                return doc
+
         snippet = video.get('items', [])[0].get('snippet', {})
         statistics = video.get('items', [])[0].get('statistics', {})
 
@@ -304,6 +312,9 @@ def today_yesterday_data(_id):
 
     video = get_video_info(_id)
 
+    if 'private' in video:
+        return video
+
     if video:
         video['daily_views_yesterday'] = int(
             video_doc.get('daily_views_today', 0)
@@ -317,6 +328,7 @@ def today_yesterday_data(_id):
 def start_updating_jobs():
     less_today = datetime.datetime.now().replace(hour=0, minute=30, second=0)
     _criteria = {
+        'private': {'$ne': True},
         '$or': [
             {'update_video_data': {'$lte': less_today}},
             {'all_views': {'$exists': False}}
