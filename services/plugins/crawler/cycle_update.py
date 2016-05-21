@@ -7,7 +7,7 @@ from config.settings import update_crawling_interval
 from core.generals.scheduler import scheduler
 from services.libs.async_call import asynchronous
 from services.libs.register import register
-from services.plugins.crawler.libs.func_tools import running_update_crawl
+from services.plugins.crawler.libs.func_tools import start_updating_jobs
 
 
 @register
@@ -33,7 +33,7 @@ class CycleUpdate:
     def run(self):
 
         scheduler.add_job(
-            running_update_crawl,
+            start_updating_jobs,
             'interval',
             minutes=update_crawling_interval,
             args=[],
