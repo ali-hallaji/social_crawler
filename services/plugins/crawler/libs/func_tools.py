@@ -6,6 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
+from twisted.internet import reactor
 
 from apiclient.discovery import build
 from pymongo.errors import DuplicateKeyError
@@ -20,6 +21,10 @@ from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
+
+
+def running_update_crawl():
+    reactor.callInThread(start_updating_jobs, )
 
 
 def open_url_api(video_id):
