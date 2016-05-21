@@ -21,15 +21,26 @@ from core import toLog
 from core.db import cursor
 
 
+global api_key_update
+api_key_update = DEVELOPER_KEY2
+
+
 def open_url_api(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + DEVELOPER_KEY2
+    base_url += "&key=" + api_key_update
     base_url += "&part=statistics,snippet"
 
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
-    toLog(data, 'debug')
+
+    if ('error' in data) and data['error']['code'] == 403:
+
+        if api_key_update == DEVELOPER_KEY2:
+            api_key_update = DEVELOPER_KEY
+
+        elif api_key_update == DEVELOPER_KEY:
+            api_key_update = DEVELOPER_KEY2
 
     return data
 
