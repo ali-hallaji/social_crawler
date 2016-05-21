@@ -50,10 +50,8 @@ scheduler.start()
 
 def job_logger(event):
     if event.code > 512:
-        toLog('Job {}, code {}, exception {}'.format(
-            event.job_id, event_code_translator(event.code),
-            event.exception
-        ), 'jobs')
+        toLog('Job {}, code {}'.format(
+            event.job_id, event_code_translator(event.code)), 'jobs')
 
     elif event > 64:
         toLog('Event {} for job {} happenend'.format(event_code_translator(event.code), event.job_id), 'jobs')
