@@ -39,8 +39,9 @@ class CycleUpdate:
             start_updating_jobs,
             'interval',
             minutes=update_crawling_interval,
-            timezone=local_tz
+            # timezone=local_tz
         )
+        scheduler.start()
         # reactor.callInThread(start_updating_jobs, )
 
         return dumps(True)
