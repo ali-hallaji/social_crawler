@@ -23,6 +23,8 @@ period_years = 1
 max_page_crawl = 100000
 retry_update_count = 40
 update_crawling_interval = 50
+hour_crawl = '0'
+minute_crawl = '30'
 api_key_update = DEVELOPER_KEY2
 ########################################################################
 

@@ -383,3 +383,21 @@ def start_updating_jobs():
 
             except Exception as e:
                 toLog(str(e), 'error')
+
+
+def bulk_jobs_from_dates():
+    # tuple_month_list = divide_datetime(period_years)
+    now = datetime.datetime.now()
+    last_day = now - datetime.timedelta(days=1)
+    tuple_month_list = [
+        (last_day, now),
+        ('whole', 'whole')
+    ]
+
+    for item in tuple_month_list:
+        criteria = {'max_results': 50, 'q': ''}
+        result = execute_batch(item[1], item[0], criteria)
+
+        msg = "Crawler jobs from: {0} | to: {1}".format(item[1], item[0])
+        msg += "{0}".format(str(result))
+        toLog(msg, 'jobs')

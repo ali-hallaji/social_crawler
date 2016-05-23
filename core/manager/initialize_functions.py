@@ -1,19 +1,20 @@
 # Python import
-import datetime
 import random
 import time
 # from apscheduler.jobstores.base import ConflictingIdError
 # from bson.json_util import dumps
 
 # Core Import
+from config.settings import hour_crawl
 from config.settings import keyword_list
 from config.settings import local_tz
 from config.settings import max_page_crawl
+from config.settings import minute_crawl
 from config.settings import update_crawling_interval
 from core import toLog
 from core.generals.scheduler import scheduler
+from services.plugins.crawler.libs.func_tools import bulk_jobs_from_dates
 from services.plugins.crawler.libs.func_tools import crawl_search
-from services.plugins.crawler.libs.func_tools import execute_batch
 from services.plugins.crawler.libs.func_tools import start_updating_jobs
 # from config.settings import period_years
 # from core.generals.scheduler import scheduler
@@ -24,50 +25,10 @@ from services.plugins.crawler.libs.func_tools import start_updating_jobs
 def initial_executer():
 
     # Run crawler with api
-    # create_bulk_jobs_from_dates()
-    # create_bulk_jobs_from_dates()
+    start_crawling()
+
+    # Update crawl
     update_crawl_data()
-    # try:
-    #     scheduler.add_job(
-    #         create_bulk_jobs_from_dates,
-    #         'interval',
-    #         hours=24,
-    #         id='youtube_api'
-    #     )
-
-    # except ConflictingIdError as e:
-    #     print e
-
-    # # Run crawler without api
-    # try:
-    #     scheduler.add_job(
-    #         create_crawl_job,
-    #         'interval',
-    #         hours=24,
-    #         id='youtube_without_api'
-    #     )
-    # create_crawl_job()
-
-    # except ConflictingIdError as e:
-    #     print e
-
-
-def create_bulk_jobs_from_dates():
-    # tuple_month_list = divide_datetime(period_years)
-    now = datetime.datetime.now()
-    last_day = now - datetime.timedelta(days=1)
-    tuple_month_list = [
-        (last_day, now),
-        ('whole', 'whole')
-    ]
-
-    for item in tuple_month_list:
-        criteria = {'max_results': 50, 'q': ''}
-        result = execute_batch(item[1], item[0], criteria)
-
-        msg = "Crawler jobs from: {0} | to: {1}".format(item[1], item[0])
-        msg += "{0}".format(str(result))
-        toLog(msg, 'jobs')
 
 
 def create_crawl_job():
@@ -97,4 +58,19 @@ def update_crawl_data():
 
     # result = send_request('crawler.cycle_update', '')
     msg = "Start new jobs for update crawling data."
+    toLog(msg, 'jobs')
+
+
+def start_crawling():
+
+    scheduler.add_job(
+        bulk_jobs_from_dates,
+        trigger='cron',
+        hour=hour_crawl,
+        minute=minute_crawl,
+        args=[],
+        timezone=local_tz
+    )
+
+    msg = "Start crawling."
     toLog(msg, 'jobs')
