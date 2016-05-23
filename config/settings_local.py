@@ -47,12 +47,12 @@ CORE_PORT_SELF = 7085
 
 # MongoDB Configuration ################################################
 MONGO_HOST_LOCAL = 'localhost'
-MONGO_PORT_LOCAL = 27017
+MONGO_PORT_LOCAL = 47017
 BALANCING = False
 MONGO_HOST_GLOBAL = 'localhost'
-MONGO_PORT_GLOBAL = 27017
+MONGO_PORT_GLOBAL = 47017
 MONGO_HOST_SELF = 'localhost'
-MONGO_PORT_SELF = 27017
+MONGO_PORT_SELF = 47017
 ########################################################################
 
 # Extra Data ###########################################################
