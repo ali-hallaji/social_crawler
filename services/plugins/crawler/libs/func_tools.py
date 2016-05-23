@@ -396,8 +396,8 @@ def bulk_jobs_from_dates():
 
     for item in tuple_month_list:
         criteria = {'max_results': 50, 'q': ''}
-        result = execute_batch(item[1], item[0], criteria)
+        result = execute_batch(item[0], item[1], criteria)
 
-        msg = "Crawler jobs from: {0} | to: {1}".format(item[1], item[0])
+        msg = "Crawler jobs from: {0} | to: {1}".format(item[0], item[1])
         msg += "{0}".format(str(result))
         toLog(msg, 'jobs')
