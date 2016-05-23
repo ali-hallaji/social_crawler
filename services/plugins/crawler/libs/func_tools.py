@@ -6,7 +6,6 @@ import json
 import requests
 import urllib
 import urlparse
-from twisted.internet import reactor
 
 from apiclient.discovery import build
 from pymongo.errors import DuplicateKeyError
@@ -63,30 +62,55 @@ def executor_crawl(_to, _from, criteria, next_page_token=None):
 
     # Call the search.list method to retrieve results matching the specified
     # query term.
-    if next_page_token:
-        search_response = youtube.search().list(
-            q=criteria['q'],
-            maxResults=criteria['max_results'],
-            part="id,snippet",
-            type='video',
-            order='viewCount',
-            pageToken=next_page_token,
-            videoCategoryId='10',  # Music & Entertaiment Category
-            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-        ).execute()
+    if (_from == 'whole') or (_to == 'whole'):
+
+        if next_page_token:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order='viewCount',
+                pageToken=next_page_token,
+                videoCategoryId='10',  # Music & Entertaiment Category
+            ).execute()
+
+        else:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order='viewCount',
+                videoCategoryId='10',  # Music & Entertaiment Category
+            ).execute()
 
     else:
-        search_response = youtube.search().list(
-            q=criteria['q'],
-            maxResults=criteria['max_results'],
-            part="id,snippet",
-            type='video',
-            order='viewCount',
-            videoCategoryId='10',  # Music & Entertaiment Category
-            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-        ).execute()
+
+        if next_page_token:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order='viewCount',
+                pageToken=next_page_token,
+                videoCategoryId='10',  # Music & Entertaiment Category
+                publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
+
+        else:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order='viewCount',
+                videoCategoryId='10',  # Music & Entertaiment Category
+                publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
 
     # Add each result to the appropriate list, and then display the lists of
     # matching videos, channels, and playlists.
