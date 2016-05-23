@@ -24,32 +24,10 @@ from services.plugins.crawler.libs.func_tools import start_updating_jobs
 def initial_executer():
 
     # Run crawler with api
-    # create_bulk_jobs_from_dates()
-    # create_bulk_jobs_from_dates()
+    create_bulk_jobs_from_dates()
+
+    # Update crawl
     update_crawl_data()
-    # try:
-    #     scheduler.add_job(
-    #         create_bulk_jobs_from_dates,
-    #         'interval',
-    #         hours=24,
-    #         id='youtube_api'
-    #     )
-
-    # except ConflictingIdError as e:
-    #     print e
-
-    # # Run crawler without api
-    # try:
-    #     scheduler.add_job(
-    #         create_crawl_job,
-    #         'interval',
-    #         hours=24,
-    #         id='youtube_without_api'
-    #     )
-    # create_crawl_job()
-
-    # except ConflictingIdError as e:
-    #     print e
 
 
 def create_bulk_jobs_from_dates():
