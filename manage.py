@@ -80,7 +80,7 @@ def main():
                 print cursor.index_information()
 
             else:
-                cursor.create_index([{'id': ASCENDING}], 'unique'=True)
+                cursor.create_index([('id', ASCENDING)], unique=True)
 
         elif sys.argv[1] == 'logs':
             from os import system
