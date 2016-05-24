@@ -6,6 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
+from dateutil import parser
 
 from apiclient.discovery import build
 from pymongo.errors import DuplicateKeyError
@@ -53,140 +54,6 @@ def build_youtube_api():
     return youtube
 
 
-def executor_crawl(_to, _from, criteria, next_page_token=None):
-    msg = 'Start executer:---> start: {0} | end: {1}'.format(_from, _to)
-    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
-    toLog(msg, 'jobs')
-
-    youtube = build_youtube_api()
-
-    # Call the search.list method to retrieve results matching the specified
-    # query term.
-    if (_from == 'whole') or (_to == 'whole'):
-
-        if next_page_token:
-            search_response = youtube.search().list(
-                q=criteria['q'],
-                maxResults=criteria['max_results'],
-                part="id,snippet",
-                type='video',
-                order='viewCount',
-                pageToken=next_page_token,
-                videoCategoryId='10',  # Music & Entertaiment Category
-            ).execute()
-
-        else:
-            search_response = youtube.search().list(
-                q=criteria['q'],
-                maxResults=criteria['max_results'],
-                part="id,snippet",
-                type='video',
-                order='viewCount',
-                videoCategoryId='10',  # Music & Entertaiment Category
-            ).execute()
-
-    else:
-
-        if next_page_token:
-            search_response = youtube.search().list(
-                q=criteria['q'],
-                maxResults=criteria['max_results'],
-                part="id,snippet",
-                type='video',
-                order='viewCount',
-                pageToken=next_page_token,
-                videoCategoryId='10',  # Music & Entertaiment Category
-                publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-                publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            ).execute()
-
-        else:
-            search_response = youtube.search().list(
-                q=criteria['q'],
-                maxResults=criteria['max_results'],
-                part="id,snippet",
-                type='video',
-                order='viewCount',
-                videoCategoryId='10',  # Music & Entertaiment Category
-                publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-                publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            ).execute()
-
-    # Add each result to the appropriate list, and then display the lists of
-    # matching videos, channels, and playlists.
-    for search_result in search_response.get("items", []):
-        _video = {'created_date': datetime.datetime.now()}
-
-        if search_result["kind"] == "youtube#video":
-            _video['href'] = 'https://www.youtube.com/watch?v='
-            _video['img'] = search_result['snippet']['thumbnails']['default']
-            _video['title'] = search_result['snippet']['title']
-            _video['channel_id'] = search_result['snippet']['channelId']
-            _video['channel_title'] = search_result['snippet']['channelTitle']
-            _video['published_at'] = search_result['snippet']['publishedAt']
-            _video['description'] = search_result['snippet']['description']
-
-            if 'id' in search_result['snippet']:
-                _video['href'] += search_result['snippet']['id']['videoId']
-                _video['id'] = search_result['snippet']['id']['videoId']
-
-            else:
-                _video['href'] += search_result['id']['videoId']
-                _video['id'] = search_result['id']['videoId']
-
-            try:
-                result = cursor.refined_data.insert(_video)
-
-            except DuplicateKeyError:
-                result = True
-                toLog("Crawling Error: It can't be save record", 'error')
-
-            if not result:
-                toLog("Crawling Error: It can't be save record", 'error')
-
-        elif search_result["kind"] == "youtube#searchResult":
-            _video['href'] = 'https://www.youtube.com/watch?v='
-            _video['img'] = search_result['snippet']['thumbnails']['default']
-            _video['title'] = search_result['snippet']['title']
-            _video['channel_id'] = search_result['snippet']['channelId']
-            _video['channel_title'] = search_result['snippet']['channelTitle']
-            _video['published_at'] = search_result['snippet']['publishedAt']
-            _video['description'] = search_result['snippet']['description']
-
-            if 'id' in search_result['snippet']:
-                _video['href'] += search_result['snippet']['id']['videoId']
-                _video['id'] = search_result['snippet']['id']['videoId']
-
-            else:
-                _video['href'] += search_result['id']['videoId']
-                _video['id'] = search_result['id']['videoId']
-
-            try:
-                result = cursor.refined_data.insert(_video)
-
-            except DuplicateKeyError:
-                result = True
-                toLog("Crawling Error: It can't be save record", 'error')
-
-            if not result:
-                toLog("Crawling Error: It can't be save record", 'error')
-
-        else:
-            toLog("UnHandled Crawling: {0}".format(search_result), 'debug')
-
-        if not result:
-            toLog("Crawling Error: It can't be save record", 'error')
-
-    # Create Next Page
-    next_page_token = search_response.get("nextPageToken")
-
-    msg = 'End executer:---> start: {0} | end: {1}'.format(_from, _to)
-    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
-    toLog(msg, 'jobs')
-
-    return next_page_token
-
-
 def divide_datetime(period_years):
     now = datetime.datetime.now()
     last = now - datetime.timedelta(days=period_years * 365)
@@ -203,20 +70,6 @@ def divide_datetime(period_years):
     tuple_month_list.append((month_list[-1], last))
 
     return tuple_month_list
-
-
-def execute_batch(_from, _to, criteria):
-    flag = True
-    next_page = None
-
-    while flag:
-        try:
-            next_page = executor_crawl(_to, _from, criteria, next_page)
-
-        except Exception as e:
-            print e
-            toLog(str(e), 'jobs')
-            flag = False
 
 
 def crawl_search(keyword, page):
@@ -291,7 +144,7 @@ def get_video_info(video_id):
         doc['title'] = snippet.get('title', '')
         doc['channel_id'] = snippet.get('channelId', '')
         doc['category_id'] = snippet.get('categoryId', '')
-        doc['published_at'] = snippet.get('publishedAt', '')
+        doc['published_at'] = parser.parse(snippet.get('publishedAt', ''))
         doc['channel_title'] = snippet.get('channelTitle', '')
         doc['description'] = snippet.get('description', '')
         doc['keywords'] = snippet.get('tags', '')
@@ -325,12 +178,15 @@ def get_video_info(video_id):
 
 
 def today_yesterday_data(_id):
-    video_doc = cursor.refined_data.find_one({'id': _id})
-
+    video_doc = cursor.refined_data.find_one(
+        {
+            'id': _id,
+            'private': {
+                '$ne': True
+            }
+        }
+    )
     video = get_video_info(_id)
-
-    if 'private' in video:
-        return video
 
     if video:
         video['daily_views_yesterday'] = int(
@@ -343,7 +199,7 @@ def today_yesterday_data(_id):
 
 
 def start_updating_jobs():
-    less_today = datetime.datetime.now().replace(hour=0, minute=30, second=0)
+    less_today = datetime.datetime.now().replace(hour=4, minute=30, second=0)
     _criteria = {
         'private': {'$ne': True},
         '$or': [
@@ -356,48 +212,178 @@ def start_updating_jobs():
     }
     toLog('Start updating jobs criteria: {0}'.format(str(_criteria)), 'jobs')
 
-    count = True
-    while count:
+    count = cursor.refined_data.count(_criteria)
+    toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
+    all_videos = cursor.refined_data.find(_criteria, _projection)
 
-        count = cursor.refined_data.count(_criteria)
-        toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
-        all_videos = cursor.refined_data.find(_criteria, _projection)
+    for doc in all_videos:
+        try:
+            _id = doc['id']
+            criteria = {'_id': doc['_id']}
+            new_data = today_yesterday_data(_id)
 
-        for doc in all_videos:
-            try:
-                _id = doc['id']
-                criteria = {'_id': doc['_id']}
-                new_data = today_yesterday_data(_id)
+            if not new_data:
+                toLog('Unsuccessful update: {0}'.format(_id), 'jobs')
+                continue
 
-                if not new_data:
-                    toLog('Unsuccessful update: {0}'.format(_id), 'jobs')
-                    continue
+            _update = {'$set': new_data}
+            update = cursor.refined_data.update_one(criteria, _update)
 
-                _update = {'$set': new_data}
-                update = cursor.refined_data.update_one(criteria, _update)
+            if not update.raw_result.get('updatedExisting', None):
+                msg = "The video with this id"
+                msg += " '{0}' can't be updated".format(_id)
+                toLog(msg, 'db')
 
-                if not update.raw_result.get('updatedExisting', None):
-                    msg = "The video with this id"
-                    msg += " '{0}' can't be updated".format(_id)
-                    toLog(msg, 'db')
+        except Exception as e:
+            toLog(str(e), 'error')
 
-            except Exception as e:
-                toLog(str(e), 'error')
+
+def execute_batch(_from, criteria):
+    next_page = None
+    list_token = []
+
+    for i in range(1, 1000):
+        try:
+            if next_page not in list_token:
+                next_page = executor_crawl(_from, criteria, next_page)
+                list_token.append(next_page)
+            else:
+                continue
+
+        except Exception as e:
+            print e
+            toLog(str(e), 'jobs')
 
 
 def bulk_jobs_from_dates():
     # tuple_month_list = divide_datetime(period_years)
+    # tuple_month_list = [
+    #     (last_day, now),
+    #     ('whole', 'whole')
+    # ]
     now = datetime.datetime.now()
     last_day = now - datetime.timedelta(days=1)
-    tuple_month_list = [
-        (last_day, now),
-        ('whole', 'whole')
-    ]
+    category_list = ['10', '24']
 
-    for item in tuple_month_list:
-        criteria = {'max_results': 50, 'q': ''}
-        result = execute_batch(item[0], item[1], criteria)
+    for item in category_list:
+        criteria = {'max_results': 50, 'q': '', 'category_id': item}
+        result = execute_batch(last_day, criteria)
 
-        msg = "Crawler jobs from: {0} | to: {1}".format(item[0], item[1])
+        msg = "Crawler jobs from: {0} | category: {1}".format(last_day, item)
         msg += "{0}".format(str(result))
         toLog(msg, 'jobs')
+
+
+def executor_crawl(_from, criteria, next_page_token=None):
+    msg = 'Start executer:---> start: {0}'.format(_from)
+    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
+    toLog(msg, 'jobs')
+
+    youtube = build_youtube_api()
+    # Call the search.list method to retrieve results matching the specified
+    # query term.
+    if next_page_token:
+        search_response = youtube.search().list(
+            q=criteria['q'],
+            maxResults=criteria['max_results'],
+            part="id,snippet",
+            type='video',
+            order='viewCount',
+            pageToken=next_page_token,
+            videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        ).execute()
+
+    else:
+        search_response = youtube.search().list(
+            q=criteria['q'],
+            maxResults=criteria['max_results'],
+            part="id,snippet",
+            type='video',
+            order='viewCount',
+            videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        ).execute()
+
+    # Add each result to the appropriate list, and then display the lists of
+    # matching videos, channels, and playlists.
+    for search_result in search_response.get("items", []):
+        _video = {'created_date': datetime.datetime.now()}
+
+        if criteria['category_id'] == '10':
+            _video['category_name'] = 'Music'
+
+        elif criteria['category_id'] == '24':
+            _video['category_name'] = 'Entertainment'
+
+        if search_result["kind"] == "youtube#video":
+            _publish = parser.parse(search_result['snippet']['publishedAt'])
+            _video['href'] = 'https://www.youtube.com/watch?v='
+            _video['img'] = search_result['snippet']['thumbnails']['default']
+            _video['title'] = search_result['snippet']['title']
+            _video['channel_id'] = search_result['snippet']['channelId']
+            _video['channel_title'] = search_result['snippet']['channelTitle']
+            _video['published_at'] = _publish
+            _video['description'] = search_result['snippet']['description']
+
+            if 'id' in search_result['snippet']:
+                _video['href'] += search_result['snippet']['id']['videoId']
+                _video['id'] = search_result['snippet']['id']['videoId']
+            else:
+                _video['href'] += search_result['id']['videoId']
+                _video['id'] = search_result['id']['videoId']
+
+            try:
+                result = cursor.refined_data.insert(_video)
+            except DuplicateKeyError:
+                result = True
+                toLog("Crawling Error: It can't be save record", 'error')
+
+            if not result:
+                toLog("Crawling Error: It can't be save record", 'error')
+
+        elif search_result["kind"] == "youtube#searchResult":
+            _publish = parser.parse(search_result['snippet']['publishedAt'])
+            _video['href'] = 'https://www.youtube.com/watch?v='
+            _video['img'] = search_result['snippet']['thumbnails']['default']
+            _video['title'] = search_result['snippet']['title']
+            _video['channel_id'] = search_result['snippet']['channelId']
+            _video['channel_title'] = search_result['snippet']['channelTitle']
+            _video['published_at'] = _publish
+            _video['description'] = search_result['snippet']['description']
+
+            if 'id' in search_result['snippet']:
+                _video['href'] += search_result['snippet']['id']['videoId']
+                _video['id'] = search_result['snippet']['id']['videoId']
+            else:
+                _video['href'] += search_result['id']['videoId']
+                _video['id'] = search_result['id']['videoId']
+
+            try:
+                result = cursor.refined_data.insert(_video)
+            except DuplicateKeyError:
+                result = True
+                toLog("Crawling Error: It can't be save record", 'error')
+
+            if not result:
+                toLog("Crawling Error: It can't be save record", 'error')
+
+        else:
+            toLog("UnHandled Crawling: {0}".format(search_result), 'debug')
+
+        if not result:
+            toLog("Crawling Error: It can't be save record", 'error')
+
+    # Create Next Page
+    next_page_token = search_response.get("nextPageToken")
+
+    msg = 'End executer:---> start: {0} | category: {1}'.format(
+        _from,
+        criteria['category_id']
+    )
+    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
+    toLog(msg, 'jobs')
+
+    return next_page_token

@@ -32,7 +32,7 @@ Options:\n\n[General options]:\n\n\n
  generate_settings          Generate your settings_local from scratch.
                             e.g: python manage.py generate_settings
 
- set_index                  For setting your main index on your project.
+ set_index  (show|write)    For setting your main index on your project.
 
 """
 
@@ -79,7 +79,7 @@ def main():
             if second_cmd == 'show':
                 print cursor.index_information()
 
-            else:
+            elif second_cmd == 'write':
                 cursor.create_index([('id', ASCENDING)], unique=True)
 
         elif sys.argv[1] == 'logs':

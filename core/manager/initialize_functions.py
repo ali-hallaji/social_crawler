@@ -6,11 +6,12 @@ import time
 
 # Core Import
 from config.settings import hour_crawl
+from config.settings import hour_update
 from config.settings import keyword_list
 from config.settings import local_tz
 from config.settings import max_page_crawl
 from config.settings import minute_crawl
-from config.settings import update_crawling_interval
+from config.settings import minute_update
 from core import toLog
 from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import bulk_jobs_from_dates
@@ -50,8 +51,9 @@ def update_crawl_data():
 
     scheduler.add_job(
         start_updating_jobs,
-        'interval',
-        minutes=update_crawling_interval,
+        trigger='cron',
+        hour=hour_update,
+        minute=minute_update,
         args=[],
         timezone=local_tz
     )
