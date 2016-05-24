@@ -68,6 +68,7 @@ def main():
         elif sys.argv[1] == 'set_index':
             second_cmd = sys.argv[2]
             from pymongo import MongoClient
+            from pymongo import ASCENDING
             from config.settings import MONGO_HOST_LOCAL
             from config.settings import MONGO_PORT_LOCAL
 
@@ -79,7 +80,7 @@ def main():
                 print cursor.index_information()
 
             else:
-                cursor.create_index({'id': 1}, {'unique': True})
+                cursor.create_index([{'id': ASCENDING}], 'unique'=True)
 
         elif sys.argv[1] == 'logs':
             from os import system
