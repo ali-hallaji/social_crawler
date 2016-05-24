@@ -1,6 +1,7 @@
 #!../bin/python
 # Core import
 import sys
+
 from json import dumps
 
 
@@ -26,22 +27,12 @@ Options:\n\n[General options]:\n\n\n
  logs                       Show all logs(error, jobs, debug, object,
                             service, request)
 
- show_ras                   Show status of all raspberrys.
-
  plugin                     Show All components with their plugins.
-
- memory                     Access to all data of the shared memory.
-                            Just pass your key to memory option.
-                            e.g: python manage.py memory local_airports
 
  generate_settings          Generate your settings_local from scratch.
                             e.g: python manage.py generate_settings
 
- dump_filter                Create dump file (Filter.so) from user saved
-                            filters on flight list.
-
- restore_filter             Restore saved dump file and apply to each
-                            user on flight list.
+ set_index                  For setting your main index on your project.
 
 """
 
@@ -74,18 +65,22 @@ def main():
             except error:
                 print 'Core Services shutdown \t\t\t\t\t\t[OK]'
 
-        elif sys.argv[1] == 'show_ras':
-            from jsonrpclib import Server
-            from socket import error
-            from config.settings import CORE_PORT
+        elif sys.argv[1] == 'set_index':
+            second_cmd = sys.argv[2]
+            from pymongo import MongoClient
+            from config.settings import MONGO_HOST_LOCAL
+            from config.settings import MONGO_PORT_LOCAL
 
-            try:
-                conn = Server('http://localhost:{0}'.format(CORE_PORT))
-                data = conn.raspberry.show_all_ras()
-                pretty(data)
+            url = "mongodb://{0}".format(MONGO_HOST_LOCAL)
+            url += ":{0}".format(MONGO_PORT_LOCAL)
+            cursor = MongoClient(url)['YouTube']['refined_data']
 
-            except error:
-                print 'Core Services shutdown \t\t\t\t\t\t[OK]'
+            if second_cmd == 'show':
+                pretty(cursor.index_information())
+
+            else:
+                index1 = ({'id': 1}, {'unique': True})
+                cursor.create_index(*index1)
 
         elif sys.argv[1] == 'logs':
             from os import system
