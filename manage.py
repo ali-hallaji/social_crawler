@@ -76,7 +76,7 @@ def main():
             cursor = MongoClient(url)['YouTube']['refined_data']
 
             if second_cmd == 'show':
-                pretty(cursor.index_information())
+                print cursor.index_information()
 
             else:
                 index1 = ({'id': 1}, {'unique': True})
