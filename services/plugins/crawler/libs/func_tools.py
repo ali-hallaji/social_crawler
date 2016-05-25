@@ -191,7 +191,7 @@ def today_yesterday_data(_id):
     )
     video = get_video_info(_id)
 
-    if video:
+    if video and ('all_views' in video):
         video['daily_views_yesterday'] = int(
             video_doc.get('daily_views_today', 0)
         )
