@@ -245,13 +245,12 @@ def execute_batch(_date, name, criteria):
     next_page = None
 
     for i in range(1, (batch_loop + 1)):
-        try:
-            time.sleep(1)
-            next_page = executor_crawl(_date, name, criteria, next_page)
+        # try:
+        time.sleep(1)
+        next_page = executor_crawl(_date, name, criteria, next_page)
 
-        except Exception as e:
-            print e
-            toLog(str(e), 'jobs')
+        # except Exception as e:
+        #     toLog(str(e), 'error')
 
 
 def bulk_jobs_from_dates():
@@ -270,10 +269,10 @@ def bulk_jobs_from_dates():
     ten = (ten_years, last_year)
 
     date_list = [
-        ((last_day, "Now"), '"Daily"'),
-        (weekly, '"Weekly"'),
-        (monthly, '"Monthly"'),
-        (yearly, '"Yearly"'),
+        ((last_day, "Now"), 'Daily'),
+        (weekly, 'Weekly'),
+        (monthly, 'Monthly'),
+        (yearly, 'Yearly'),
         (ten, 'Ten years')
     ]
     category_list = ['10', '24']
@@ -296,7 +295,7 @@ def bulk_jobs_from_dates():
                 toLog(msg, 'jobs')
 
 
-def executor_crawl(_date, criteria, name, next_page_token=None):
+def executor_crawl(_date, name, criteria, next_page_token=None):
     msg = 'Start executer:---> start: {0}'.format(_date[1])
     msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
     toLog(msg, 'jobs')
@@ -304,7 +303,7 @@ def executor_crawl(_date, criteria, name, next_page_token=None):
     youtube = build_youtube_api()
     # Call the search.list method to retrieve results matching the specified
     # query term.
-    if name == '"Daily"':
+    if name == 'Daily':
         if next_page_token:
             search_response = youtube.search().list(
                 q=criteria['q'],
@@ -433,7 +432,7 @@ def executor_crawl(_date, criteria, name, next_page_token=None):
     next_page_token = search_response.get("nextPageToken")
 
     msg = 'End executer:---> start: {0} | category: {1}'.format(
-        _from,
+        _date[1],
         criteria['category_id']
     )
     msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
