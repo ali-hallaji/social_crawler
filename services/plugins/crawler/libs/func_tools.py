@@ -241,13 +241,13 @@ def start_updating_jobs():
             toLog(str(e), 'error')
 
 
-def execute_batch(_from, criteria):
+def execute_batch(_date, name, criteria):
     next_page = None
 
     for i in range(1, (batch_loop + 1)):
         try:
             time.sleep(1)
-            next_page = executor_crawl(_from, criteria, next_page)
+            next_page = executor_crawl(_date, name, criteria, next_page)
 
         except Exception as e:
             print e
@@ -264,52 +264,97 @@ def bulk_jobs_from_dates():
     last_year = now - datetime.timedelta(days=365)
     ten_years = now - datetime.timedelta(days=(365 * 10))
 
-    date_list = [last_day, last_week, last_month, last_year, ten_years]
+    weekly = (last_week, last_day)
+    monthly = (last_month, last_week)
+    yearly = (last_year, last_month)
+    ten = (ten_years, last_year)
+
+    date_list = [
+        ((last_day, "Now"), '"Daily"'),
+        (weekly, '"Weekly"'),
+        (monthly, '"Monthly"'),
+        (yearly, '"Yearly"'),
+        (ten, 'Ten years')
+    ]
     category_list = ['10', '24']
+    order_list = ['date', 'rating', 'relevance', 'viewCount']
 
-    for _date in date_list:
+    for order in order_list:
+        for _date, _name in date_list:
+            for item in category_list:
+                criteria = {
+                    'max_results': 50,
+                    'q': '',
+                    'category_id': item,
+                    'order': order
+                }
+                result = execute_batch(_date, _name, criteria)
 
-        for item in category_list:
-            criteria = {'max_results': 50, 'q': '', 'category_id': item}
-            result = execute_batch(_date, criteria)
-
-            msg = "Crawler jobs from: {0} | category: {1}".format(_date, item)
-            msg += "{0}".format(str(result))
-            toLog(msg, 'jobs')
+                msg = _name + " Crawler Jobs"
+                msg += " from: {0} | category: {1}".format(_date, item)
+                msg += "{0}".format(str(result))
+                toLog(msg, 'jobs')
 
 
-def executor_crawl(_from, criteria, next_page_token=None):
-    msg = 'Start executer:---> start: {0}'.format(_from)
+def executor_crawl(_date, criteria, name, next_page_token=None):
+    msg = 'Start executer:---> start: {0}'.format(_date[1])
     msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
     toLog(msg, 'jobs')
 
     youtube = build_youtube_api()
     # Call the search.list method to retrieve results matching the specified
     # query term.
-    if next_page_token:
-        search_response = youtube.search().list(
-            q=criteria['q'],
-            maxResults=criteria['max_results'],
-            part="id,snippet",
-            type='video',
-            order='viewCount',
-            pageToken=next_page_token,
-            videoCategoryId=criteria['category_id'],  # Music/Entertaiment
-            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-        ).execute()
+    if name == '"Daily"':
+        if next_page_token:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order=criteria['order'],
+                pageToken=next_page_token,
+                videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+                publishedAfter=_date[0].strftime('%Y-%m-%dT%H:%M:%SZ'),
+                # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
+
+        else:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order=criteria['order'],
+                videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+                publishedAfter=_date[0].strftime('%Y-%m-%dT%H:%M:%SZ'),
+                # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
 
     else:
-        search_response = youtube.search().list(
-            q=criteria['q'],
-            maxResults=criteria['max_results'],
-            part="id,snippet",
-            type='video',
-            order='viewCount',
-            videoCategoryId=criteria['category_id'],  # Music/Entertaiment
-            publishedAfter=_from.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            # publishedBefore=_to.strftime('%Y-%m-%dT%H:%M:%SZ'),
-        ).execute()
+        if next_page_token:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order=criteria['order'],
+                pageToken=next_page_token,
+                videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+                publishedAfter=_date[0].strftime('%Y-%m-%dT%H:%M:%SZ'),
+                publishedBefore=_date[1].strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
+
+        else:
+            search_response = youtube.search().list(
+                q=criteria['q'],
+                maxResults=criteria['max_results'],
+                part="id,snippet",
+                type='video',
+                order=criteria['order'],
+                videoCategoryId=criteria['category_id'],  # Music/Entertaiment
+                publishedAfter=_date[0].strftime('%Y-%m-%dT%H:%M:%SZ'),
+                publishedBefore=_date[1].strftime('%Y-%m-%dT%H:%M:%SZ'),
+            ).execute()
 
     # Add each result to the appropriate list, and then display the lists of
     # matching videos, channels, and playlists.
