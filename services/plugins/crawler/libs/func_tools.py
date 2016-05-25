@@ -18,6 +18,7 @@ from config.settings import DEVELOPER_KEY
 from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
+from config.settings import batch_loop
 from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
@@ -243,9 +244,9 @@ def start_updating_jobs():
 def execute_batch(_from, criteria):
     next_page = None
 
-    for i in range(1, 1000):
+    for i in range(1, (batch_loop + 1)):
         try:
-            time.sleep(0.5)
+            time.sleep(1)
             next_page = executor_crawl(_from, criteria, next_page)
 
         except Exception as e:
@@ -255,21 +256,26 @@ def execute_batch(_from, criteria):
 
 def bulk_jobs_from_dates():
     # tuple_month_list = divide_datetime(period_years)
-    # tuple_month_list = [
-    #     (last_day, now),
-    #     ('whole', 'whole')
-    # ]
+
     now = datetime.datetime.now()
     last_day = now - datetime.timedelta(days=1)
+    last_week = now - datetime.timedelta(days=7)
+    last_month = now - datetime.timedelta(days=31)
+    last_year = now - datetime.timedelta(days=365)
+    ten_years = now - datetime.timedelta(days=(365 * 10))
+
+    date_list = [last_day, last_week, last_month, last_year, ten_years]
     category_list = ['10', '24']
 
-    for item in category_list:
-        criteria = {'max_results': 50, 'q': '', 'category_id': item}
-        result = execute_batch(last_day, criteria)
+    for _date in date_list:
 
-        msg = "Crawler jobs from: {0} | category: {1}".format(last_day, item)
-        msg += "{0}".format(str(result))
-        toLog(msg, 'jobs')
+        for item in category_list:
+            criteria = {'max_results': 50, 'q': '', 'category_id': item}
+            result = execute_batch(_date, criteria)
+
+            msg = "Crawler jobs from: {0} | category: {1}".format(_date, item)
+            msg += "{0}".format(str(result))
+            toLog(msg, 'jobs')
 
 
 def executor_crawl(_from, criteria, next_page_token=None):
@@ -337,10 +343,12 @@ def executor_crawl(_from, criteria, next_page_token=None):
                 result = cursor.refined_data.insert(_video)
             except DuplicateKeyError:
                 result = True
-                toLog("Crawling Error: It can't be save record", 'error')
+                toLog("Duplicate Error: It can't be save record", 'error')
 
             if not result:
-                toLog("Crawling Error: It can't be save record", 'error')
+                msg = "Crawling Error: It can't be save record"
+                msg += "{0}".format(search_result)
+                toLog(msg, 'error')
 
         elif search_result["kind"] == "youtube#searchResult":
             _publish = parser.parse(search_result['snippet']['publishedAt'])
@@ -363,10 +371,12 @@ def executor_crawl(_from, criteria, next_page_token=None):
                 result = cursor.refined_data.insert(_video)
             except DuplicateKeyError:
                 result = True
-                toLog("Crawling Error: It can't be save record", 'error')
+                toLog("Duplicate Error: It can't be save record", 'error')
 
             if not result:
-                toLog("Crawling Error: It can't be save record", 'error')
+                msg = "Crawling Error: It can't be save record"
+                msg += "{0}".format(search_result)
+                toLog(msg, 'error')
 
         else:
             toLog("UnHandled Crawling: {0}".format(search_result), 'debug')

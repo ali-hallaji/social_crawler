@@ -26,6 +26,7 @@ hour_update = '4'
 minute_update = '30'
 hour_crawl = '0'
 minute_crawl = '30'
+batch_loop = 21
 api_key_update = DEVELOPER_KEY2
 ########################################################################
 
