@@ -245,12 +245,12 @@ def execute_batch(_date, name, criteria):
     next_page = None
 
     for i in range(1, (batch_loop + 1)):
-        # try:
-        time.sleep(1)
-        next_page = executor_crawl(_date, name, criteria, next_page)
+        try:
+            time.sleep(1)
+            next_page = executor_crawl(_date, name, criteria, next_page)
 
-        # except Exception as e:
-        #     toLog(str(e), 'error')
+        except Exception as e:
+            toLog(str(e), 'error')
 
 
 def bulk_jobs_from_dates():
