@@ -4,8 +4,10 @@ import bs4
 import datetime
 import json
 import requests
+import time
 import urllib
 import urlparse
+
 from dateutil import parser
 
 from apiclient.discovery import build
@@ -240,15 +242,11 @@ def start_updating_jobs():
 
 def execute_batch(_from, criteria):
     next_page = None
-    list_token = []
 
     for i in range(1, 1000):
         try:
-            if next_page not in list_token:
-                next_page = executor_crawl(_from, criteria, next_page)
-                list_token.append(next_page)
-            else:
-                continue
+            time.sleep(0.5)
+            next_page = executor_crawl(_from, criteria, next_page)
 
         except Exception as e:
             print e
