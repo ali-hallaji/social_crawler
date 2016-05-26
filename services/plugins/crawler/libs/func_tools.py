@@ -159,9 +159,9 @@ def get_video_info(video_id):
         doc['likes'] = int(statistics.get('likeCount', 0))
 
         if '-' in doc['title']:
-            artist, song_title = doc['title'].split('-')
-            doc['artist'] = artist.strip()
-            doc['song_title'] = song_title.strip()
+            splited = video['title'].split('-')
+            video['artist'] = splited[0].strip()
+            video['song_title'] = '-'.join(splited[1:])
 
         doc['has_yesterday'] = True
         doc['update_video_data'] = datetime.datetime.now()
@@ -451,9 +451,9 @@ def clean_title():
 
     for video in videos:
         if '-' in video['title']:
-            artist, song_title = video['title'].split('-')
-            video['artist'] = artist.strip()
-            video['song_title'] = song_title.strip()
+            splited = video['title'].split('-')
+            video['artist'] = splited[0].strip()
+            video['song_title'] = '-'.join(splited[1:])
 
         _update = {'$set': video}
         cursor.refined_data.update_one({'_id': video['_id']}, _update)
