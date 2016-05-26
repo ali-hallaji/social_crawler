@@ -158,6 +158,11 @@ def get_video_info(video_id):
         doc['all_views'] = int(statistics.get('viewCount', 0))
         doc['likes'] = int(statistics.get('likeCount', 0))
 
+        if '-' in doc['title']:
+            artist, song_title = doc['title'].split('-')
+            doc['artist'] = artist.strip()
+            doc['song_title'] = song_title.strip()
+
         doc['has_yesterday'] = True
         doc['update_video_data'] = datetime.datetime.now()
 
@@ -439,3 +444,16 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
     toLog(msg, 'jobs')
 
     return next_page_token
+
+
+def clean_title():
+    videos = cursor.refined_data.find()
+
+    for video in videos:
+        if '-' in video['title']:
+            artist, song_title = video['title'].split('-')
+            video['artist'] = artist.strip()
+            video['song_title'] = song_title.strip()
+
+        _update = {'$set': video}
+        cursor.refined_data.update_one({'_id': video['_id']}, _update)
