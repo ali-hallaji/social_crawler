@@ -365,11 +365,11 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
     for search_result in search_response.get("items", []):
         _video = {'created_date': datetime.datetime.now()}
 
-        if criteria['category_id'] == '10':
-            _video['category_name'] = 'Music'
-
-        elif criteria['category_id'] == '24':
-            _video['category_name'] = 'Entertainment'
+        category_trans = {'24': 'Entertainment', '10': 'Music'}
+        _video['category_name'] = category_trans.get(
+            criteria['category_id'],
+            'UnKnown'
+        )
 
         if search_result["kind"] == "youtube#video":
             _publish = parser.parse(search_result['snippet']['publishedAt'])
@@ -454,6 +454,21 @@ def clean_title():
             splited = video['title'].split('-')
             video['artist'] = splited[0].strip()
             video['song_title'] = '-'.join(splited[1:])
+
+        _update = {'$set': video}
+        cursor.refined_data.update_one({'_id': video['_id']}, _update)
+
+
+def clean_category_name():
+    videos = cursor.refined_data.find()
+    category_trans = {'24': 'Entertainment', '10': 'Music'}
+
+    for video in videos:
+        if video.get('category_id', None):
+            video['category_name'] = category_trans.get(
+                video['category_id'],
+                'UnKnown'
+            )
 
         _update = {'$set': video}
         cursor.refined_data.update_one({'_id': video['_id']}, _update)
