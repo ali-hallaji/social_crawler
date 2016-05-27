@@ -158,8 +158,8 @@ def get_video_info(video_id):
         doc['all_views'] = int(statistics.get('viewCount', 0))
         doc['likes'] = int(statistics.get('likeCount', 0))
 
-        if '-' in doc['title']:
-            splited = video['title'].split('-')
+        if '-' in doc.get('title', ''):
+            splited = doc['title'].split('-')
             video['artist'] = splited[0].strip()
             video['song_title'] = '-'.join(splited[1:])
 
