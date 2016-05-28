@@ -19,6 +19,8 @@ from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import batch_loop
+from config.settings import delete_month
+from config.settings import delete_video_count
 from config.settings import period_days
 # from config.settings import retry_update_count
 from core import toLog
@@ -472,3 +474,16 @@ def clean_category_name():
 
         _update = {'$set': video}
         cursor.refined_data.update_one({'_id': video['_id']}, _update)
+
+
+def delete_video():
+    now = datetime.datetime.now()
+    last_six_month = now - datetime.timedelta(days=31 * delete_month)
+
+    criteria = {
+        'published_at': {'$lte': last_six_month},
+        'all_views': {'$lte': delete_video_count}
+    }
+    delete = cursor.refined_data.remove(criteria)
+
+    toLog('Removed "{0}" videos from DB'.format(str(delete)), 'debug')

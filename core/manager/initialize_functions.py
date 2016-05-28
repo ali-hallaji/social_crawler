@@ -16,6 +16,7 @@ from core import toLog
 from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import bulk_jobs_from_dates
 from services.plugins.crawler.libs.func_tools import crawl_search
+from services.plugins.crawler.libs.func_tools import delete_video
 from services.plugins.crawler.libs.func_tools import start_updating_jobs
 # from config.settings import period_years
 # from core.generals.scheduler import scheduler
@@ -45,6 +46,7 @@ def create_crawl_job():
 
     msg = "end crawler jobs"
     toLog(msg, 'jobs')
+    delete_video()
 
 
 def update_crawl_data():
