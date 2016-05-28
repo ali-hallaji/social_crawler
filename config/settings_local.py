@@ -27,6 +27,8 @@ minute_update = '30'
 hour_crawl = '0'
 minute_crawl = '30'
 batch_loop = 21
+delete_month = 6
+delete_video_count = 50000
 api_key_update = DEVELOPER_KEY2
 ########################################################################
 
