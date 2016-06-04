@@ -232,7 +232,7 @@ def start_updating_jobs():
     all_videos = cursor.refined_data.find(
         _criteria,
         _projection,
-        timeout=False
+        no_cursor_timeout=True
     )
 
     for doc in all_videos:
@@ -466,7 +466,7 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
 
 def clean_title():
-    videos = cursor.refined_data.find(timeout=False)
+    videos = cursor.refined_data.find(no_cursor_timeout=True)
 
     for video in videos:
         if '-' in video['title']:
@@ -484,7 +484,7 @@ def clean_title():
 
 
 def clean_category_name():
-    videos = cursor.refined_data.find(timeout=False)
+    videos = cursor.refined_data.find(no_cursor_timeout=True)
     category_trans = {'24': 'Entertainment', '10': 'Music'}
 
     for video in videos:
