@@ -100,15 +100,18 @@ def soundcloud_update():
     all_tracks = cursor_soundcloud.refined_data.find()
 
     for track in all_tracks:
+        main_track = track.copy()
         try:
             new_track = track_info(track)
             refine_track = today_yesterday_data(new_track, track)
 
             if not refine_track:
-                toLog('Unsuccessful update: {0}'.format(track['id']), 'jobs')
+                toLog(
+                    'Unsuccessful update: {0}'.format(main_track['id']), 'jobs'
+                )
                 continue
 
-            criteria = {'_id': track['_id']}
+            criteria = {'_id': main_track['_id']}
             _update = {'$set': refine_track}
             update = cursor_soundcloud.refined_data.update_one(
                 criteria,
