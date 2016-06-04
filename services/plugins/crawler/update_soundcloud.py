@@ -4,21 +4,21 @@ from bson.json_util import dumps
 # Core Services import
 from services.libs.async_call import asynchronous
 from services.libs.register import register
-from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
+from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
 
 
 @register
-class SoundCloudRunner:
+class SoundCloudUpdate:
     """
-        SoundCloudRunner
+        SoundCloudUpdate
     """
-    __name__ = 'start_soundcloud'
+    __name__ = 'update_soundcloud'
     __namespace__ = 'CrawlerComponent'
-    __full_name__ = 'crawler.start_soundcloud'
+    __full_name__ = 'crawler.update_soundcloud'
     documentation = """
 
         e.g:
-        main.start_soundcloud() > bool
+        main.update_soundcloud() > bool
 
         Keyword arguments:
 
@@ -29,8 +29,8 @@ class SoundCloudRunner:
     @asynchronous
     def run(self):
 
-        soundcloud_runner()
+        soundcloud_update()
         return dumps(True)
 
 
-SoundCloudRunner()
+SoundCloudUpdate()
