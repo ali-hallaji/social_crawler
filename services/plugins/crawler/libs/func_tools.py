@@ -168,6 +168,10 @@ def get_video_info(video_id):
             video['song_title'] = '-'.join(splited[1:])
             video['song_title'] = video['song_title'].strip()
 
+        else:
+            video['artist'] = video.get('title', '')
+            video['song_title'] = video.get('title', '')
+
         doc['has_yesterday'] = True
         doc['update_video_data'] = datetime.datetime.now()
 
@@ -225,9 +229,11 @@ def start_updating_jobs():
     }
     toLog('Start updating jobs criteria: {0}'.format(str(_criteria)), 'jobs')
 
-    count = cursor.refined_data.count(_criteria)
-    toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
-    all_videos = cursor.refined_data.find(_criteria, _projection)
+    all_videos = cursor.refined_data.find(
+        _criteria,
+        _projection,
+        timeout=False
+    )
 
     for doc in all_videos:
         try:
@@ -460,7 +466,7 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
 
 def clean_title():
-    videos = cursor.refined_data.find()
+    videos = cursor.refined_data.find(timeout=False)
 
     for video in videos:
         if '-' in video['title']:
@@ -469,12 +475,16 @@ def clean_title():
             video['song_title'] = '-'.join(splited[1:])
             video['song_title'] = video['song_title'].strip()
 
+        else:
+            video['artist'] = video.get('title', '')
+            video['song_title'] = video.get('title', '')
+
         _update = {'$set': video}
         cursor.refined_data.update_one({'_id': video['_id']}, _update)
 
 
 def clean_category_name():
-    videos = cursor.refined_data.find()
+    videos = cursor.refined_data.find(timeout=False)
     category_trans = {'24': 'Entertainment', '10': 'Music'}
 
     for video in videos:
