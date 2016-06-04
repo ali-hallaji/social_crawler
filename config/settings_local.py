@@ -30,6 +30,10 @@ batch_loop = 21
 delete_month = 6
 delete_video_count = 50000
 api_key_update = DEVELOPER_KEY2
+
+# SoundCloud
+page_length = 200
+num_pages = 40
 ########################################################################
 
 # Debug mode ###########################################################
