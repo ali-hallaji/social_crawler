@@ -4,7 +4,6 @@ jsonrpclib
 pymongo
 jdatetime
 twisted
-soundcloud
 # cerberus
 # bcrypt
 apscheduler
