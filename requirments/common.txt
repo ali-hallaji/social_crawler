@@ -15,4 +15,5 @@ pjson
 bs4
 requests[security]
 gdata
+soundcloud
 google-api-python-client
