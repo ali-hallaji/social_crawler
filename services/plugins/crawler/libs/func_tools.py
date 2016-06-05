@@ -242,7 +242,7 @@ def start_updating_jobs():
             new_data = today_yesterday_data(_id)
 
             if not new_data:
-                toLog('Unsuccessful update: {0}'.format(_id), 'jobs')
+                # toLog('Unsuccessful update: {0}'.format(_id), 'jobs')
                 continue
 
             _update = {'$set': new_data}
@@ -259,6 +259,7 @@ def start_updating_jobs():
     toLog("Start updating soundcloud ", 'jobs')
     soundcloud_update()
     toLog("End updating soundcloud ", 'jobs')
+    clean_title()
 
 
 def execute_batch(_date, name, criteria):
@@ -266,7 +267,7 @@ def execute_batch(_date, name, criteria):
 
     for i in range(1, (batch_loop + 1)):
         try:
-            time.sleep(1)
+            time.sleep(0.5)
             next_page = executor_crawl(_date, name, criteria, next_page)
 
         except Exception as e:
@@ -320,10 +321,6 @@ def bulk_jobs_from_dates():
 
 
 def executor_crawl(_date, name, criteria, next_page_token=None):
-    msg = 'Start executer:---> start: {0}'.format(_date[1])
-    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
-    toLog(msg, 'jobs')
-
     youtube = build_youtube_api()
     # Call the search.list method to retrieve results matching the specified
     # query term.
@@ -381,6 +378,8 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
     # Add each result to the appropriate list, and then display the lists of
     # matching videos, channels, and playlists.
+    duplicate = 0
+
     for search_result in search_response.get("items", []):
         _video = {'created_date': datetime.datetime.now()}
 
@@ -411,7 +410,10 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
                 result = cursor.refined_data.insert(_video)
             except DuplicateKeyError:
                 result = True
-                toLog("Duplicate Error: It can't be save record", 'error')
+                if (duplicate % 1000) == 0:
+                    toLog("Duplicate Error: 1000 records", 'error')
+
+                duplicate += 1
 
             if not result:
                 msg = "Crawling Error: It can't be save record"
@@ -439,7 +441,10 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
                 result = cursor.refined_data.insert(_video)
             except DuplicateKeyError:
                 result = True
-                toLog("Duplicate Error: It can't be save record", 'error')
+                if (duplicate % 1000) == 0:
+                    toLog("Duplicate Error: 1000 records", 'error')
+
+                duplicate += 1
 
             if not result:
                 msg = "Crawling Error: It can't be save record"
@@ -454,19 +459,14 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
     # Create Next Page
     next_page_token = search_response.get("nextPageToken")
-
-    msg = 'End executer:---> start: {0} | category: {1}'.format(
-        _date[1],
-        criteria['category_id']
-    )
-    msg += " criteria: {0} | next_page: {1}".format(criteria, next_page_token)
-    toLog(msg, 'jobs')
-
     return next_page_token
 
 
 def clean_title():
-    videos = cursor.refined_data.find(no_cursor_timeout=True)
+    criteria = {
+        'title': 1,
+    }
+    videos = cursor.refined_data.find(criteria, no_cursor_timeout=True)
 
     for video in videos:
         if '-' in video['title']:
