@@ -15,6 +15,7 @@ DEVELOPER_KEY = "AIzaSyD9O5FIwU3V1teLw0UcssN8TxL7Zl15erA"
 DEVELOPER_KEY2 = "AIzaSyAV1WWrct68Fj4fIoGrb89nY5RwdUgU0Ak"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
+SOUNDCLOUD_ID = '0f61912bac6ddba41024c18e4a7e032f'
 ########################################################################
 
 # Jobs #################################################################
@@ -30,6 +31,10 @@ batch_loop = 21
 delete_month = 6
 delete_video_count = 50000
 api_key_update = DEVELOPER_KEY2
+
+# SoundCloud
+page_length = 200
+num_pages = 40
 ########################################################################
 
 # Debug mode ###########################################################

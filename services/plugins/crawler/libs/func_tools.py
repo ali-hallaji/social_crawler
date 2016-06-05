@@ -22,6 +22,8 @@ from config.settings import batch_loop
 from config.settings import delete_month
 from config.settings import delete_video_count
 from config.settings import period_days
+from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
+from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
 # from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
@@ -164,6 +166,11 @@ def get_video_info(video_id):
             splited = doc['title'].split('-')
             video['artist'] = splited[0].strip()
             video['song_title'] = '-'.join(splited[1:])
+            video['song_title'] = video['song_title'].strip()
+
+        else:
+            video['artist'] = video.get('title', '')
+            video['song_title'] = video.get('title', '')
 
         doc['has_yesterday'] = True
         doc['update_video_data'] = datetime.datetime.now()
@@ -222,9 +229,11 @@ def start_updating_jobs():
     }
     toLog('Start updating jobs criteria: {0}'.format(str(_criteria)), 'jobs')
 
-    count = cursor.refined_data.count(_criteria)
-    toLog('Count of updating record: {0}'.format(str(count)), 'jobs')
-    all_videos = cursor.refined_data.find(_criteria, _projection)
+    all_videos = cursor.refined_data.find(
+        _criteria,
+        _projection,
+        no_cursor_timeout=True
+    )
 
     for doc in all_videos:
         try:
@@ -246,6 +255,10 @@ def start_updating_jobs():
 
         except Exception as e:
             toLog(str(e), 'error')
+
+    toLog("Start updating soundcloud ", 'jobs')
+    soundcloud_update()
+    toLog("End updating soundcloud ", 'jobs')
 
 
 def execute_batch(_date, name, criteria):
@@ -300,6 +313,10 @@ def bulk_jobs_from_dates():
                 msg += " from: {0} | category: {1}".format(_date, item)
                 msg += "{0}".format(str(result))
                 toLog(msg, 'jobs')
+
+    toLog("Start crawling soundcloud ", 'jobs')
+    soundcloud_runner()
+    toLog("End crawling soundcloud ", 'jobs')
 
 
 def executor_crawl(_date, name, criteria, next_page_token=None):
@@ -449,20 +466,25 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
 
 def clean_title():
-    videos = cursor.refined_data.find()
+    videos = cursor.refined_data.find(no_cursor_timeout=True)
 
     for video in videos:
         if '-' in video['title']:
             splited = video['title'].split('-')
             video['artist'] = splited[0].strip()
             video['song_title'] = '-'.join(splited[1:])
+            video['song_title'] = video['song_title'].strip()
+
+        else:
+            video['artist'] = video.get('title', '')
+            video['song_title'] = video.get('title', '')
 
         _update = {'$set': video}
         cursor.refined_data.update_one({'_id': video['_id']}, _update)
 
 
 def clean_category_name():
-    videos = cursor.refined_data.find()
+    videos = cursor.refined_data.find(no_cursor_timeout=True)
     category_trans = {'24': 'Entertainment', '10': 'Music'}
 
     for video in videos:
