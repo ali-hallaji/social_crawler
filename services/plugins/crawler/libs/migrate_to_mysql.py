@@ -32,6 +32,9 @@ def yt_mosted_viewed():
     # mydb.query("set character_set_results=utf8;")
     # mydb.query("set character_set_database=utf8;")
     sql_cursor = mydb.cursor()
+    sql_cursor.execute("SET NAMES utf8;")
+    sql_cursor.execute("SET CHARACTER SET utf8;")
+    sql_cursor.execute("SET character_set_connection=utf8;")
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
     last_date = _date - datetime.timedelta(days=1)
@@ -167,7 +170,7 @@ def yt_mosted_viewed():
 
             try:
                 keys = str(tuple(new_doc.keys())).replace("'", '')
-                vals = str(tuple(new_doc.values())).replace("'", '"')
+                vals = unicode(tuple(new_doc.values())).replace("'", '"')
 
                 sql = 'INSERT INTO songs_chart %s VALUES %s' % (keys, vals)
                 sql_cursor.execute(sql)
