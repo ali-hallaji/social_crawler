@@ -15,15 +15,21 @@ from core.db import cursor
 def yt_mosted_viewed():
     toLog('Start Migration to MySQL', 'db')
 
-    mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB)
-    mydb.set_character_set('utf8')
-    mydb.query('SET NAMES utf8;')
-    mydb.query('SET CHARACTER SET utf8;')
-    mydb.query('SET character_set_connection=utf8;')
-    mydb.query("set character_set_server=utf8;")
-    mydb.query("set character_set_client=utf8;")
-    mydb.query("set character_set_results=utf8;")
-    mydb.query("set character_set_database=utf8;")
+    mydb = MySQLdb.connect(
+        SQL_HOST,
+        SQL_USER,
+        SQL_PASS,
+        SQL_DB,
+        charset='utf8'
+    )
+    # mydb.set_character_set('utf8')
+    # mydb.query('SET NAMES utf8;')
+    # mydb.query('SET CHARACTER SET utf8;')
+    # mydb.query('SET character_set_connection=utf8;')
+    # mydb.query("set character_set_server=utf8;")
+    # mydb.query("set character_set_client=utf8;")
+    # mydb.query("set character_set_results=utf8;")
+    # mydb.query("set character_set_database=utf8;")
     sql_cursor = mydb.cursor()
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
@@ -130,10 +136,10 @@ def yt_mosted_viewed():
 
                         else:
                             if k == 'YTDescription':
-                                new_doc[sql_column[k]] = str(v[:50])
+                                new_doc[sql_column[k]] = v[:50].decode('utf8')
 
                             else:
-                                new_doc[sql_column[k]] = str(v)
+                                new_doc[sql_column[k]] = v.decode('utf8')
 
             for item in extra_str_columns:
                 new_doc[item] = ""
