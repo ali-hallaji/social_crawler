@@ -5,11 +5,11 @@ import datetime
 from pymongo import DESCENDING
 
 # from config.settings import BASE_DIR
-from core import toLog
 from config.settings import SQL_DB
 from config.settings import SQL_HOST
 from config.settings import SQL_PASS
 from config.settings import SQL_USER
+from core import toLog
 from core.db import cursor
 
 
@@ -171,14 +171,16 @@ def yt_mosted_viewed():
 
             try:
                 table = 'songs_chart'
-                placeholders = ', '.join(['%s'] * len(new_doc))
-                columns = ', '.join(new_doc.keys())
-                sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (
-                    table,
-                    columns,
-                    placeholders
-                )
-                sql_cursor.execute(sql, new_doc.values())
+                # placeholders = ', '.join(['%s'] * len(new_doc))
+                # columns = ', '.join(new_doc.keys())
+                # sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (
+                #     table,
+                #     columns,
+                #     placeholders
+                # )
+                # sql_cursor.execute(sql, new_doc.values())
+                sql = insert_from_dict(table, new_doc)
+                sql_cursor.execute(sql, new_doc)
                 mydb.commit()
 
             except MySQLdb.IntegrityError as e:
@@ -195,3 +197,21 @@ def yt_mosted_viewed():
             count += 1
 
     toLog('End Migration to MySQL', 'db')
+
+
+def insert_from_dict(table, dict):
+    """
+        Take dictionary object dict and produce sql for
+        inserting it into the named table
+    """
+    sql = 'INSERT INTO ' + table
+    sql += ' ('
+    sql += ', '.join(dict)
+    sql += ') VALUES ('
+    sql += ', '.join(map(dict_value_pad, dict))
+    sql += ');'
+    return sql
+
+
+def dict_value_pad(key):
+    return '%(' + str(key) + ')s'
