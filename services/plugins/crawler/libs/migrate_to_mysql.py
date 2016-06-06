@@ -20,7 +20,8 @@ def yt_mosted_viewed():
         SQL_USER,
         SQL_PASS,
         SQL_DB,
-        charset='utf8'
+        charset='utf8',
+        use_unicode=True
     )
     # mydb.set_character_set('utf8')
     # mydb.query('SET NAMES utf8;')
