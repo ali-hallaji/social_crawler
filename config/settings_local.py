@@ -64,6 +64,13 @@ MONGO_HOST_SELF = 'localhost'
 MONGO_PORT_SELF = 47017
 ########################################################################
 
+# MySQL Configuration ##################################################
+SQL_HOST = 'localhost'
+SQL_PASS = 'Sorsey2000'
+SQL_USER = 'newdatabase'
+SQL_DB = 'newdatabase'
+########################################################################
+
 # Extra Data ###########################################################
 keyword_list = [
     'music',
