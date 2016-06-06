@@ -136,10 +136,10 @@ def yt_mosted_viewed():
 
                         else:
                             if k == 'YTDescription':
-                                new_doc[sql_column[k]] = unicode(v[:50]).replace("\r", " ").replace("\n", " ").replace("\t", '').replace("\"", "")
+                                new_doc[sql_column[k]] = v[:50].encode('ascii', 'ignore')
 
                             else:
-                                new_doc[sql_column[k]] = unicode(v).replace("\r", " ").replace("\n", " ").replace("\t", '').replace("\"", "")
+                                new_doc[sql_column[k]] = v.encode('ascii', 'ignore')
 
             for item in extra_str_columns:
                 new_doc[item] = ""
