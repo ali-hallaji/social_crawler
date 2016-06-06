@@ -1,3 +1,4 @@
+import time
 import datetime
 import soundcloud
 from dateutil import parser
@@ -54,6 +55,7 @@ def soundcloud_runner():
     for _date in date_list:
         offset = 0
         for i in range(1, num_pages + 1):
+            time.sleep(0.3)
             data = client.get(
                 '/tracks',
                 created_at=_date[0],
@@ -133,6 +135,21 @@ def track_info(track_doc):
         track = loads(
             client.get('/tracks/{0}'.format(track_doc['id'])).raw_data
         )
+
+        if 'last_modified' in track:
+            track['last_modified'] = parser.parse(
+                track['last_modified']
+            )
+
+        if 'user' in track:
+            if 'last_modified' in track['user']:
+                track['user']['last_modified'] = parser.parse(
+                    track['user']['last_modified']
+                )
+
+        if 'created_at' in track:
+            track['created_at'] = parser.parse(track['created_at'])
+
         track['has_yesterday'] = True
         track['update_track_data'] = datetime.datetime.now()
 
@@ -166,3 +183,29 @@ def today_yesterday_data(track, track_doc):
         track['daily_playback_count_today'] = today_playback
 
         return track
+
+
+def fix_str_date():
+    tracks = cursor_soundcloud.refined_data.find(no_cursor_timeout=True)
+
+    for track in tracks:
+
+        if 'last_modified' in track:
+            track['last_modified'] = parser.parse(
+                track['last_modified']
+            )
+
+        if 'user' in track:
+            if 'last_modified' in track['user']:
+                track['user']['last_modified'] = parser.parse(
+                    track['user']['last_modified']
+                )
+
+        if 'created_at' in track:
+            track['created_at'] = parser.parse(track['created_at'])
+
+        _update = {'$set': track}
+        cursor_soundcloud.refined_data.update_one(
+            {'_id': track['_id']},
+            _update
+        )

@@ -117,11 +117,23 @@ def yt_mosted_viewed():
                 if k != '_id':
                     if k == 'published_at':
                         new_doc[sql_column[k]] = str(v.date())
+
                     else:
-                        if isinstance(v, int) or isinstance(v, float) or isinstance(v, long):
+                        if isinstance(v, int):
                             new_doc[sql_column[k]] = v
+
+                        elif isinstance(v, float):
+                            new_doc[sql_column[k]] = v
+
+                        elif isinstance(v, long):
+                            new_doc[sql_column[k]] = v
+
                         else:
-                            new_doc[sql_column[k]] = v.encode('utf-8')
+                            if k == 'YTDescription':
+                                new_doc[sql_column[k]] = v[:50].encode('utf-8')
+
+                            else:
+                                new_doc[sql_column[k]] = v.encode('utf-8')
 
             for item in extra_str_columns:
                 new_doc[item] = ""
