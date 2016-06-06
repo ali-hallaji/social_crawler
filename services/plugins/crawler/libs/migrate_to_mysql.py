@@ -119,11 +119,9 @@ def yt_mosted_viewed():
                         new_doc[sql_column[k]] = str(v.date())
                     else:
                         if isinstance(v, int) or isinstance(v, float):
-                            new_doc[sql_column[k]] = mydb.escape_string(v)
+                            new_doc[sql_column[k]] = v
                         else:
-                            new_doc[sql_column[k]] = mydb.escape_string(
-                                v.encode('utf-8')
-                            )
+                            new_doc[sql_column[k]] = v.encode('utf-8')
 
             for item in extra_str_columns:
                 new_doc[item] = ""
