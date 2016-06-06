@@ -187,7 +187,16 @@ def today_yesterday_data(track, track_doc):
 
 
 def fix_str_date():
-    tracks = cursor_soundcloud.refined_data.find(no_cursor_timeout=True)
+    projection = {
+        'last_modified': 1,
+        'created_at': 1,
+        'user.username': 1
+    }
+    tracks = cursor_soundcloud.refined_data.find(
+        {},
+        projection,
+        no_cursor_timeout=True
+    )
 
     for track in tracks:
 
@@ -199,7 +208,7 @@ def fix_str_date():
         if 'created_at' in track:
             track['created_at'] = parser.parse(track['created_at'])
 
-        track['username'] = track.get('user', {}).get('username', '')
+        track['username'] = track.pop('user', {}).get('username', '')
 
         _update = {'$set': track, '$unset': {'user': ''}}
         cursor_soundcloud.refined_data.update_one(
