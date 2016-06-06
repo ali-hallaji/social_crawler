@@ -178,7 +178,7 @@ def yt_mosted_viewed():
                     columns,
                     placeholders
                 )
-                sql_cursor.execute(sql, columns, new_doc.values())
+                sql_cursor.execute(sql, new_doc.values())
                 mydb.commit()
 
             except MySQLdb.IntegrityError as e:
