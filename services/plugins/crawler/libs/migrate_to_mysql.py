@@ -132,7 +132,7 @@ def yt_mosted_viewed():
 
             try:
                 keys = str(tuple(new_doc.keys())).replace("'", '')
-                vals = str(tuple(new_doc.values())).replace("'", '"')
+                vals = str(tuple(new_doc.values())).replace("'", '"""')
 
                 sql = 'INSERT INTO songs_chart %s VALUES %s' % (keys, vals)
                 sql_cursor.execute(sql)
