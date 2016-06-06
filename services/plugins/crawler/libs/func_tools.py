@@ -464,10 +464,8 @@ def executor_crawl(_date, name, criteria, next_page_token=None):
 
 
 def clean_title():
-    criteria = {
-        'title': 1,
-    }
-    videos = cursor.refined_data.find(criteria, no_cursor_timeout=True)
+    projection = {'title': 1}
+    videos = cursor.refined_data.find({}, projection, no_cursor_timeout=True)
 
     for video in videos:
         if '-' in video['title']:
@@ -485,7 +483,8 @@ def clean_title():
 
 
 def clean_category_name():
-    videos = cursor.refined_data.find(no_cursor_timeout=True)
+    projection = {'category_id': 1}
+    videos = cursor.refined_data.find({}, projection, no_cursor_timeout=True)
     category_trans = {'24': 'Entertainment', '10': 'Music'}
 
     for video in videos:
