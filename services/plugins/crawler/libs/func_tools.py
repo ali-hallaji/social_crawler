@@ -164,13 +164,13 @@ def get_video_info(video_id):
 
         if '-' in doc.get('title', ''):
             splited = doc['title'].split('-')
-            video['artist'] = splited[0].strip()
-            video['song_title'] = '-'.join(splited[1:])
-            video['song_title'] = video['song_title'].strip()
+            doc['artist'] = splited[0].strip()
+            doc['song_title'] = '-'.join(splited[1:])
+            doc['song_title'] = doc['song_title'].strip()
 
         else:
-            video['artist'] = video.get('title', '')
-            video['song_title'] = video.get('title', '')
+            doc['artist'] = doc.get('title', '')
+            doc['song_title'] = doc.get('title', '')
 
         doc['has_yesterday'] = True
         doc['update_video_data'] = datetime.datetime.now()
