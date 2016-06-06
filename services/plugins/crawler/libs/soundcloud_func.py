@@ -199,17 +199,14 @@ def fix_str_date():
     )
 
     for track in tracks:
-        try:
-            if 'last_modified' in track:
-                track['last_modified'] = parser.parse(
-                    track['last_modified']
-                )
 
-            if 'created_at' in track:
-                track['created_at'] = parser.parse(track['created_at'])
+        if 'last_modified' in track:
+            track['last_modified'] = parser.parse(
+                str(track['last_modified'])
+            )
 
-        except Exception as e:
-            print str(e)
+        if 'created_at' in track:
+            track['created_at'] = parser.parse(str(track['created_at']))
 
         track['username'] = track.pop('user', {}).get('username', '')
 
