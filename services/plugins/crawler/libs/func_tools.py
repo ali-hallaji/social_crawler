@@ -22,11 +22,11 @@ from config.settings import batch_loop
 from config.settings import delete_month
 from config.settings import delete_video_count
 from config.settings import period_days
-from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
-from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
-# from config.settings import retry_update_count
 from core import toLog
 from core.db import cursor
+from services.plugins.crawler.libs.migrate_to_mysql import yt_mosted_viewed
+from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
+from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
 
 
 def create_base_url(video_id, api_key):
@@ -260,6 +260,7 @@ def start_updating_jobs():
     soundcloud_update()
     toLog("End updating soundcloud ", 'jobs')
     clean_title()
+    yt_mosted_viewed()
 
 
 def execute_batch(_date, name, criteria):
