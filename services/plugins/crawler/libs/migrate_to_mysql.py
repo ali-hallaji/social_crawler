@@ -17,10 +17,14 @@ def yt_mosted_viewed():
 
     mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB)
     mydb.set_character_set('utf8')
+    mydb.query('SET NAMES utf8;')
+    mydb.query('SET CHARACTER SET utf8;')
+    mydb.query('SET character_set_connection=utf8;')
+    mydb.query("set character_set_server=utf8;")
+    mydb.query("set character_set_client=utf8;")
+    mydb.query("set character_set_results=utf8;")
+    mydb.query("set character_set_database=utf8;")
     sql_cursor = mydb.cursor()
-    sql_cursor.execute('SET NAMES utf8;')
-    sql_cursor.execute('SET CHARACTER SET utf8;')
-    sql_cursor.execute('SET character_set_connection=utf8;')
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
     last_date = _date - datetime.timedelta(days=1)
@@ -115,9 +119,11 @@ def yt_mosted_viewed():
                         new_doc[sql_column[k]] = str(v.date())
                     else:
                         if isinstance(v, int) or isinstance(v, float):
-                            new_doc[sql_column[k]] = v
+                            new_doc[sql_column[k]] = mydb.escape_string(v)
                         else:
-                            new_doc[sql_column[k]] = v.encode('utf-8')
+                            new_doc[sql_column[k]] = mydb.escape_string(
+                                v.encode('utf-8')
+                            )
 
             for item in extra_str_columns:
                 new_doc[item] = ""
