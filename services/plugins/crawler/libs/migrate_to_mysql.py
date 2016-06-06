@@ -4,6 +4,7 @@ import datetime
 from pymongo import DESCENDING
 
 # from config.settings import BASE_DIR
+from core import toLog
 from config.settings import SQL_DB
 from config.settings import SQL_HOST
 from config.settings import SQL_PASS
@@ -12,8 +13,14 @@ from core.db import cursor
 
 
 def yt_mosted_viewed():
+    toLog('Start Migration to MySQL', 'db')
+
     mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB)
+    mydb.set_character_set('utf8')
     sql_cursor = mydb.cursor()
+    sql_cursor.execute('SET NAMES utf8;')
+    sql_cursor.execute('SET CHARACTER SET utf8;')
+    sql_cursor.execute('SET character_set_connection=utf8;')
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
     last_date = _date - datetime.timedelta(days=1)
@@ -55,6 +62,35 @@ def yt_mosted_viewed():
         'artist': 'Artist'
     }
 
+    extra_int_columns = [
+        'Met',
+        'Flag',
+        'Cover',
+        'Favorite',
+        'Listened_To',
+    ]
+
+    extra_str_columns = [
+        'Brand_new_artist',
+        'Total',
+        'Brand_new_song',
+        'Tags',
+        'Album',
+        'Chart_name',
+        'Genre',
+        'Label',
+        'Charts_today',
+        'Charts_today_type',
+        'Manager',
+        'Agent',
+        'Lawyer',
+        'Notes',
+        'Negotiation',
+        'Playlist',
+        'Price',
+        'Chart_name_2'
+    ]
+
     projection = {}
     for i in sql_column.keys():
         projection[i] = 1
@@ -75,21 +111,32 @@ def yt_mosted_viewed():
 
             for k, v in doc.items():
                 if k != '_id':
-                    new_doc[sql_column[k]] = v
+                    if k == 'published_at':
+                        new_doc[sql_column[k]] = str(v.date())
+                    else:
+                        if isinstance(v, int) or isinstance(v, float):
+                            new_doc[sql_column[k]] = v
+                        else:
+                            new_doc[sql_column[k]] = v.encode('utf-8')
+
+            for item in extra_str_columns:
+                new_doc[item] = ""
+
+            for item in extra_int_columns:
+                new_doc[item] = 0
 
             new_doc['Date'] = datetime.datetime.now().replace(hour=6, minute=0)
             new_doc['Date'] = str(new_doc['Date'].date())
-            new_doc['ReleaseDate'] = str(new_doc['ReleaseDate'].date())
             new_doc['Chart_type'] = 'YouTube'
             new_doc['Rank'] = count
 
             try:
-                qmarks = ', '.join('?' * len(new_doc))
-                qry = "Insert Into songs_chart (%s) Values (%s)" % (
-                    qmarks,
-                    qmarks
-                )
-                sql_cursor.execute(qry, new_doc.keys() + new_doc.values())
+                keys = str(tuple(new_doc.keys())).replace("'", '')
+                vals = str(tuple(new_doc.values())).replace("'", '"')
+
+                sql = 'INSERT INTO songs_chart %s VALUES %s' % (keys, vals)
+                sql_cursor.execute(sql)
+
                 mydb.commit()
 
             except MySQLdb.IntegrityError as e:
@@ -100,7 +147,9 @@ def yt_mosted_viewed():
                 sql_cursor.execute(qry, new_doc.values())
                 mydb.commit()
 
+            except Exception as e:
+                print str(e)
+
             count += 1
 
-    print 'Finished'
-
+    toLog('End Migration to MySQL', 'db')
