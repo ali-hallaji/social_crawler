@@ -69,16 +69,13 @@ def soundcloud_runner():
             for track in tracks['collection']:
                 track['created_date'] = datetime.datetime.now()
 
+                track['username'] = track.get('user', {}).get('username', '')
+                track.pop('user', '')
+
                 if 'last_modified' in track:
                     track['last_modified'] = parser.parse(
                         track['last_modified']
                     )
-
-                if 'user' in track:
-                    if 'last_modified' in track['user']:
-                        track['user']['last_modified'] = parser.parse(
-                            track['user']['last_modified']
-                        )
 
                 if 'created_at' in track:
                     track['created_at'] = parser.parse(track['created_at'])
@@ -101,6 +98,7 @@ def soundcloud_runner():
 def soundcloud_update():
     all_tracks = cursor_soundcloud.refined_data.find(no_cursor_timeout=True)
 
+    count = 1
     for track in all_tracks:
         main_track = track.copy()
         try:
@@ -121,12 +119,18 @@ def soundcloud_update():
             )
 
             if not update.raw_result.get('updatedExisting', None):
+                count += 1
                 msg = "The video with this id"
                 msg += " '{0}' can't be updated".format(track['id'])
-                toLog(msg, 'db')
+
+                if (count % 100) == 0:
+                    toLog(msg, 'db')
 
         except Exception as e:
-            toLog(str(e), 'error')
+            count += 1
+
+            if (count % 1000) == 0:
+                toLog(str(e), 'error')
 
 
 def track_info(track_doc):
@@ -141,14 +145,11 @@ def track_info(track_doc):
                 track['last_modified']
             )
 
-        if 'user' in track:
-            if 'last_modified' in track['user']:
-                track['user']['last_modified'] = parser.parse(
-                    track['user']['last_modified']
-                )
-
         if 'created_at' in track:
             track['created_at'] = parser.parse(track['created_at'])
+
+        track['username'] = track.get('user', {}).get('username', '')
+        track.pop('user', '')
 
         track['has_yesterday'] = True
         track['update_track_data'] = datetime.datetime.now()
@@ -195,16 +196,12 @@ def fix_str_date():
                 track['last_modified']
             )
 
-        if 'user' in track:
-            if 'last_modified' in track['user']:
-                track['user']['last_modified'] = parser.parse(
-                    track['user']['last_modified']
-                )
-
         if 'created_at' in track:
             track['created_at'] = parser.parse(track['created_at'])
 
-        _update = {'$set': track}
+        track['username'] = track.get('user', {}).get('username', '')
+
+        _update = {'$set': track, '$unset': {'user': ''}}
         cursor_soundcloud.refined_data.update_one(
             {'_id': track['_id']},
             _update
