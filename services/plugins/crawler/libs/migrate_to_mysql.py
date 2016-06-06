@@ -15,7 +15,7 @@ from core.db import cursor
 def yt_mosted_viewed():
     toLog('Start Migration to MySQL', 'db')
 
-    mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB, charset='utf8', init_command='SET NAMES UTF8')
+    mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB)
     mydb.set_character_set('utf8')
     mydb.query('SET NAMES utf8;')
     mydb.query('SET CHARACTER SET utf8;')
@@ -118,7 +118,7 @@ def yt_mosted_viewed():
                     if k == 'published_at':
                         new_doc[sql_column[k]] = str(v.date())
                     else:
-                        if isinstance(v, int) or isinstance(v, float):
+                        if isinstance(v, int) or isinstance(v, float) or isinstance(v, long):
                             new_doc[sql_column[k]] = v
                         else:
                             new_doc[sql_column[k]] = v.encode('utf-8')
@@ -136,7 +136,7 @@ def yt_mosted_viewed():
 
             try:
                 keys = str(tuple(new_doc.keys())).replace("'", '')
-                vals = str(tuple(new_doc.values()))
+                vals = str(tuple(new_doc.values())).replace("'", '"')
 
                 sql = 'INSERT INTO songs_chart %s VALUES %s' % (keys, vals)
                 sql_cursor.execute(sql)
