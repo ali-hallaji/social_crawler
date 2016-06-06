@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import MySQLdb
 import datetime
 
@@ -169,12 +170,15 @@ def yt_mosted_viewed():
             new_doc['Rank'] = count
 
             try:
-                keys = str(tuple(new_doc.keys())).replace("'", '')
-                vals = unicode(tuple(new_doc.values())).replace("'", '"')
-
-                sql = 'INSERT INTO songs_chart %s VALUES %s' % (keys, vals)
-                sql_cursor.execute(sql)
-
+                table = 'songs_chart'
+                placeholders = ', '.join(['%s'] * len(new_doc))
+                columns = ', '.join(new_doc.keys())
+                sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (
+                    table,
+                    columns,
+                    placeholders
+                )
+                sql_cursor.execute(sql, columns, new_doc.values())
                 mydb.commit()
 
             except MySQLdb.IntegrityError as e:
