@@ -78,6 +78,8 @@ def yt_mosted_viewed():
                     new_doc[sql_column[k]] = v
 
             new_doc['Date'] = datetime.datetime.now().replace(hour=6, minute=0)
+            new_doc['Date'] = str(new_doc['Date'].date())
+            new_doc['ReleaseDate'] = str(new_doc['ReleaseDate'].date())
             new_doc['Chart_type'] = 'YouTube'
             new_doc['Rank'] = count
 
