@@ -15,7 +15,7 @@ from core.db import cursor
 def yt_mosted_viewed():
     toLog('Start Migration to MySQL', 'db')
 
-    mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB)
+    mydb = MySQLdb.connect(SQL_HOST, SQL_USER, SQL_PASS, SQL_DB, charset='utf8', init_command='SET NAMES UTF8')
     mydb.set_character_set('utf8')
     mydb.query('SET NAMES utf8;')
     mydb.query('SET CHARACTER SET utf8;')
