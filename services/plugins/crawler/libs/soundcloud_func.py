@@ -67,8 +67,11 @@ def soundcloud_runner():
             for track in tracks['collection']:
                 track['created_date'] = datetime.datetime.now()
 
-                track['username'] = track.get('user', {}).get('username', '')
-                track.pop('user', '')
+                if 'user' in track:
+                    if 'username' in track['user']:
+                        track['username'] = track['user']['username']
+
+                    del track['user']
 
                 if 'last_modified' in track:
                     track['last_modified'] = parser.parse(
@@ -94,11 +97,14 @@ def soundcloud_runner():
 
 
 def soundcloud_update():
-    all_tracks = cursor_soundcloud.refined_data.find(no_cursor_timeout=True)
+    all_tracks = cursor_soundcloud.refined_data.find(
+        no_cursor_timeout=True
+    )
 
     count = 1
     for track in all_tracks:
         main_track = track.copy()
+
         try:
             new_track = track_info(track)
             refine_track = today_yesterday_data(new_track, track)
@@ -146,8 +152,11 @@ def track_info(track_doc):
         if 'created_at' in track:
             track['created_at'] = parser.parse(track['created_at'])
 
-        track['username'] = track.get('user', {}).get('username', '')
-        track.pop('user', '')
+        if 'user' in track:
+            if 'username' in track['user']:
+                track['username'] = track['user']['username']
+
+            del track['user']
 
         track['has_yesterday'] = True
         track['update_track_data'] = datetime.datetime.now()
@@ -206,7 +215,11 @@ def fix_str_date():
         if 'created_at' in track:
             track['created_at'] = parser.parse(str(track['created_at']))
 
-        track['username'] = track.pop('user', {}).get('username', '')
+        if 'user' in track:
+            if 'username' in track['user']:
+                track['username'] = track['user']['username']
+
+            del track['user']
 
         _update = {'$set': track, '$unset': {'user': ''}}
         cursor_soundcloud.refined_data.update_one(

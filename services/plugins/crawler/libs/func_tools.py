@@ -163,9 +163,9 @@ def get_video_info(video_id):
         doc['likes'] = int(statistics.get('likeCount', 0))
 
         if '-' in doc.get('title', ''):
-            splited = doc['title'].split('-')
+            splited = doc['title'].split(' - ')
             doc['artist'] = splited[0].strip()
-            doc['song_title'] = '-'.join(splited[1:])
+            doc['song_title'] = ' - '.join(splited[1:])
             doc['song_title'] = doc['song_title'].strip()
 
         else:
@@ -469,9 +469,9 @@ def clean_title():
 
     for video in videos:
         if '-' in video['title']:
-            splited = video['title'].split('-')
+            splited = video['title'].split(' - ')
             video['artist'] = splited[0].strip()
-            video['song_title'] = '-'.join(splited[1:])
+            video['song_title'] = ' - '.join(splited[1:])
             video['song_title'] = video['song_title'].strip()
 
         else:
