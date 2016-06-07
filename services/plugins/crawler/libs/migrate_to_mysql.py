@@ -21,13 +21,13 @@ def yt_mosted_viewed():
         SQL_USER,
         SQL_PASS,
         SQL_DB,
-        charset='utf8',
+        charset='utf8mb4',
         use_unicode=True
     )
     sql_cursor = mydb.cursor()
-    sql_cursor.execute("SET NAMES utf8;")
-    sql_cursor.execute("SET CHARACTER SET utf8;")
-    sql_cursor.execute("SET character_set_connection=utf8;")
+    sql_cursor.execute("SET NAMES utf8mb4;")
+    sql_cursor.execute("SET CHARACTER SET utf8mb4;")
+    sql_cursor.execute("SET character_set_connection=utf8mb4;")
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
     # last_date = _date - datetime.timedelta(days=1)
