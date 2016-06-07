@@ -36,6 +36,9 @@ def yt_mosted_viewed():
     sql_cursor.execute("SET NAMES utf8;")
     sql_cursor.execute("SET CHARACTER SET utf8;")
     sql_cursor.execute("SET character_set_connection=utf8;")
+    query = "ALTER DATABASE `songs_chart` CHARACTER SET 'utf8' COLLATE"
+    query += " 'utf8_unicode_ci'"
+    sql_cursor.execute(query)
 
     _date = datetime.datetime.now().replace(hour=4, minute=30)
     # last_date = _date - datetime.timedelta(days=1)
@@ -113,7 +116,6 @@ def yt_mosted_viewed():
     for i in sql_column.keys():
         projection[i] = 1
 
-    print criteria
     data = cursor.refined_data.find(
         criteria,
         projection,
