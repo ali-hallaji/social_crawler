@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"ta",
+				"table	statement"
+			],
+			[
+				"sql_",
+				"sql_cursor	statement"
+			],
+			[
+				"pro",
+				"projection"
+			],
+			[
+				"cursor",
+				"cursor_soundcloud	import"
+			],
+			[
 				"so",
 				"soundcloud_update	function"
 			],
@@ -498,22 +514,6 @@
 			[
 				"enc",
 				"enc_list	statement"
-			],
-			[
-				"pro",
-				"process_exists	function"
-			],
-			[
-				"sub",
-				"subprocess	module"
-			],
-			[
-				"sys",
-				"system	function"
-			],
-			[
-				"ref",
-				"refinary_loop_arr	function"
 			]
 		]
 	},
@@ -544,18 +544,18 @@
 			}
 		},
 		{
-			"file": "services/plugins/crawler/start_soundcloud.py",
+			"file": "services/plugins/crawler/libs/func_tools.py",
 			"settings":
 			{
-				"buffer_size": 700,
+				"buffer_size": 16967,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "services/plugins/crawler/libs/func_tools.py",
+			"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
 			"settings":
 			{
-				"buffer_size": 16888,
+				"buffer_size": 6261,
 				"line_ending": "Unix"
 			}
 		},
@@ -563,7 +563,7 @@
 			"file": "services/plugins/crawler/libs/soundcloud_func.py",
 			"settings":
 			{
-				"buffer_size": 5297,
+				"buffer_size": 6473,
 				"line_ending": "Unix"
 			}
 		},
@@ -650,10 +650,6 @@
 	[
 		"/home/ali/Public/Projects/crawler/youtube_crawler",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/config",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/core",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/core/cache_control",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/core/db",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/core/generals",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/requirments",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins",
@@ -793,7 +789,7 @@
 	],
 	"find":
 	{
-		"height": 64.0
+		"height": 65.0
 	},
 	"find_in_files":
 	{
@@ -812,6 +808,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cursor",
+			"video",
 			"tolog",
 			"find(",
 			"SoundCloudRunner",
@@ -937,8 +935,6 @@
 			"research",
 			"Research",
 			"research",
-			"exhibition",
-			"Exhibition",
 			"exhibition"
 		],
 		"highlight": true,
@@ -972,7 +968,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1035,10 +1031,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 144.0,
+						"translation.y": 700.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1061,37 +1057,6 @@
 						"settings":
 						{
 							"incomplete_sync": null,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 216.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "services/plugins/crawler/start_soundcloud.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								700,
-								700
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
@@ -1099,27 +1064,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 188.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "services/plugins/crawler/libs/func_tools.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16888,
+						"buffer_size": 16967,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								14569,
-								14569
+								16410,
+								16410
 							]
 						],
 						"settings":
@@ -1133,27 +1098,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 10065.0,
+						"translation.y": 11449.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "services/plugins/crawler/libs/soundcloud_func.py",
+					"buffer": 4,
+					"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5297,
+						"buffer_size": 6261,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3169,
-								3169
+								6201,
+								6201
 							]
 						],
 						"settings":
@@ -1162,13 +1127,47 @@
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3528.0,
+						"translation.y": 3927.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "services/plugins/crawler/libs/soundcloud_func.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6226,
+								6226
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4777.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1197,7 +1196,7 @@
 							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1080.0,
+						"translation.y": 208.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -1208,7 +1207,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 33.0
+		"height": 32.0
 	},
 	"input":
 	{
@@ -1249,7 +1248,7 @@
 	"project": "crawler.sublime-project",
 	"replace":
 	{
-		"height": 105.0
+		"height": 60.0
 	},
 	"save_all_on_build": true,
 	"select_file":

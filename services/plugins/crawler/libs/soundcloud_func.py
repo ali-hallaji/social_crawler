@@ -1,4 +1,3 @@
-import time
 import datetime
 import soundcloud
 from dateutil import parser
@@ -55,7 +54,6 @@ def soundcloud_runner():
     for _date in date_list:
         offset = 0
         for i in range(1, num_pages + 1):
-            time.sleep(0.3)
             data = client.get(
                 '/tracks',
                 created_at=_date[0],
