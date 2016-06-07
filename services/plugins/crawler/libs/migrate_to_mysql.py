@@ -49,7 +49,7 @@ def yt_mosted_viewed():
     mydb.commit()
 
     query = "ALTER TABLE songs_chart MODIFY COLUMN YTTitle"
-    query += " varchar(500) DEFAULT '' CHARACTER SET utf8"
+    query += " varchar(500) CHARACTER SET utf8"
     query += " COLLATE utf8_general_ci NOT NULL;"
     sql_cursor.execute(query)
     mydb.commit()
