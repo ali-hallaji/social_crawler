@@ -111,6 +111,7 @@ def yt_mosted_viewed():
     for i in sql_column.keys():
         projection[i] = 1
 
+    print criteria
     data = cursor.refined_data.find(
         criteria,
         projection,
