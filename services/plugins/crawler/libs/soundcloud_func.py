@@ -99,11 +99,12 @@ def soundcloud_runner():
 
 
 def soundcloud_update():
-    all_tracks = cursor_soundcloud.refined_data.find(no_cursor_timeout=True)
+    all_tracks = cursor_soundcloud.refined_data.find(
+        no_cursor_timeout=True
+    )
 
     count = 1
     for track in all_tracks:
-        time.sleep(0.5)
         main_track = track.copy()
 
         try:
