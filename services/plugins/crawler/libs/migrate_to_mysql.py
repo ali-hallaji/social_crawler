@@ -140,13 +140,15 @@ def yt_mosted_viewed():
                             new_doc[sql_column[k]] = v
 
                         else:
-                            if k == 'YTDescription':
+                            if k == 'description':
                                 if isinstance(v, basestring):
                                     text = v[:50].encode('utf8')
+                                    text += ' ...'
                                     new_doc[sql_column[k]] = text
 
                                 else:
                                     text = unicode(v[:50]).encode('utf8')
+                                    text += ' ...'
                                     new_doc[sql_column[k]] = text
 
                             else:
