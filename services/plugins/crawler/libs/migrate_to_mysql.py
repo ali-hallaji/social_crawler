@@ -24,52 +24,13 @@ def yt_mosted_viewed():
         charset='utf8',
         use_unicode=True
     )
-    # mydb.set_character_set('utf8')
-    # mydb.query('SET NAMES utf8;')
-    # mydb.query('SET CHARACTER SET utf8;')
-    # mydb.query('SET character_set_connection=utf8;')
-    # mydb.query("set character_set_server=utf8;")
-    # mydb.query("set character_set_client=utf8;")
-    # mydb.query("set character_set_results=utf8;")
-    # mydb.query("set character_set_database=utf8;")
     sql_cursor = mydb.cursor()
     sql_cursor.execute("SET NAMES utf8;")
     sql_cursor.execute("SET CHARACTER SET utf8;")
     sql_cursor.execute("SET character_set_connection=utf8;")
 
-    query = "ALTER DATABASE `newdatabase` CHARACTER SET 'utf8' COLLATE"
-    query += " 'utf8_unicode_ci'"
-    sql_cursor.execute(query)
-    mydb.commit()
-
-    query = "ALTER TABLE songs_chart MODIFY COLUMN YTDESCRIPTION"
-    query += " varchar(500) CHARACTER SET utf8"
-    query += " COLLATE utf8_general_ci;"
-    sql_cursor.execute(query)
-    mydb.commit()
-
-    query = "ALTER TABLE songs_chart MODIFY COLUMN YTTitle"
-    query += " varchar(500) CHARACTER SET utf8"
-    query += " COLLATE utf8_general_ci NOT NULL;"
-    sql_cursor.execute(query)
-    mydb.commit()
-
-    query = "ALTER TABLE songs_chart MODIFY COLUMN Song"
-    query += " varchar(500) CHARACTER SET utf8"
-    query += " COLLATE utf8_general_ci NOT NULL;"
-    sql_cursor.execute(query)
-    mydb.commit()
-
-    query = "ALTER TABLE songs_chart MODIFY COLUMN Artist"
-    query += " varchar(500) CHARACTER SET utf8"
-    query += " COLLATE utf8_general_ci NOT NULL;"
-    sql_cursor.execute(query)
-    mydb.commit()
-
     _date = datetime.datetime.now().replace(hour=4, minute=30)
-    # last_date = _date - datetime.timedelta(days=1)
-    _date = _date - datetime.timedelta(days=1)
-    last_date = _date - datetime.timedelta(days=2)
+    last_date = _date - datetime.timedelta(days=1)
 
     criteria = {
         "$or": [
@@ -148,10 +109,8 @@ def yt_mosted_viewed():
         no_cursor_timeout=True
     )
     data = data.sort('daily_views_today', DESCENDING).limit(50000)
-    # path = BASE_DIR + '/cache/' + '{0}.csv'.format(_date.date())
 
     if data:
-
         count = 1
         for doc in data:
             new_doc = {}
@@ -205,14 +164,6 @@ def yt_mosted_viewed():
 
             try:
                 table = 'songs_chart'
-                # placeholders = ', '.join(['%s'] * len(new_doc))
-                # columns = ', '.join(new_doc.keys())
-                # sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (
-                #     table,
-                #     columns,
-                #     placeholders
-                # )
-                # sql_cursor.execute(sql, new_doc.values())
                 sql = insert_from_dict(table, new_doc)
                 sql_cursor.execute(sql, new_doc)
                 mydb.commit()
