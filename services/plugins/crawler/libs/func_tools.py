@@ -161,7 +161,7 @@ def get_video_info(video_id):
         doc['all_views'] = int(statistics.get('viewCount', 0))
         doc['likes'] = int(statistics.get('likeCount', 0))
 
-        if '-' in doc.get('title', ''):
+        if ' - ' in doc.get('title', ''):
             splited = doc['title'].split(' - ')
             doc['artist'] = splited[0].strip()
             doc['song_title'] = ' - '.join(splited[1:])
@@ -256,10 +256,10 @@ def start_updating_jobs():
             toLog(str(e), 'error')
 
     toLog("Start updating soundcloud ", 'jobs')
-    soundcloud_update()
-    toLog("End updating soundcloud ", 'jobs')
     clean_title()
     yt_mosted_viewed()
+    soundcloud_update()
+    toLog("End updating soundcloud ", 'jobs')
 
 
 def execute_batch(_date, name, criteria):
@@ -466,7 +466,7 @@ def clean_title():
     videos = cursor.refined_data.find({}, projection, no_cursor_timeout=True)
 
     for video in videos:
-        if '-' in video['title']:
+        if ' - ' in video['title']:
             splited = video['title'].split(' - ')
             video['artist'] = splited[0].strip()
             video['song_title'] = ' - '.join(splited[1:])
