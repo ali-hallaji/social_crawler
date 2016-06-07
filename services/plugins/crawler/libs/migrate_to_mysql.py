@@ -36,7 +36,7 @@ def yt_mosted_viewed():
     sql_cursor.execute("SET NAMES utf8;")
     sql_cursor.execute("SET CHARACTER SET utf8;")
     sql_cursor.execute("SET character_set_connection=utf8;")
-    query = "ALTER DATABASE `songs_chart` CHARACTER SET 'utf8' COLLATE"
+    query = "ALTER DATABASE `newdatabase` CHARACTER SET 'utf8' COLLATE"
     query += " 'utf8_unicode_ci'"
     sql_cursor.execute(query)
 
