@@ -37,14 +37,8 @@ def yt_mosted_viewed():
     query += " utf8mb4 COLLATE utf8mb4_unicode_ci;"
     sql_cursor.execute(query)
 
-    query = "ALTER TABLE songs_chart CHANGE YTDESCRIPTION YTDESCRIPTION"
-    query += " VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-    sql_cursor.execute(query)
-
     _date = datetime.datetime.now().replace(hour=4, minute=30)
-    # last_date = _date - datetime.timedelta(days=1)
-    _date = _date - datetime.timedelta(days=1)
-    last_date = _date - datetime.timedelta(days=2)
+    last_date = _date - datetime.timedelta(days=1)
 
     criteria = {
         "$or": [
