@@ -83,6 +83,7 @@ def yt_mosted_viewed():
         'Cover',
         'Favorite',
         'Listened_To',
+        'Omit'
     ]
 
     extra_str_columns = [
