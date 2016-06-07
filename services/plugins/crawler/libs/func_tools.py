@@ -4,7 +4,6 @@ import bs4
 import datetime
 import json
 import requests
-import time
 import urllib
 import urlparse
 
@@ -268,7 +267,6 @@ def execute_batch(_date, name, criteria):
 
     for i in range(1, (batch_loop + 1)):
         try:
-            time.sleep(0.5)
             next_page = executor_crawl(_date, name, criteria, next_page)
 
         except Exception as e:
