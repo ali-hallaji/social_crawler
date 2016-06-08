@@ -1,4 +1,3 @@
-import time
 import datetime
 import soundcloud
 from dateutil import parser
@@ -55,7 +54,6 @@ def soundcloud_runner():
     for _date in date_list:
         offset = 0
         for i in range(1, num_pages + 1):
-            time.sleep(0.5)
             data = client.get(
                 '/tracks',
                 created_at=_date[0],
@@ -99,7 +97,16 @@ def soundcloud_runner():
 
 
 def soundcloud_update():
+    less_today = datetime.datetime.now().replace(hour=4, minute=30, second=0)
+    _criteria = {
+        'private': {'$ne': True},
+        '$or': [
+            {'update_track_data': {'$lte': less_today}},
+            {'update_track_data': {'$exists': False}}
+        ]
+    }
     all_tracks = cursor_soundcloud.refined_data.find(
+        _criteria,
         no_cursor_timeout=True
     )
 
