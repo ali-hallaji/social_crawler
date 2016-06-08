@@ -215,7 +215,7 @@ def today_yesterday_data(_id):
 
 
 def start_updating_jobs():
-    less_today = datetime.datetime.now().replace(hour=4, minute=30, second=0)
+    less_today = datetime.datetime.now().replace(hour=2, minute=30, second=0)
     _criteria = {
         'private': {'$ne': True},
         '$or': [
@@ -317,6 +317,7 @@ def bulk_jobs_from_dates():
     toLog("Start crawling soundcloud ", 'jobs')
     soundcloud_runner()
     toLog("End crawling soundcloud ", 'jobs')
+    delete_video()
 
 
 def executor_crawl(_date, name, criteria, next_page_token=None):

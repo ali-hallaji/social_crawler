@@ -37,7 +37,7 @@ def yt_mosted_viewed():
     query += " utf8mb4 COLLATE utf8mb4_unicode_ci;"
     sql_cursor.execute(query)
 
-    _date = datetime.datetime.now().replace(hour=4, minute=30)
+    _date = datetime.datetime.now().replace(hour=2, minute=30)
     last_date = _date - datetime.timedelta(days=1)
 
     criteria = {

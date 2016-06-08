@@ -48,7 +48,7 @@ def create_crawl_job():
 
     msg = "end crawler jobs"
     toLog(msg, 'jobs')
-    delete_video()
+    # delete_video()
 
 
 def update_crawl_data():
