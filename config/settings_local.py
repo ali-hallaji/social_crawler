@@ -29,7 +29,7 @@ hour_crawl = '0'
 minute_crawl = '30'
 batch_loop = 21
 delete_month = 6
-delete_video_count = 350000
+delete_video_count = 500000
 api_key_update = DEVELOPER_KEY2
 
 # SoundCloud
