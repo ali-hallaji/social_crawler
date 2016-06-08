@@ -23,13 +23,13 @@ period_days = 120
 period_years = 1
 max_page_crawl = 100000
 retry_update_count = 40
-hour_update = '4'
+hour_update = '2'
 minute_update = '30'
 hour_crawl = '0'
 minute_crawl = '30'
 batch_loop = 21
 delete_month = 6
-delete_video_count = 500000
+delete_video_count = 5000000
 api_key_update = DEVELOPER_KEY2
 
 # SoundCloud
