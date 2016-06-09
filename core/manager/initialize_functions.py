@@ -16,9 +16,8 @@ from core import toLog
 from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import bulk_jobs_from_dates
 from services.plugins.crawler.libs.func_tools import crawl_search
-from services.plugins.crawler.libs.func_tools import delete_video
 from services.plugins.crawler.libs.func_tools import start_updating_jobs
-# from services.plugins.crawler.libs.backup_scheduler import yt_mosted_viewed
+# from services.plugins.crawler.libs.backup_scheduler import yt_most_viewed
 # from config.settings import period_years
 # from core.generals.scheduler import scheduler
 # from services.plugins.crawler.libs.func_tools import divide_datetime
@@ -32,7 +31,7 @@ def initial_executer():
 
     # Update crawl
     update_crawl_data()
-    # yt_mosted_viewed()
+    # yt_most_viewed()
 
 
 def create_crawl_job():
