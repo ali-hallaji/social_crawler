@@ -154,14 +154,17 @@ def soundcloud_update():
             {'update_track_data': {'$exists': False}}
         ]
     }
+    projection = {
+        'id': 1
+    }
     all_tracks = cursor_soundcloud.refined_data.find(
         _criteria,
+        projection,
         no_cursor_timeout=True
     )
 
     count = 1
     for track in all_tracks:
-        main_track = track.copy()
 
         try:
             new_track = track_info(track)
@@ -169,11 +172,11 @@ def soundcloud_update():
 
             if not refine_track:
                 toLog(
-                    'Unsuccessful update: {0}'.format(main_track['id']), 'jobs'
+                    'Unsuccessful update: {0}'.format(track['id']), 'jobs'
                 )
                 continue
 
-            criteria = {'_id': main_track['_id']}
+            criteria = {'_id': track['_id']}
             _update = {'$set': refine_track}
             update = cursor_soundcloud.refined_data.update_one(
                 criteria,
@@ -238,7 +241,14 @@ def track_info(track_doc):
         cursor_soundcloud.logs.insert(data_log)
 
 
-def today_yesterday_data(track, track_doc):
+def today_yesterday_data(track, _id):
+    criteria = {'_id': _id['_id']}
+    projection = {
+        'playback_count': 1,
+        'daily_playback_count_today': 1
+    }
+    track_doc = cursor_soundcloud.refined_data.find_one(criteria, projection)
+
     if track and ('playback_count' in track):
         track['daily_playback_count_yesterday'] = int(
             track_doc.get('daily_playback_count_today', 0)
