@@ -286,6 +286,7 @@ def sc_most_played():
     ]
 
     extra_str_columns = [
+        'YTTitle',
         'Brand_new_artist',
         'Total',
         'Brand_new_song',
@@ -345,10 +346,12 @@ def sc_most_played():
                                     new_doc[sql_column[k]] = text
 
                                 else:
-                                    text = unicode(v[:50]).encode('utf8')
-                                    text += ' ...'
-                                    new_doc[sql_column[k]] = text
-
+                                    try:
+                                        text = unicode(v[:50]).encode('utf8')
+                                        text += ' ...'
+                                        new_doc[sql_column[k]] = text
+                                    except Exception as e:
+                                        print str(e)
                             else:
                                 if isinstance(v, basestring):
                                     text = v.encode('utf8')
