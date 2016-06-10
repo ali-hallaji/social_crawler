@@ -114,7 +114,16 @@ def soundcloud_runner():
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 data = requests.get(url)
 
-                catharsis(data.json())
+                try:
+                    loads_data = data.json()
+
+                    if loads_data and 'error' not in loads_data:
+                        catharsis(loads_data)
+                    else:
+                        pass
+
+                except Exception as e:
+                    print str(e)
 
                 offset += page_length
 
@@ -292,8 +301,6 @@ def pre_catharsis(track):
 
 
 def catharsis(tracks):
-    print tracks
-    print tracks.keys()
     for track in tracks['collection']:
         track = pre_catharsis(track)
         track['created_date'] = datetime.datetime.now()
