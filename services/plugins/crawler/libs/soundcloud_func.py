@@ -242,6 +242,7 @@ def track_info(track_doc):
 
 
 def today_yesterday_data(track, _id):
+    # This is good
     criteria = {'_id': _id['_id']}
     projection = {
         'playback_count': 1,
