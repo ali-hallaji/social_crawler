@@ -292,6 +292,8 @@ def pre_catharsis(track):
 
 
 def catharsis(tracks):
+    print tracks
+    print tracks.keys()
     for track in tracks['collection']:
         track = pre_catharsis(track)
         track['created_date'] = datetime.datetime.now()
