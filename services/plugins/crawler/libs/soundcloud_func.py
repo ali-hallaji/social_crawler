@@ -14,7 +14,7 @@ from core.db import cursor_soundcloud
 
 
 def soundcloud_runner():
-    client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
+    # client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
 
     # now = datetime.datetime.now()
     # last_day = now - datetime.timedelta(days=1)
@@ -111,7 +111,7 @@ def soundcloud_runner():
                 url += "/charts?kind={0}".format(kind)
                 url += "&genre=soundcloud%3Agenres%3A{0}&client".format(genre)
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
-                url += "limit={2}&linked_partitioning=1".format(page_length)
+                url += "limit={0}&linked_partitioning=1".format(page_length)
                 data = requests.get(url)
 
                 try:
