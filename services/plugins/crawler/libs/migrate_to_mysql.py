@@ -245,7 +245,7 @@ def sc_most_played():
                     "$gt": _date
                 },
                 "daily_playback_count_yesterday": {
-                    "$gt": 0
+                    "$gte": 0
                 }
             },
             {
