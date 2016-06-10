@@ -23,6 +23,7 @@ from config.settings import delete_video_count
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
+from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 from services.plugins.crawler.libs.migrate_to_mysql import yt_most_viewed
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
@@ -259,6 +260,7 @@ def start_updating_jobs():
     clean_title()
     yt_most_viewed()
     soundcloud_update()
+    sc_most_played()
     toLog("End updating soundcloud ", 'jobs')
 
 
