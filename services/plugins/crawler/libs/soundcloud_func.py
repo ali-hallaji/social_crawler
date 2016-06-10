@@ -301,6 +301,7 @@ def pre_catharsis(track):
 
 
 def catharsis(tracks):
+    counter = 0
     for track in tracks['collection']:
         track = pre_catharsis(track)
         track['created_date'] = datetime.datetime.now()
@@ -321,9 +322,13 @@ def catharsis(tracks):
 
         try:
             result = cursor_soundcloud.refined_data.insert(track)
+
         except DuplicateKeyError:
+            counter += 1
             result = True
-            toLog("Duplicate Error: It can't be save record", 'error')
+
+            if (counter % 25) == 0:
+                toLog("Duplicate Error: It can't be save record", 'error')
 
         if not result:
             msg = "Crawling Error: It can't be save record"
