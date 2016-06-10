@@ -257,22 +257,22 @@ def sc_most_played():
     }
 
     sql_column = {
-        'published_at': 'ReleaseDate',
-        'href': 'YTURL',
-        'dislikes': 'YTDisLikes',
-        'likes': 'YTLikes',
-        'id': 'YTVideoID',
-        'daily_views_today': 'YTDailyViews',
-        'title': 'YTTitle',
-        'comment_count': 'YTComments',
-        'channel_title': 'YTChannel',
-        'description': 'YTDescription',
-        'daily_views_yesterday': 'YTDailyViewsYest',
-        'channel_id': 'YTChannelID',
-        'all_views': 'YTAllTimeViews',
-        'category_name': 'YTCategory',
-        'song_title': 'Song',
-        'artist': 'Artist'
+        'created_at': 'ReleaseDate',
+        'permalink_url': 'SCURL',
+        'label_name': 'Label',
+        'genre': 'Genre',
+        'download_count': 'SCDownloads',
+        'id': 'SCSongID',
+        'daily_playback_count_today': 'SCDailyStreams',
+        'isrc': 'ISRC',
+        'title': 'Song',
+        'comment_count': 'SCComments',
+        'description': 'SCDescription',
+        'daily_playback_count_yesterday': 'SCDailyStreamsYest',
+        'artwork_url': 'SCArtWorkURL',
+        'playback_count': 'SCAllTimeStreams',
+        'user_id': 'SCUserID',
+        'username': 'Artist'
     }
 
     extra_int_columns = [
