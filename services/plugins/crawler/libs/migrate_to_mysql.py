@@ -295,8 +295,6 @@ def sc_most_played():
         'Tags',
         'Album',
         'Chart_name',
-        'Genre',
-        'Label',
         'Charts_today',
         'Charts_today_type',
         'Manager',
