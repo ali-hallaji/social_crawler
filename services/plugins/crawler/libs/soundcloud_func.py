@@ -1,3 +1,4 @@
+import requests
 import datetime
 import soundcloud
 from dateutil import parser
@@ -15,85 +16,127 @@ from core.db import cursor_soundcloud
 def soundcloud_runner():
     client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
 
-    now = datetime.datetime.now()
-    last_day = now - datetime.timedelta(days=1)
-    last_week = now - datetime.timedelta(days=7)
-    last_month = now - datetime.timedelta(days=31)
-    last_year = now - datetime.timedelta(days=365)
-    ten_years = now - datetime.timedelta(days=(365 * 10))
+    # now = datetime.datetime.now()
+    # last_day = now - datetime.timedelta(days=1)
+    # last_week = now - datetime.timedelta(days=7)
+    # last_month = now - datetime.timedelta(days=31)
+    # last_year = now - datetime.timedelta(days=365)
+    # ten_years = now - datetime.timedelta(days=(365 * 10))
 
-    daily = {
-        'from': last_day.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': now.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    weekly = {
-        'from': last_week.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_day.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    monthly = {
-        'from': last_month.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_week.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    yearly = {
-        'from': last_year.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_month.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    ten = {
-        'from': ten_years.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_year.strftime("%Y-%m-%d %H:%M:%S")
-    }
+    # daily = {
+    #     'from': last_day.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': now.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # weekly = {
+    #     'from': last_week.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_day.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # monthly = {
+    #     'from': last_month.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_week.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # yearly = {
+    #     'from': last_year.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_month.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # ten = {
+    #     'from': ten_years.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_year.strftime("%Y-%m-%d %H:%M:%S")
+    # }
 
-    date_list = [
-        (daily, 'Daily'),
-        (weekly, 'Weekly'),
-        (monthly, 'Monthly'),
-        (yearly, 'Yearly'),
-        (ten, 'Ten years')
+    # date_list = [
+    #     (daily, 'Daily'),
+    #     (weekly, 'Weekly'),
+    #     (monthly, 'Monthly'),
+    #     (yearly, 'Yearly'),
+    #     (ten, 'Ten years')
+    # ]
+
+    kind_list = [
+        'top',      # Top 50
+        'trending'  # New & Hot
     ]
 
-    for _date in date_list:
-        offset = 0
-        for i in range(1, num_pages + 1):
-            data = client.get(
-                '/tracks',
-                created_at=_date[0],
-                order='playback_count',
-                limit=page_length,
-                linked_partitioning=1,
-                offset=offset
-            )
-            tracks = loads(data.raw_data)
+    genres_list = [
+        "all-music",
+        "all-audio",
+        "alternativerock",
+        "ambient",
+        "classical",
+        "country",
+        "danceedm",
+        "dancehall",
+        "deephouse",
+        "disco",
+        "drumbass",
+        "dubstep",
+        "electronic",
+        "folksingersongwriter",
+        "hiphoprap",
+        "house",
+        "indie",
+        "jazzblues",
+        "latin",
+        "metal",
+        "piano",
+        "pop",
+        "rbsoul",
+        "reggae",
+        "reggaeton",
+        "rock",
+        "soundtrack",
+        "techno",
+        "trance",
+        "trap",
+        "triphop",
+        "world",
+        "audiobooks",
+        "business",
+        "comedy",
+        "entertainment",
+        "learning",
+        "newspolitics",
+        "religionspirituality",
+        "science",
+        "sports",
+        "storytelling",
+        "technology",
+    ]
 
-            for track in tracks['collection']:
-                track['created_date'] = datetime.datetime.now()
-
-                if 'user' in track:
-                    if 'username' in track['user']:
-                        track['username'] = track['user']['username']
-
-                    del track['user']
-
-                if 'last_modified' in track:
-                    track['last_modified'] = parser.parse(
-                        track['last_modified']
-                    )
-
-                if 'created_at' in track:
-                    track['created_at'] = parser.parse(track['created_at'])
+    for kind in kind_list:
+        for genre in genres_list:
+            offset = 0
+            for i in range(1, num_pages + 1):
+                url = "https://api-v2.soundcloud.com"
+                url += "/charts?kind={0}".format(kind)
+                url += "&genre=soundcloud%3Agenres%3A{0}&client".format(genre)
+                url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
+                url += "limit={2}&linked_partitioning=1".format(page_length)
+                data = requests.get(url)
 
                 try:
-                    result = cursor_soundcloud.refined_data.insert(track)
-                except DuplicateKeyError:
-                    result = True
-                    toLog("Duplicate Error: It can't be save record", 'error')
+                    catharsis(data.json())
+                except Exception as e:
+                    print str(e)
 
-                if not result:
-                    msg = "Crawling Error: It can't be save record"
-                    msg += "{0}".format(track)
-                    toLog(msg, 'error')
+                offset += page_length
 
-            offset += page_length
-            toLog('{0} Crawled for soundcloud'.format(_date[1]), 'jobs')
+    # for _date in date_list:
+    #     offset = 0
+    #     for i in range(1, num_pages + 1):
+    #         data = client.get(
+    #             '/tracks',
+    #             created_at=_date[0],
+    #             order='playback_count',
+    #             limit=page_length,
+    #             linked_partitioning=1,
+    #             offset=offset
+    #         )
+
+    #         catharsis(loads(data.raw_data))
+
+    #         offset += page_length
+    #         toLog('{0} Crawled for soundcloud'.format(_date[1]), 'jobs')
 
 
 def soundcloud_update():
@@ -235,3 +278,48 @@ def fix_str_date():
             {'_id': track['_id']},
             _update
         )
+
+
+def pre_catharsis(track):
+    new_track = {}
+
+    if 'track' in track:
+        for k, v in track['track'].items():
+            new_track[k] = v
+
+        new_track['score'] = track['score']
+        return new_track
+
+    else:
+        return track
+
+
+def catharsis(tracks):
+    for track in tracks['collection']:
+        track = pre_catharsis(track)
+        track['created_date'] = datetime.datetime.now()
+
+        if 'user' in track:
+            if 'username' in track['user']:
+                track['username'] = track['user']['username']
+
+            del track['user']
+
+        if 'last_modified' in track:
+            track['last_modified'] = parser.parse(
+                track['last_modified']
+            )
+
+        if 'created_at' in track:
+            track['created_at'] = parser.parse(track['created_at'])
+
+        try:
+            result = cursor_soundcloud.refined_data.insert(track)
+        except DuplicateKeyError:
+            result = True
+            toLog("Duplicate Error: It can't be save record", 'error')
+
+        if not result:
+            msg = "Crawling Error: It can't be save record"
+            msg += "{0}".format(track)
+            toLog(msg, 'error')
