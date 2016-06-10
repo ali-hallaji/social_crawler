@@ -266,6 +266,7 @@ def sc_most_played():
         'daily_playback_count_today': 'SCDailyStreams',
         'isrc': 'ISRC',
         'title': 'Song',
+        'favoritings_count': 'SCFavorites',
         'comment_count': 'SCComments',
         'description': 'SCDescription',
         'daily_playback_count_yesterday': 'SCDailyStreamsYest',
