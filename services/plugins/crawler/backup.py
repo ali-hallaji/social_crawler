@@ -4,7 +4,7 @@ from bson.json_util import dumps
 # Core Services import
 from services.libs.async_call import asynchronous
 from services.libs.register import register
-from services.plugins.crawler.libs.backup_scheduler import yt_mosted_viewed
+from services.plugins.crawler.libs.backup_scheduler import yt_most_viewed
 
 
 @register
@@ -29,7 +29,7 @@ class BackUp:
     @asynchronous
     def run(self):
 
-        yt_mosted_viewed()
+        yt_most_viewed()
         return dumps(True)
 
 
