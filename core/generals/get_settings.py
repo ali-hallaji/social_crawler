@@ -24,14 +24,5 @@ def general_settings(key=None):
     return get_settings('GeneralSettings', key)
 
 
-def default_status(key=None):
-
-    return get_settings('DefaultStatus', key)
-
-
-def resource_customization(key=None):
-    return get_settings('ResourceCustomization', key)
-
-
-def pa_settings(key=None):
-    return get_settings('PASettings', key)
+def yt_settings(key=None):
+    return get_settings('YTSettings', key)
