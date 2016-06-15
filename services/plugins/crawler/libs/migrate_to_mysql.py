@@ -40,7 +40,7 @@ def yt_most_viewed():
     sql_cursor.execute(query)
 
     _date = datetime.datetime.now().replace(hour=2, minute=30)
-    last_date = _date - datetime.timedelta(days=yt_settings('last_date'))
+    last_date = _date - datetime.timedelta(days=int(yt_settings('last_date')))
 
     criteria = {
         "$or": [
