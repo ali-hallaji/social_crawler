@@ -15,6 +15,6 @@ def MongoCursorDefsGlobal(db):
     return MongoConnectionGlobal().getCursor(db)
 
 
-cursor_local = MongoCursorDefsLocal('YouTube')
+cursor_local = MongoCursorDefsLocal('All')
 cursor_soundcloud = MongoCursorDefsGlobal('SoundCloud')
 cursor = MongoCursorDefsSelf('YouTube')
