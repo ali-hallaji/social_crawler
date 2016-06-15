@@ -10,6 +10,7 @@ from config.settings import SQL_HOST
 from config.settings import SQL_PASS
 from config.settings import SQL_USER
 from core import toLog
+from core.generals.get_settings import yt_settings
 from core.db import cursor
 from core.db import cursor_soundcloud
 
@@ -39,7 +40,7 @@ def yt_most_viewed():
     sql_cursor.execute(query)
 
     _date = datetime.datetime.now().replace(hour=2, minute=30)
-    last_date = _date - datetime.timedelta(days=1)
+    last_date = _date - datetime.timedelta(days=yt_settings('last_date'))
 
     criteria = {
         "$or": [
