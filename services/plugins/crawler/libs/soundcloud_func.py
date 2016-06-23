@@ -14,43 +14,43 @@ from core.db import cursor_soundcloud
 
 
 def soundcloud_runner():
-    client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
+    # client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
 
-    now = datetime.datetime.now()
-    last_day = now - datetime.timedelta(days=1)
-    last_week = now - datetime.timedelta(days=7)
-    last_month = now - datetime.timedelta(days=31)
-    last_year = now - datetime.timedelta(days=365)
-    ten_years = now - datetime.timedelta(days=(365 * 10))
+    # now = datetime.datetime.now()
+    # last_day = now - datetime.timedelta(days=1)
+    # last_week = now - datetime.timedelta(days=7)
+    # last_month = now - datetime.timedelta(days=31)
+    # last_year = now - datetime.timedelta(days=365)
+    # ten_years = now - datetime.timedelta(days=(365 * 10))
 
-    daily = {
-        'from': last_day.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': now.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    weekly = {
-        'from': last_week.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_day.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    monthly = {
-        'from': last_month.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_week.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    yearly = {
-        'from': last_year.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_month.strftime("%Y-%m-%d %H:%M:%S")
-    }
-    ten = {
-        'from': ten_years.strftime("%Y-%m-%d %H:%M:%S"),
-        'to': last_year.strftime("%Y-%m-%d %H:%M:%S")
-    }
+    # daily = {
+    #     'from': last_day.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': now.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # weekly = {
+    #     'from': last_week.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_day.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # monthly = {
+    #     'from': last_month.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_week.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # yearly = {
+    #     'from': last_year.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_month.strftime("%Y-%m-%d %H:%M:%S")
+    # }
+    # ten = {
+    #     'from': ten_years.strftime("%Y-%m-%d %H:%M:%S"),
+    #     'to': last_year.strftime("%Y-%m-%d %H:%M:%S")
+    # }
 
-    date_list = [
-        (daily, 'Daily'),
-        (weekly, 'Weekly'),
-        (monthly, 'Monthly'),
-        (yearly, 'Yearly'),
-        (ten, 'Ten years')
-    ]
+    # date_list = [
+    #     (daily, 'Daily'),
+    #     (weekly, 'Weekly'),
+    #     (monthly, 'Monthly'),
+    #     (yearly, 'Yearly'),
+    #     (ten, 'Ten years')
+    # ]
 
     kind_list = [
         'top',      # Top 50
@@ -109,7 +109,7 @@ def soundcloud_runner():
             for i in range(1, num_pages + 1):
                 url = "https://api-v2.soundcloud.com"
                 url += "/charts?kind={0}".format(kind)
-                url += "&genre=soundcloud%3Agenres%3A{0}&client".format(genre)
+                url += "&genre=soundcloud&genres={0}&client".format(genre)
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 data = requests.get(url)
@@ -127,22 +127,22 @@ def soundcloud_runner():
 
                 offset += page_length
 
-    for _date in date_list:
-        offset = 0
-        for i in range(1, num_pages + 1):
-            data = client.get(
-                '/tracks',
-                created_at=_date[0],
-                order='playback_count',
-                limit=page_length,
-                linked_partitioning=1,
-                offset=offset
-            )
+    # for _date in date_list:
+    #     offset = 0
+    #     for i in range(1, num_pages + 1):
+    #         data = client.get(
+    #             '/tracks',
+    #             created_at=_date[0],
+    #             order='playback_count',
+    #             limit=page_length,
+    #             linked_partitioning=1,
+    #             offset=offset
+    #         )
 
-            catharsis(loads(data.raw_data))
+    #         catharsis(loads(data.raw_data))
 
-            offset += page_length
-            toLog('{0} Crawled for soundcloud'.format(_date[1]), 'jobs')
+    #         offset += page_length
+    #         toLog('{0} Crawled for soundcloud'.format(_date[1]), 'jobs')
 
 
 def soundcloud_update():
@@ -290,6 +290,9 @@ def fix_str_date():
 
             del track['user']
 
+        if not track.get('artist', None):
+            track['artist'] = track.get('username', "")
+
         _update = {'$set': track, '$unset': {'user': ''}}
         cursor_soundcloud.refined_data.update_one(
             {'_id': track['_id']},
@@ -316,6 +319,10 @@ def catharsis(tracks):
     for track in tracks['collection']:
         track = pre_catharsis(track)
         track['created_date'] = datetime.datetime.now()
+
+        if not track.get('isrc', None):
+            if 'publisher_metadata' in track:
+                track['isrc'] = track["publisher_metadata"]["isrc"]
 
         if 'user' in track:
             if 'username' in track['user']:
