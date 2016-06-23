@@ -276,7 +276,8 @@ def sc_most_played():
         'user_id': 'SCUserID',
         'score': 'SCScore',
         'reposts_count': 'SCReposts',
-        'username': 'Artist'
+        'username': 'SCUsername',
+        'artist': 'Artist'
     }
 
     extra_int_columns = [
