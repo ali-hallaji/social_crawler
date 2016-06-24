@@ -316,10 +316,10 @@ def bulk_jobs_from_dates():
                 msg += "{0}".format(str(result))
                 toLog(msg, 'jobs')
 
+    delete_video()
     toLog("Start crawling soundcloud ", 'jobs')
     soundcloud_runner()
     toLog("End crawling soundcloud ", 'jobs')
-    delete_video()
 
 
 def executor_crawl(_date, name, criteria, next_page_token=None):
