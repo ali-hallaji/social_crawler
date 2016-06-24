@@ -109,7 +109,7 @@ def soundcloud_runner():
             for i in range(1, num_pages + 1):
                 url = "https://api-v2.soundcloud.com"
                 url += "/charts?kind={0}".format(kind)
-                url += "&genre=soundcloud&genres={0}&client".format(genre)
+                url += "&genre=soundcloud:genres:{0}&client".format(genre)
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 data = requests.get(url)
