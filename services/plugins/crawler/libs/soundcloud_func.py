@@ -322,7 +322,7 @@ def catharsis(tracks):
 
         if not track.get('isrc', None):
             if 'publisher_metadata' in track:
-                track['isrc'] = track["publisher_metadata"]["isrc"]
+                track['isrc'] = track["publisher_metadata"].get("isrc", None)
 
         if 'user' in track:
             if 'username' in track['user']:
