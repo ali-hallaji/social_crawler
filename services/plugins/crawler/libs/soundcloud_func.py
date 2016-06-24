@@ -321,7 +321,7 @@ def catharsis(tracks):
         track['created_date'] = datetime.datetime.now()
 
         if not track.get('isrc', None):
-            if 'publisher_metadata' in track:
+            if track.get('publisher_metadata', None):
                 track['isrc'] = track["publisher_metadata"].get("isrc", None)
 
         if 'user' in track:
