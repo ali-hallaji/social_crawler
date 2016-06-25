@@ -555,7 +555,7 @@
 			"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
 			"settings":
 			{
-				"buffer_size": 11461,
+				"buffer_size": 11493,
 				"line_ending": "Unix"
 			}
 		},
@@ -579,7 +579,7 @@
 			"file": "services/plugins/crawler/libs/soundcloud_func.py",
 			"settings":
 			{
-				"buffer_size": 9303,
+				"buffer_size": 9667,
 				"line_ending": "Unix"
 			}
 		},
@@ -817,7 +817,7 @@
 	],
 	"find":
 	{
-		"height": 33.0
+		"height": 66.0
 	},
 	"find_in_files":
 	{
@@ -837,6 +837,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"soundcloud_runner",
+			"isrc",
 			"yt_most_viewed",
 			"songs",
 			"today_yesterday_data",
@@ -962,9 +964,7 @@
 			"Article",
 			"article",
 			"catalog",
-			"Catalog",
-			"catalog",
-			"book"
+			"Catalog"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -997,7 +997,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1112,8 +1112,8 @@
 						"selection":
 						[
 							[
-								7721,
-								7721
+								16571,
+								16571
 							]
 						],
 						"settings":
@@ -1127,10 +1127,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 6459.0,
+						"translation.y": 12751.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1139,7 +1139,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11461,
+						"buffer_size": 11493,
 						"regions":
 						{
 						},
@@ -1236,15 +1236,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9303,
+						"buffer_size": 9667,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3862,
-								3862
+								352,
+								352
 							]
 						],
 						"settings":
@@ -1257,10 +1257,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2630.0,
+						"translation.y": 2663.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
