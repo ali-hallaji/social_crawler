@@ -316,9 +316,9 @@ def bulk_jobs_from_dates():
                 msg += "{0}".format(str(result))
                 toLog(msg, 'jobs')
 
-    delete_video()
     toLog("Start crawling soundcloud ", 'jobs')
     soundcloud_runner()
+    delete_video()
     toLog("End crawling soundcloud ", 'jobs')
 
 
@@ -509,4 +509,4 @@ def delete_video():
     }
     delete = cursor.refined_data.remove(criteria)
 
-    toLog('Removed "{0}" videos from DB'.format(str(delete)), 'debug')
+    toLog('Removed "%s" videos from DB' % str(delete), 'debug')
