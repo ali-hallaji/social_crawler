@@ -114,12 +114,16 @@ def soundcloud_runner():
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 data = requests.get(url)
 
-                loads_data = data.json()
+                try:
+                    loads_data = data.json()
 
-                if loads_data and 'error' not in loads_data:
-                    catharsis(loads_data)
-                else:
-                    pass
+                    if loads_data and 'error' not in loads_data:
+                        catharsis(loads_data)
+                    else:
+                        pass
+
+                except Exception as e:
+                    print str(e)
 
                 offset += page_length
 
