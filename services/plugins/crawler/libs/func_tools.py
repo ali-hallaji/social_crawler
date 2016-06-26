@@ -10,7 +10,7 @@ import urlparse
 from dateutil import parser
 
 from apiclient.discovery import build
-from pymongo.errors import DESCENDING
+from pymongo import DESCENDING
 from pymongo.errors import DuplicateKeyError
 
 # YouTube Crawler Import
