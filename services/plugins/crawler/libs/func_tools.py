@@ -506,28 +506,16 @@ def delete_video():
     # last_six_month = now - datetime.timedelta(days=31 * delete_month)
 
     _date = datetime.datetime.now().replace(hour=2, minute=30)
-    last_date = _date - datetime.timedelta(days=int(yt_settings('last_date')))
+    last_date = _date - datetime.timedelta(days=7)
 
     criteria = {
-        "$or": [
-            {
-                "update_video_data": {
-                    "$gt": _date
-                },
-                "daily_views_yesterday": {
-                    "$gt": 0
-                }
-            },
-            {
-                "published_at": {
-                    "$gt": last_date
-                }
-            }
-        ]
+        "published_at": {
+            "$gt": last_date
+        }
     }
 
     delete_id = cursor.refined_data.find(criteria, {'_id': 1})
-    delete_id = delete_id.sort('daily_views_today', DESCENDING)
+    delete_id = delete_id.sort('all_views', DESCENDING)
     delete_id = list(delete_id.skip(100000))
     print len(delete_id)
 
