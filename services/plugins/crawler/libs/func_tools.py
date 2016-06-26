@@ -506,7 +506,7 @@ def delete_video():
     # last_six_month = now - datetime.timedelta(days=31 * delete_month)
 
     _date = datetime.datetime.now().replace(hour=2, minute=30)
-    last_date = _date - datetime.timedelta(days=7)
+    last_date = _date - datetime.timedelta(days=2)
 
     criteria = {
         "published_at": {
