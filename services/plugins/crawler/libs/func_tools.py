@@ -22,9 +22,9 @@ from config.settings import batch_loop
 # from config.settings import delete_month
 # from config.settings import delete_video_count
 from config.settings import period_days
-from config.settings import yt_settings
 from core import toLog
 from core.db import cursor
+from core.generals.get_settings import yt_settings
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 from services.plugins.crawler.libs.migrate_to_mysql import yt_most_viewed
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
