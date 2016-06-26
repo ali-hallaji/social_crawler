@@ -528,7 +528,8 @@ def delete_video():
 
     delete_id = cursor.refined_data.find(criteria, {'_id': 1})
     delete_id = delete_id.sort('daily_views_today', DESCENDING)
-    delete_id = delete_id.skip(100000)
+    delete_id = list(delete_id.skip(100000))
+    print len(delete_id)
 
     count = 0
     for _id in delete_id:
