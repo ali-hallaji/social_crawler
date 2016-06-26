@@ -6,6 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
+from twisted.internet import reactor
 
 from dateutil import parser
 
@@ -25,7 +26,6 @@ from config.settings import period_days
 from core import toLog
 from core.db import cursor
 from core.generals.get_settings import yt_settings
-from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 from services.plugins.crawler.libs.migrate_to_mysql import yt_most_viewed
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
@@ -218,6 +218,8 @@ def today_yesterday_data(_id):
 
 
 def start_updating_jobs():
+    reactor.callInThread(soundcloud_update,)
+
     less_today = datetime.datetime.now().replace(hour=2, minute=30, second=0)
     _criteria = {
         'private': {'$ne': True},
@@ -258,12 +260,8 @@ def start_updating_jobs():
         except Exception as e:
             toLog(str(e), 'error')
 
-    toLog("Start updating soundcloud ", 'jobs')
     clean_title()
     yt_most_viewed()
-    soundcloud_update()
-    sc_most_played()
-    toLog("End updating soundcloud ", 'jobs')
 
 
 def execute_batch(_date, name, criteria):
@@ -278,6 +276,7 @@ def execute_batch(_date, name, criteria):
 
 
 def bulk_jobs_from_dates():
+    reactor.callInThread(soundcloud_runner,)
     # tuple_month_list = divide_datetime(period_years)
 
     now = datetime.datetime.now()
@@ -318,10 +317,7 @@ def bulk_jobs_from_dates():
                 msg += "{0}".format(str(result))
                 toLog(msg, 'jobs')
 
-    toLog("Start crawling soundcloud ", 'jobs')
-    soundcloud_runner()
     delete_video()
-    toLog("End crawling soundcloud ", 'jobs')
 
 
 def executor_crawl(_date, name, criteria, next_page_token=None):
@@ -517,7 +513,6 @@ def delete_video():
     delete_id = cursor.refined_data.find(criteria, {'_id': 1})
     delete_id = delete_id.sort('all_views', DESCENDING)
     delete_id = list(delete_id.skip(100000))
-    print len(delete_id)
 
     count = 0
     for _id in delete_id:

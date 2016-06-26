@@ -1,6 +1,7 @@
-import requests
 import datetime
+import requests
 import soundcloud
+
 from dateutil import parser
 
 from json import loads
@@ -9,11 +10,14 @@ from pymongo.errors import DuplicateKeyError
 from config.settings import SOUNDCLOUD_ID
 from config.settings import num_pages
 from config.settings import page_length
+
 from core import toLog
 from core.db import cursor_soundcloud
+from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 
 
 def soundcloud_runner():
+    toLog("Start crawling soundcloud ", 'jobs')
     # client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
 
     # now = datetime.datetime.now()
@@ -127,6 +131,8 @@ def soundcloud_runner():
 
                 offset += page_length
 
+    toLog("End crawling soundcloud ", 'jobs')
+
     # for _date in date_list:
     #     offset = 0
     #     for i in range(1, num_pages + 1):
@@ -146,6 +152,7 @@ def soundcloud_runner():
 
 
 def soundcloud_update():
+    toLog("Start updating soundcloud ", 'jobs')
     less_today = datetime.datetime.now().replace(hour=2, minute=30, second=0)
     _criteria = {
         'private': {'$ne': True},
@@ -196,6 +203,9 @@ def soundcloud_update():
 
             if (count % 1000) == 0:
                 toLog(str(e), 'error')
+
+    toLog("End updating soundcloud ", 'jobs')
+    sc_most_played()
 
 
 def track_info(track_doc):
