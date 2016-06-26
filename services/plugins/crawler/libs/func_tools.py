@@ -10,6 +10,7 @@ import urlparse
 from dateutil import parser
 
 from apiclient.discovery import build
+from pymongo.errors import DESCENDING
 from pymongo.errors import DuplicateKeyError
 
 # YouTube Crawler Import
@@ -18,9 +19,10 @@ from config.settings import DEVELOPER_KEY2
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import batch_loop
-from config.settings import delete_month
-from config.settings import delete_video_count
+# from config.settings import delete_month
+# from config.settings import delete_video_count
 from config.settings import period_days
+from config.settings import yt_settings
 from core import toLog
 from core.db import cursor
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
@@ -500,13 +502,37 @@ def clean_category_name():
 
 
 def delete_video():
-    now = datetime.datetime.now()
-    last_six_month = now - datetime.timedelta(days=31 * delete_month)
+    # now = datetime.datetime.now()
+    # last_six_month = now - datetime.timedelta(days=31 * delete_month)
+
+    _date = datetime.datetime.now().replace(hour=2, minute=30)
+    last_date = _date - datetime.timedelta(days=int(yt_settings('last_date')))
 
     criteria = {
-        'published_at': {'$lte': last_six_month},
-        'all_views': {'$lte': delete_video_count}
+        "$or": [
+            {
+                "update_video_data": {
+                    "$gt": _date
+                },
+                "daily_views_yesterday": {
+                    "$gt": 0
+                }
+            },
+            {
+                "published_at": {
+                    "$gt": last_date
+                }
+            }
+        ]
     }
-    delete = cursor.refined_data.remove(criteria)
 
-    toLog('Removed "%s" videos from DB' % str(delete), 'debug')
+    delete_id = cursor.refined_data.find(criteria, {'_id': 1})
+    delete_id = delete_id.sort('daily_views_today', DESCENDING)
+    delete_id = delete_id.skip(100000)
+
+    count = 0
+    for _id in delete_id:
+        cursor.refined_data.delete_one({'_id': _id['_id']})
+        count += 1
+
+    toLog('Removed "%s" videos from DB' % str(count), 'debug')
