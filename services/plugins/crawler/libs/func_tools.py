@@ -276,7 +276,7 @@ def execute_batch(_date, name, criteria):
 
 
 def bulk_jobs_from_dates():
-    reactor.callInThread(soundcloud_runner,)
+    reactor.callInThread(soundcloud_runner)
     # tuple_month_list = divide_datetime(period_years)
 
     now = datetime.datetime.now()
