@@ -295,7 +295,6 @@ def sc_most_played():
         'Total',
         'Brand_new_song',
         'Tags',
-        'Album',
         'Chart_name',
         'Charts_today',
         'Charts_today_type',
@@ -362,6 +361,29 @@ def sc_most_played():
                                 else:
                                     text = unicode(v).encode('utf8')
                                     new_doc[sql_column[k]] = text
+
+                    if k == 'publisher_metadata':
+                        album = doc['publisher_metadata'].get(
+                            'album_title',
+                            None
+                        )
+
+                        if album:
+                            new_doc['Album'] = album
+
+                        else:
+                            new_doc['Album'] = " "
+
+                        artist = doc['publisher_metadata'].get(
+                            'artist',
+                            None
+                        )
+
+                        if artist:
+                            new_doc['Artist'] = artist
+
+                        else:
+                            new_doc['Artist'] = " "
 
             for item in extra_str_columns:
                 new_doc[item] = ""
