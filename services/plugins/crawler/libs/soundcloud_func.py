@@ -173,36 +173,35 @@ def soundcloud_update():
     count = 1
     for track in all_tracks:
 
-        try:
-            new_track = track_info(track)
-            refine_track = today_yesterday_data(new_track, track)
+        new_track = track_info(track)
+        refine_track = today_yesterday_data(new_track, track)
 
-            if not refine_track:
-                toLog(
-                    'Unsuccessful update: {0}'.format(track['id']), 'jobs'
-                )
-                continue
-
-            criteria = {'_id': track['_id']}
-            _update = {'$set': refine_track}
-            update = cursor_soundcloud.refined_data.update_one(
-                criteria,
-                _update
+        if not refine_track:
+            toLog(
+                'Unsuccessful update: {0}'.format(track['id']), 'jobs'
             )
+            continue
 
-            if not update.raw_result.get('updatedExisting', None):
-                count += 1
-                msg = "The video with this id"
-                msg += " '{0}' can't be updated".format(track['id'])
+        criteria = {'_id': track['_id']}
+        _update = {'$set': refine_track}
+        update = cursor_soundcloud.refined_data.update_one(
+            criteria,
+            _update
+        )
 
-                if (count % 100) == 0:
-                    toLog(msg, 'db')
-
-        except Exception as e:
+        if not update.raw_result.get('updatedExisting', None):
             count += 1
+            msg = "The video with this id"
+            msg += " '{0}' can't be updated".format(track['id'])
 
-            if (count % 1000) == 0:
-                toLog(str(e), 'error')
+            if (count % 100) == 0:
+                toLog(msg, 'db')
+
+        # except Exception as e:
+        #     count += 1
+
+        #     if (count % 1000) == 0:
+        #         toLog(str(e), 'error')
 
     toLog("End updating soundcloud ", 'jobs')
     sc_most_played()
