@@ -173,84 +173,84 @@ def soundcloud_update():
     count = 1
     for track in all_tracks:
 
-        # try:
-        new_track = track_info(track)
-        refine_track = today_yesterday_data(new_track, track)
+        try:
+            new_track = track_info(track)
+            refine_track = today_yesterday_data(new_track, track)
 
-        if not refine_track:
-            toLog(
-                'Unsuccessful update: {0}'.format(track['id']), 'jobs'
+            if not refine_track:
+                toLog(
+                    'Unsuccessful update: {0}'.format(track['id']), 'jobs'
+                )
+                continue
+
+            criteria = {'_id': track['_id']}
+            _update = {'$set': refine_track}
+            update = cursor_soundcloud.refined_data.update_one(
+                criteria,
+                _update
             )
-            continue
 
-        criteria = {'_id': track['_id']}
-        _update = {'$set': refine_track}
-        update = cursor_soundcloud.refined_data.update_one(
-            criteria,
-            _update
-        )
+            if not update.raw_result.get('updatedExisting', None):
+                count += 1
+                msg = "The video with this id"
+                msg += " '{0}' can't be updated".format(track['id'])
 
-        if not update.raw_result.get('updatedExisting', None):
+                if (count % 100) == 0:
+                    toLog(msg, 'db')
+
+        except Exception as e:
             count += 1
-            msg = "The video with this id"
-            msg += " '{0}' can't be updated".format(track['id'])
 
-            if (count % 100) == 0:
-                toLog(msg, 'db')
-
-        # except Exception as e:
-        #     count += 1
-
-        #     if (count % 1000) == 0:
-        #         toLog(str(e), 'error')
+            if (count % 1000) == 0:
+                toLog(str(e), 'error')
 
     toLog("End updating soundcloud ", 'jobs')
     sc_most_played()
 
 
 def track_info(track_doc):
-    # try:
-    url = "https://api-v2.soundcloud.com/tracks/" + track_doc['id']
-    url += "?client_id=" + SOUNDCLOUD_ID
-    track = requests.get(url).json()
+    try:
+        url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
+        url += "?client_id=" + SOUNDCLOUD_ID
+        track = requests.get(url).json()
 
-    if 'last_modified' in track:
-        track['last_modified'] = parser.parse(
-            track['last_modified']
-        )
+        if 'last_modified' in track:
+            track['last_modified'] = parser.parse(
+                track['last_modified']
+            )
 
-    if 'created_at' in track:
-        track['created_at'] = parser.parse(track['created_at'])
+        if 'created_at' in track:
+            track['created_at'] = parser.parse(track['created_at'])
 
-    if 'user' in track:
-        if 'username' in track['user']:
-            track['username'] = track['user']['username']
+        if 'user' in track:
+            if 'username' in track['user']:
+                track['username'] = track['user']['username']
 
-        del track['user']
+            del track['user']
 
-    if not track.get('artist', None):
-        track['artist'] = track.get('username', "")
+        if not track.get('artist', None):
+            track['artist'] = track.get('username', "")
 
-    track['has_yesterday'] = True
-    track['update_track_data'] = datetime.datetime.now()
+        track['has_yesterday'] = True
+        track['update_track_data'] = datetime.datetime.now()
 
-    return track
+        return track
 
-    # except Exception as e:
-    #     data_log = {'track_id': track_doc['id']}
-    #     data_log['type'] = 'update_data'
-    #     data_log['date'] = datetime.datetime.now()
+    except Exception as e:
+        data_log = {'track_id': track_doc['id']}
+        data_log['type'] = 'update_data'
+        data_log['date'] = datetime.datetime.now()
 
-    #     if 'list index out of range' in str(e):
-    #         msg = "Track Id: {0} can't be fetch".format(track_doc['id'])
-    #         data_log['reason'] = msg
-    #         toLog(msg, 'error')
+        if 'list index out of range' in str(e):
+            msg = "Track Id: {0} can't be fetch".format(track_doc['id'])
+            data_log['reason'] = msg
+            toLog(msg, 'error')
 
-    #     else:
-    #         toLog(e, 'error')
+        else:
+            toLog(e, 'error')
 
-    #     data_log['reason'] = str(e)
-    #     cursor_soundcloud.logs.insert(data_log)
+        data_log['reason'] = str(e)
+        cursor_soundcloud.logs.insert(data_log)
 
 
 def today_yesterday_data(track, _id):
