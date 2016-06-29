@@ -210,10 +210,9 @@ def soundcloud_update():
 
 def track_info(track_doc):
     try:
-        client = soundcloud.Client(client_id=SOUNDCLOUD_ID)
-        track = loads(
-            client.get('/tracks/{0}'.format(track_doc['id'])).raw_data
-        )
+        url = "https://api-v2.soundcloud.com/tracks/" + track_doc['id']
+        url += "?client_id=" + SOUNDCLOUD_ID
+        track = requests.get(url).json()
 
         if 'last_modified' in track:
             track['last_modified'] = parser.parse(
