@@ -325,6 +325,11 @@ def sc_most_played():
             new_doc = {}
 
             for k, v in doc.items():
+                ignore_list = [
+                    'publisher_metadata',
+                    '_id',
+                    'artist'
+                ]
                 if (k == 'publisher_metadata') and doc[k]:
                     album = v.get('album_title', " ")
                     new_doc['Album'] = album
@@ -333,11 +338,11 @@ def sc_most_played():
                     if not artist:
                         doc['artist'] = doc['username']
                         new_doc['Artist'] = doc['username']
+                    else:
+                        doc['artist'] = artist
+                        new_doc['Artist'] = artist
 
-                    doc['artist'] = artist
-                    new_doc['Artist'] = artist
-
-                elif (k != '_id') and (k != 'publisher_metadata'):
+                elif k not in ignore_list:
                     if k == 'created_at':
                         new_doc[sql_column[k]] = str(v.date())
 
