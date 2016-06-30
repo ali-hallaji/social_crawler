@@ -329,6 +329,22 @@ def sc_most_played():
                     if k == 'created_at':
                         new_doc[sql_column[k]] = str(v.date())
 
+                    elif k == 'publisher_metadata':
+                        album = doc[k].get('album_title', None)
+
+                        if album:
+                            new_doc['Album'] = album
+
+                        else:
+                            new_doc['Album'] = " "
+
+                        artist = doc[k].get('artist', None)
+
+                        if artist:
+                            new_doc['Artist'] = artist
+                        else:
+                            new_doc['Artist'] = " "
+
                     else:
                         if isinstance(v, int):
                             new_doc[sql_column[k]] = v
@@ -361,23 +377,6 @@ def sc_most_played():
                                 else:
                                     text = unicode(v).encode('utf8')
                                     new_doc[sql_column[k]] = text
-
-                    if k == 'publisher_metadata':
-                        album = doc[k].get('album_title', None)
-
-                        if album:
-                            new_doc['Album'] = album
-
-                        else:
-                            new_doc['Album'] = " "
-
-                        artist = doc[k].get('artist', None)
-
-                        if artist:
-                            new_doc['Artist'] = artist
-
-                        else:
-                            new_doc['Artist'] = " "
 
             for item in extra_str_columns:
                 new_doc[item] = ""
