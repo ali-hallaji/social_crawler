@@ -363,10 +363,7 @@ def sc_most_played():
                                     new_doc[sql_column[k]] = text
 
                     if k == 'publisher_metadata':
-                        album = doc['publisher_metadata'].get(
-                            'album_title',
-                            None
-                        )
+                        album = doc[k].get('album_title', None)
 
                         if album:
                             new_doc['Album'] = album
@@ -374,10 +371,7 @@ def sc_most_played():
                         else:
                             new_doc['Album'] = " "
 
-                        artist = doc['publisher_metadata'].get(
-                            'artist',
-                            None
-                        )
+                        artist = doc[k].get('artist', None)
 
                         if artist:
                             new_doc['Artist'] = artist
