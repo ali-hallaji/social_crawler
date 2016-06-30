@@ -346,6 +346,9 @@ def sc_most_played():
                         elif isinstance(v, long):
                             new_doc[sql_column[k]] = v
 
+                        elif isinstance(v, dict):
+                            continue
+
                         else:
                             if k == 'description':
                                 if isinstance(v, basestring):
