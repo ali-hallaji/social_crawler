@@ -304,7 +304,6 @@ def sc_most_played():
         'Lawyer',
         'Notes',
         'Negotiation',
-        'Playlist',
         'Price',
         'Chart_name_2'
     ]
@@ -338,9 +337,6 @@ def sc_most_played():
                         new_doc['Artist'] = artist
                     else:
                         new_doc['Artist'] = " "
-
-                else:
-                    new_doc['Album'] = " "
 
                 if k != '_id':
                     if k == 'created_at':
