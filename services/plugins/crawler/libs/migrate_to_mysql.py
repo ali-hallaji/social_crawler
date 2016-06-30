@@ -380,7 +380,7 @@ def sc_most_played():
                                     new_doc[sql_column[k]] = text
 
             for item in extra_str_columns:
-                new_doc[item] = ""
+                new_doc[item] = " "
 
             for item in extra_int_columns:
                 new_doc[item] = 0
