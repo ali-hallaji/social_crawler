@@ -329,7 +329,11 @@ def sc_most_played():
                     album = v.get('album_title', " ")
                     new_doc['Album'] = album
 
-                    artist = v.get('artist', " ")
+                    artist = v.get('artist', "")
+                    if not artist:
+                        doc['artist'] = doc['username']
+                        new_doc['Artist'] = doc['username']
+
                     doc['artist'] = artist
                     new_doc['Artist'] = artist
 
