@@ -332,7 +332,7 @@ def sc_most_played():
                     artist = v.get('artist', " ")
                     new_doc['Artist'] = artist
 
-                elif k != '_id':
+                elif (k != '_id') and (k != 'publisher_metadata'):
                     if k == 'created_at':
                         new_doc[sql_column[k]] = str(v.date())
 
