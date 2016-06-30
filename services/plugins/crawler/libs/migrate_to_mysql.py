@@ -308,7 +308,7 @@ def sc_most_played():
         'Chart_name_2'
     ]
 
-    projection = {}
+    projection = {'publisher_metadata': 1}
     for i in sql_column.keys():
         projection[i] = 1
 
@@ -330,8 +330,6 @@ def sc_most_played():
                     new_doc['Album'] = album
 
                     artist = v.get('artist', " ")
-                    doc['artist'] = artist
-                    doc['username'] = artist
                     new_doc['Artist'] = artist
 
                 elif k != '_id':
