@@ -338,11 +338,7 @@ def sc_most_played():
                     else:
                         new_doc['Artist'] = " "
 
-                else:
-                    if 'Album' not in new_doc:
-                        new_doc['Album'] = " "
-
-                if k != '_id':
+                elif k != '_id':
                     if k == 'created_at':
                         new_doc[sql_column[k]] = str(v.date())
 
@@ -378,6 +374,10 @@ def sc_most_played():
                                 else:
                                     text = unicode(v).encode('utf8')
                                     new_doc[sql_column[k]] = text
+
+                else:
+                    if 'Album' not in new_doc:
+                        new_doc['Album'] = " "
 
             for item in extra_str_columns:
                 new_doc[item] = " "
