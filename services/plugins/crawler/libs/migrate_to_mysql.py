@@ -328,11 +328,15 @@ def sc_most_played():
                 ignore_list = [
                     'publisher_metadata',
                     '_id',
-                    'artist'
+                    'artist',
+                    'isrc'
                 ]
                 if (k == 'publisher_metadata') and doc[k]:
                     album = v.get('album_title', " ")
                     new_doc['Album'] = album
+
+                    isrc = v.get('isrc', " ")
+                    new_doc['ISRC'] = isrc
 
                     artist = v.get('artist', "")
                     if not artist:
