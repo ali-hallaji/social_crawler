@@ -330,6 +330,7 @@ def sc_most_played():
                     new_doc['Album'] = album
 
                     artist = v.get('artist', " ")
+                    doc['artist'] = artist
                     new_doc['Artist'] = artist
 
                 elif (k != '_id') and (k != 'publisher_metadata'):
