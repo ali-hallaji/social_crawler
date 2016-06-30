@@ -325,7 +325,7 @@ def sc_most_played():
             new_doc = {}
 
             for k, v in doc.items():
-                if k == 'publisher_metadata':
+                if k == 'publisher_metadata' or k == 'artist':
                     album = v.get('album_title', None)
                     if album:
                         new_doc['Album'] = album
