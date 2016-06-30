@@ -331,6 +331,7 @@ def sc_most_played():
 
                     artist = v.get('artist', " ")
                     doc['artist'] = artist
+                    doc['username'] = artist
                     new_doc['Artist'] = artist
 
                 elif k != '_id':
