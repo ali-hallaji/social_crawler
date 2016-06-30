@@ -228,9 +228,6 @@ def track_info(track_doc):
 
             del track['user']
 
-        if not track.get('artist', None):
-            track['artist'] = track.get('username', "")
-
         track['has_yesterday'] = True
         track['update_track_data'] = datetime.datetime.now()
 
@@ -301,9 +298,6 @@ def fix_str_date():
                 track['username'] = track['user']['username']
 
             del track['user']
-
-        if not track.get('artist', None):
-            track['artist'] = track.get('username', "")
 
         _update = {'$set': track, '$unset': {'user': ''}}
         cursor_soundcloud.refined_data.update_one(
