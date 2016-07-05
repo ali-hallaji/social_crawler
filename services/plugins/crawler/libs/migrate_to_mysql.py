@@ -348,7 +348,9 @@ def sc_most_played():
 
                 elif (k == 'publisher_metadata') and not doc.get(k, None):
                     artist = doc.get('artist', None)
-                    if not artist:
+                    if artist:
+                        new_doc['Artist'] = artist
+                    else:
                         new_doc['Artist'] = doc['username']
 
                 elif k not in ignore_list:
