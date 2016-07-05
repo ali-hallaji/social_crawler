@@ -346,8 +346,8 @@ def sc_most_played():
                         doc['artist'] = artist
                         new_doc['Artist'] = artist
 
-                elif (k == 'publisher_metadata') and not doc[k]:
-                    artist = doc.get('artist', "")
+                elif (k == 'publisher_metadata') and not doc.get(k, None):
+                    artist = doc.get('artist', None)
                     if not artist:
                         new_doc['Artist'] = doc['username']
 
