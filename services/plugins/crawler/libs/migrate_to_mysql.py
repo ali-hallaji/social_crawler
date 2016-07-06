@@ -232,7 +232,7 @@ def sc_most_played():
     query += " COLLATE = utf8mb4_unicode_ci;"
     sql_cursor.execute(query)
 
-    query = "ALTER TABLE songs_chart1 CONVERT TO CHARACTER SET"
+    query = "ALTER TABLE songs_chart CONVERT TO CHARACTER SET"
     query += " utf8mb4 COLLATE utf8mb4_unicode_ci;"
     sql_cursor.execute(query)
 
@@ -409,14 +409,14 @@ def sc_most_played():
             new_doc['Rank'] = count
 
             try:
-                table = 'songs_chart1'
+                table = 'songs_chart'
                 sql = insert_from_dict(table, new_doc)
                 sql_cursor.execute(sql, new_doc)
                 mydb.commit()
 
             except MySQLdb.IntegrityError as e:
                 print str(e)
-                qry = 'UPDATE songs_chart1 SET {}'.format(
+                qry = 'UPDATE songs_chart SET {}'.format(
                     ', '.join('{}=%s'.format(k) for k in new_doc)
                 )
                 sql_cursor.execute(qry, new_doc.values())

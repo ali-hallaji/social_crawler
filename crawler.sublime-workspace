@@ -555,7 +555,7 @@
 			"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
 			"settings":
 			{
-				"buffer_size": 12467,
+				"buffer_size": 12764,
 				"line_ending": "Unix"
 			}
 		},
@@ -1140,15 +1140,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12467,
+						"buffer_size": 12764,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9165,
-								9185
+								9922,
+								9922
 							]
 						],
 						"settings":
@@ -1162,7 +1162,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8458.0,
+						"translation.y": 8874.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
