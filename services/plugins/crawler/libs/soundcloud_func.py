@@ -215,9 +215,8 @@ def track_info(track_doc):
     try:
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID
-        print url
         track = requests.get(url)
-        print track.json().keys()
+        track = track.json()
 
         if 'last_modified' in track:
             track['last_modified'] = parser.parse(
