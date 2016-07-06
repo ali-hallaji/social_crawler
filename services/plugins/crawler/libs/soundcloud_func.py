@@ -173,9 +173,11 @@ def soundcloud_update():
     print all_tracks.count()
     print datetime.datetime.now()
     for track in all_tracks:
-
+        print 1
         try:
+            print 2
             new_track = track_info(track)
+            print 3
             refine_track = today_yesterday_data(new_track, track)
 
             if not refine_track:
