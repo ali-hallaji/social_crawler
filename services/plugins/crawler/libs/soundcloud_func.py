@@ -171,6 +171,7 @@ def soundcloud_update():
 
     count = 1
     print all_tracks.count()
+    print datetime.datetime.now()
     for track in all_tracks:
 
         try:
@@ -213,6 +214,7 @@ def track_info(track_doc):
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID
         track = requests.get(url).json()
+        print track.keys()
 
         if 'last_modified' in track:
             track['last_modified'] = parser.parse(
