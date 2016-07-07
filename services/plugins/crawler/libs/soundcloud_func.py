@@ -1,10 +1,8 @@
 import datetime
 import requests
-import soundcloud
+import socket
 
 from dateutil import parser
-
-from json import loads
 from pymongo.errors import DuplicateKeyError
 
 from config.settings import SOUNDCLOUD_ID
@@ -14,6 +12,17 @@ from config.settings import page_length
 from core import toLog
 from core.db import cursor_soundcloud
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
+
+
+def spoofing():
+    real_create_conn = socket.create_connection
+
+    def set_src_addr(*args):
+        address, timeout = args[0], args[1]
+        source_address = ('201.X.X.1', 0)
+        return real_create_conn(address, timeout, source_address)
+
+    socket.create_connection = set_src_addr
 
 
 def soundcloud_runner():
@@ -107,6 +116,8 @@ def soundcloud_runner():
         "technology",
     ]
 
+    spoofing()
+
     for kind in kind_list:
         for genre in genres_list:
             offset = 0
@@ -172,12 +183,11 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
+    spoofing()
+
     for track in all_tracks:
-        print 1
         try:
-            print 2
             new_track = track_info(track)
-            print 3
             refine_track = today_yesterday_data(new_track, track)
 
             if not refine_track:

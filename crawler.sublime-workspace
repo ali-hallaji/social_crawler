@@ -555,7 +555,7 @@
 			"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
 			"settings":
 			{
-				"buffer_size": 12764,
+				"buffer_size": 12761,
 				"line_ending": "Unix"
 			}
 		},
@@ -579,7 +579,7 @@
 			"file": "services/plugins/crawler/libs/soundcloud_func.py",
 			"settings":
 			{
-				"buffer_size": 9854,
+				"buffer_size": 9960,
 				"line_ending": "Unix"
 			}
 		},
@@ -837,6 +837,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"songs_chart1",
 			"artist",
 			"Artist",
 			"artist\n",
@@ -963,8 +964,7 @@
 			"degree_thesis",
 			"research",
 			"book",
-			"article",
-			"culture"
+			"article"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -972,6 +972,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"songs_chart",
 			"no_cursor_timeout=True",
 			"n(",
 			"    ",
@@ -997,7 +998,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -1140,15 +1141,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12764,
+						"buffer_size": 12761,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9922,
-								9922
+								10096,
+								10096
 							]
 						],
 						"settings":
@@ -1162,10 +1163,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8874.0,
+						"translation.y": 9334.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1240,15 +1241,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9854,
+						"buffer_size": 9960,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1830,
-								1830
+								5748,
+								5748
 							]
 						],
 						"settings":
@@ -1262,10 +1263,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1363.0,
+						"translation.y": 5237.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -2245,7 +2246,7 @@
 	"project": "crawler.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 109.0
 	},
 	"save_all_on_build": true,
 	"select_file":
