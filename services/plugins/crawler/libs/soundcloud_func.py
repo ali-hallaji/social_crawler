@@ -1,6 +1,7 @@
 import datetime
 import requests
 import socket
+import time
 
 from dateutil import parser
 from pymongo.errors import DuplicateKeyError
@@ -127,6 +128,7 @@ def soundcloud_runner():
                 url += "&genre=soundcloud:genres:{0}&client".format(genre)
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
                 url += "limit={0}&linked_partitioning=1".format(page_length)
+                time.sleep(0.3)
                 data = requests.get(url)
 
                 try:
@@ -186,6 +188,7 @@ def soundcloud_update():
     spoofing()
 
     for track in all_tracks:
+        time.sleep(0.3)
         try:
             new_track = track_info(track)
             refine_track = today_yesterday_data(new_track, track)
