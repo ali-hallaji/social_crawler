@@ -18,11 +18,11 @@ from config.settings import page_length
 
 from core import toLog
 from core.db import cursor_soundcloud
-from services.libs.async_call import asynchronous
+from services.libs.async_call import asynchronous_background
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 
 
-@asynchronous
+@asynchronous_background
 def ssh_connection():
     cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
         SSH_PASS,
@@ -134,7 +134,6 @@ def soundcloud_runner():
         "technology",
     ]
 
-    ssh_connection()
     proxies = {
         'http': 'socks5://localhost:9153',
         'https': 'socks5://localhost:9153'
@@ -142,6 +141,7 @@ def soundcloud_runner():
     headers = {
         'User-Agent': 'Maryam&Ali'
     }
+    ssh_connection()
 
     for kind in kind_list:
         for genre in genres_list:

@@ -69,6 +69,20 @@ def to_log_error(failure):
     toLog(str(failure), 'error')
 
 
+def asynchronous_background(cls):
+
+    @wraps(cls)
+    def async(*args, **kwargs):
+        """
+           This asynchronous call function.
+        """
+        # Pass to defer
+        worker = deferToThreadPool(reactor, cls, *args, **kwargs)
+        # worker = deferToThread(cls, *args, **kwargs)
+        return worker
+
+    return async
+
 # def set_activity_log(username, address, func_name, args):
 #     activity_log_list = activity_log.keys()
 
