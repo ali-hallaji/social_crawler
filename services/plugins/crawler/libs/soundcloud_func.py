@@ -3,6 +3,7 @@ import os
 import requests
 import socket
 import time
+
 from twisted.internet import reactor
 
 from dateutil import parser
@@ -17,9 +18,11 @@ from config.settings import page_length
 
 from core import toLog
 from core.db import cursor_soundcloud
+from services.libs.async_call import asynchronous
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 
 
+@asynchronous
 def ssh_connection():
     cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
         SSH_PASS,
@@ -131,7 +134,7 @@ def soundcloud_runner():
         "technology",
     ]
 
-    reactor.callInThread(ssh_connection)
+    ssh_connection()
     proxies = {
         'http': 'socks5://localhost:9153',
         'https': 'socks5://localhost:9153'
@@ -206,7 +209,7 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
-    reactor.callInThread(ssh_connection)
+    ssh_connection()
 
     for track in all_tracks:
         time.sleep(0.15)
