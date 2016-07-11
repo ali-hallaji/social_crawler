@@ -29,7 +29,8 @@ def ssh_connection():
         SSH_USER,
         SSH_ADDRESS
     )
-    os.system(cmd)
+    t = os.system(cmd)
+    print 'Done SSH %s' % t
 
 
 def spoofing():
