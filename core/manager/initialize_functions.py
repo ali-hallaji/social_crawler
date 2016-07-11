@@ -29,6 +29,7 @@ from services.plugins.crawler.libs.func_tools import start_updating_jobs
 def initial_executer():
 
     # Run crawler with api
+    reactor.callInThread(ssh_connection,)
     start_crawling()
 
     # Update crawl
@@ -69,7 +70,6 @@ def update_crawl_data():
 
 
 def start_crawling():
-    reactor.callInThread(ssh_connection,)
 
     scheduler.add_job(
         bulk_jobs_from_dates,
