@@ -3,7 +3,7 @@ import time
 
 from functools import wraps
 from twisted.internet import reactor
-# from twisted.internet.threads import deferToThread
+from twisted.internet.threads import deferToThread
 from twisted.internet.threads import deferToThreadPool
 from txjsonrpc.web.jsonrpc import with_activity_log
 
@@ -77,8 +77,8 @@ def asynchronous_background(cls):
            This asynchronous call function.
         """
         # Pass to defer
-        worker = deferToThreadPool(reactor, cls, *args, **kwargs)
-        # worker = deferToThread(cls, *args, **kwargs)
+        # worker = deferToThreadPool(reactor, cls, *args, **kwargs)
+        worker = deferToThread(cls, *args, **kwargs)
         return worker
 
     return async
