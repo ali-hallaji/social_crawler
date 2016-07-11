@@ -3,6 +3,7 @@ import os
 import requests
 import socket
 import time
+import subprocess
 
 from twisted.internet import reactor
 
@@ -18,19 +19,30 @@ from config.settings import page_length
 
 from core import toLog
 from core.db import cursor_soundcloud
-from services.libs.async_call import asynchronous_background
+# from services.libs.async_call import asynchronous_background
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 
 
-@asynchronous_background
+# @asynchronous_background
 def ssh_connection():
     cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
         SSH_PASS,
         SSH_USER,
         SSH_ADDRESS
     )
-    t = os.system(cmd)
-    print 'Done SSH %s' % t
+    subprocess.call(
+        [
+            "sshpass",
+            "-p",
+            "'{0}'".format(SSH_PASS),
+            "ssh",
+            "-D",
+            "9153",
+            "{1}@{2}".format(SSH_USER, SSH_ADDRESS)
+        ]
+    )
+    # t = os.system(cmd)
+    # print 'Done SSH %s' % t
 
 
 def spoofing():
