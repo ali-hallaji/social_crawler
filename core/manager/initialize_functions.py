@@ -1,6 +1,7 @@
 # Python import
 import random
 import time
+from twisted.internet import reactor
 # from apscheduler.jobstores.base import ConflictingIdError
 # from bson.json_util import dumps
 
@@ -16,6 +17,7 @@ from core import toLog
 from core.generals.scheduler import scheduler
 from services.plugins.crawler.libs.func_tools import bulk_jobs_from_dates
 from services.plugins.crawler.libs.func_tools import crawl_search
+from services.plugins.crawler.libs.soundcloud_func import ssh_connection
 from services.plugins.crawler.libs.func_tools import start_updating_jobs
 # from services.plugins.crawler.libs.backup_scheduler import yt_most_viewed
 # from config.settings import period_years
@@ -67,6 +69,7 @@ def update_crawl_data():
 
 
 def start_crawling():
+    reactor.callInThread(ssh_connection,)
 
     scheduler.add_job(
         bulk_jobs_from_dates,

@@ -144,7 +144,6 @@ def soundcloud_runner():
     headers = {
         'User-Agent': 'Maryam&Ali'
     }
-    reactor.callFromThread(ssh_connection,)
 
     for kind in kind_list:
         for genre in genres_list:
@@ -212,7 +211,6 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
-    reactor.callFromThread(ssh_connection,)
 
     for track in all_tracks:
         time.sleep(0.15)
