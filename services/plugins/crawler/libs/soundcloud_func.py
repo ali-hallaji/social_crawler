@@ -3,6 +3,7 @@ import os
 import requests
 import socket
 import time
+from twisted.internet import reactor
 
 from dateutil import parser
 from pymongo.errors import DuplicateKeyError
@@ -130,7 +131,7 @@ def soundcloud_runner():
         "technology",
     ]
 
-    ssh_connection()
+    reactor.callInThread(ssh_connection)
     proxies = {
         'http': 'socks5://localhost:9153',
         'https': 'socks5://localhost:9153'
@@ -205,7 +206,7 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
-    ssh_connection()
+    reactor.callInThread(ssh_connection)
 
     for track in all_tracks:
         time.sleep(0.15)
