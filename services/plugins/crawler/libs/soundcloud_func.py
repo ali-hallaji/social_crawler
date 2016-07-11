@@ -30,7 +30,7 @@ def ssh_connection():
         SSH_USER,
         SSH_ADDRESS
     )
-    subprocess.Popen(cmd, shell=False, stderr=subprocess.PIPE)
+    subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
     # t = os.system(cmd)
     # print 'Done SSH %s' % t
 
@@ -144,7 +144,7 @@ def soundcloud_runner():
     headers = {
         'User-Agent': 'Maryam&Ali'
     }
-    ssh_connection()
+    reactor.callInThread(ssh_connection,)
 
     for kind in kind_list:
         for genre in genres_list:
@@ -212,7 +212,7 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
-    ssh_connection()
+    reactor.callInThread(ssh_connection,)
 
     for track in all_tracks:
         time.sleep(0.15)
