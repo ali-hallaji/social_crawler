@@ -1,4 +1,5 @@
 import datetime
+import os
 import requests
 import socket
 import time
@@ -7,12 +8,24 @@ from dateutil import parser
 from pymongo.errors import DuplicateKeyError
 
 from config.settings import SOUNDCLOUD_ID
+from config.settings import SSH_ADDRESS
+from config.settings import SSH_PASS
+from config.settings import SSH_USER
 from config.settings import num_pages
 from config.settings import page_length
 
 from core import toLog
 from core.db import cursor_soundcloud
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
+
+
+def ssh_connection():
+    cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
+        SSH_PASS,
+        SSH_USER,
+        SSH_ADDRESS
+    )
+    os.system(cmd)
 
 
 def spoofing():
@@ -117,7 +130,14 @@ def soundcloud_runner():
         "technology",
     ]
 
-    spoofing()
+    ssh_connection()
+    proxies = {
+        'http': 'socks5://localhost:9153',
+        'https': 'socks5://localhost:9153'
+    }
+    headers = {
+        'User-Agent': 'Maryam&Ali'
+    }
 
     for kind in kind_list:
         for genre in genres_list:
@@ -128,8 +148,8 @@ def soundcloud_runner():
                 url += "&genre=soundcloud:genres:{0}&client".format(genre)
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
                 url += "limit={0}&linked_partitioning=1".format(page_length)
-                time.sleep(0.3)
-                data = requests.get(url)
+                time.sleep(0.15)
+                data = requests.get(url, headers=headers, proxies=proxies)
 
                 try:
                     loads_data = data.json()
@@ -185,10 +205,10 @@ def soundcloud_update():
     count = 1
     print all_tracks.count()
     print datetime.datetime.now()
-    spoofing()
+    ssh_connection()
 
     for track in all_tracks:
-        time.sleep(0.3)
+        time.sleep(0.15)
         try:
             new_track = track_info(track)
             refine_track = today_yesterday_data(new_track, track)
@@ -225,10 +245,17 @@ def soundcloud_update():
 
 
 def track_info(track_doc):
+    proxies = {
+        'http': 'socks5://localhost:9153',
+        'https': 'socks5://localhost:9153'
+    }
+    headers = {
+        'User-Agent': 'Maryam&Ali'
+    }
     try:
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID
-        track = requests.get(url)
+        track = requests.get(url, headers=headers, proxies=proxies)
         track = track.json()
 
         if 'last_modified' in track:
