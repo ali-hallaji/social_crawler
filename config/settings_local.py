@@ -95,3 +95,9 @@ path_apscheduler = '/var/log/core/{0}/apscheduler.log'.format(CORE_ID)
 max_bytes = 1000000
 backup_count = 10
 ########################################################################
+
+
+# SSH CONFIG ###########################################################
+SSH_PASS = 'ALI_11767324'
+SSH_USER = 'ali'
+SSH_ADDRESS = '88.198.86.106'
