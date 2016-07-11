@@ -38,7 +38,7 @@ def ssh_connection():
             "ssh",
             "-D",
             "9153",
-            "{1}@{2}".format(SSH_USER, SSH_ADDRESS)
+            "{0}@{1}".format(SSH_USER, SSH_ADDRESS)
         ]
     )
     # t = os.system(cmd)
