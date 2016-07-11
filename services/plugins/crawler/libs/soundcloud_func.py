@@ -19,11 +19,11 @@ from config.settings import page_length
 
 from core import toLog
 from core.db import cursor_soundcloud
-# from services.libs.async_call import asynchronous_background
+from services.libs.async_call import asynchronous_background
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
 
 
-# @asynchronous_background
+@asynchronous_background
 def ssh_connection():
     cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
         SSH_PASS,
