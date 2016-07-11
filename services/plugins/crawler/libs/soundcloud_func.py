@@ -30,17 +30,9 @@ def ssh_connection():
         SSH_USER,
         SSH_ADDRESS
     )
-    subprocess.call(
-        [
-            "sshpass",
-            "-p",
-            "'{0}'".format(SSH_PASS),
-            "ssh",
-            "-D",
-            "9153",
-            "{0}@{1}".format(SSH_USER, SSH_ADDRESS)
-        ]
-    )
+    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
+    out = p.stderr.read(1)
+    print out
     # t = os.system(cmd)
     # print 'Done SSH %s' % t
 
