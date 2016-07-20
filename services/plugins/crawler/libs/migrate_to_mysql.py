@@ -243,7 +243,7 @@ def sc_most_played():
         "$or": [
             {
                 "update_track_data": {
-                    "$gt": _date
+                    "$gte": _date
                 },
                 "daily_playback_count_yesterday": {
                     "$gte": 0
@@ -251,7 +251,7 @@ def sc_most_played():
             },
             {
                 "created_at": {
-                    "$gt": last_date
+                    "$gte": last_date
                 }
             }
         ]
