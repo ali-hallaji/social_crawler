@@ -46,7 +46,7 @@ def yt_most_viewed():
         "$or": [
             {
                 "update_video_data": {
-                    "$gt": _date
+                    "$gte": _date
                 },
                 "daily_views_yesterday": {
                     "$gt": 0
@@ -54,7 +54,7 @@ def yt_most_viewed():
             },
             {
                 "published_at": {
-                    "$gt": last_date
+                    "$gte": last_date
                 }
             }
         ]
