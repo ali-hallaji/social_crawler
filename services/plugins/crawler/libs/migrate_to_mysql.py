@@ -49,7 +49,7 @@ def yt_most_viewed():
                     "$gte": _date
                 },
                 "daily_views_yesterday": {
-                    "$gt": 0
+                    "$gte": 0
                 }
             },
             {
