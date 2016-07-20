@@ -155,7 +155,7 @@ def soundcloud_runner():
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 time.sleep(0.15)
                 # data = requests.get(url, headers=headers, proxies=proxies)
-                data = requests.get(url, headers=headers)
+                data = requests.get(url)
 
                 try:
                     loads_data = data.json()
@@ -261,7 +261,7 @@ def track_info(track_doc):
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID
         # track = requests.get(url, headers=headers, proxies=proxies)
-        track = requests.get(url, headers=headers)
+        track = requests.get(url)
         track = track.json()
 
         if 'last_modified' in track:
