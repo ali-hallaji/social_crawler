@@ -85,6 +85,7 @@ def yt_most_viewed():
         'Cover',
         'Favorite',
         'Listened_To',
+        'Playlist',
         'Omit'
     ]
 
@@ -104,7 +105,6 @@ def yt_most_viewed():
         'Lawyer',
         'Notes',
         'Negotiation',
-        'Playlist',
         'Price',
         'Chart_name_2'
     ]
