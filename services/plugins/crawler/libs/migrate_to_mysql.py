@@ -46,10 +46,10 @@ def yt_most_viewed():
         "$or": [
             {
                 "update_video_data": {
-                    "$gte": _date
+                    "$gt": _date
                 },
                 "daily_views_yesterday": {
-                    "$gte": 0
+                    "$gt": 0
                 }
             },
             {
@@ -118,11 +118,11 @@ def yt_most_viewed():
         projection,
         no_cursor_timeout=True
     )
-    data = data.sort('daily_views_today', DESCENDING).limit(50000)
+    new_data = data.sort('daily_views_today', DESCENDING).limit(50000)
 
     if data:
         count = 1
-        for doc in data:
+        for doc in new_data:
             new_doc = {}
 
             for k, v in doc.items():
@@ -243,10 +243,10 @@ def sc_most_played():
         "$or": [
             {
                 "update_track_data": {
-                    "$gte": _date
+                    "$gt": _date
                 },
                 "daily_playback_count_yesterday": {
-                    "$gte": 0
+                    "$gt": 0
                 }
             },
             {
@@ -317,11 +317,11 @@ def sc_most_played():
         projection,
         no_cursor_timeout=True
     )
-    data = data.sort('daily_playback_count_today', DESCENDING).limit(50000)
+    new_data = data.sort('daily_playback_count_today', DESCENDING).limit(50000)
 
     if data:
         count = 1
-        for doc in data:
+        for doc in new_data:
             new_doc = {}
 
             for k, v in doc.items():
