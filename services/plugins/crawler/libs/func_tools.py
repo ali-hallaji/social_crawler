@@ -197,7 +197,7 @@ def get_video_info(video_id):
 
 
 def today_yesterday_data(_id):
-    video_doc = cursor.refined_data.find_one(
+    video_db = cursor.refined_data.find_one(
         {
             'id': _id,
             'private': {
@@ -205,16 +205,19 @@ def today_yesterday_data(_id):
             }
         }
     )
-    video = get_video_info(_id)
+    new_video = get_video_info(_id)
 
-    if video and ('all_views' in video):
-        video['daily_views_yesterday'] = int(
-            video_doc.get('daily_views_today', 0)
+    if new_video and ('all_views' in new_video):
+        new_video = new_video.copy()
+        new_video['daily_views_yesterday'] = int(
+            video_db.get('daily_views_today', 0)
         )
-        today_views = video['all_views'] - int(video_doc.get('all_views', 0))
-        video['daily_views_today'] = today_views
+        today_views = new_video['all_views'] - int(
+            video_db.get('all_views', 0)
+        )
+        new_video['daily_views_today'] = today_views
 
-        return video
+        return new_video
 
 
 def start_updating_jobs():
