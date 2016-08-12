@@ -1,19 +1,12 @@
 import datetime
-import os
 import requests
 import socket
 import time
-import subprocess
-
-from twisted.internet import reactor
 
 from dateutil import parser
 from pymongo.errors import DuplicateKeyError
 
 from config.settings import SOUNDCLOUD_ID
-from config.settings import SSH_ADDRESS
-from config.settings import SSH_PASS
-from config.settings import SSH_USER
 from config.settings import num_pages
 from config.settings import page_length
 
@@ -21,17 +14,6 @@ from core import toLog
 from core.db import cursor_soundcloud
 # from services.libs.async_call import asynchronous_background
 from services.plugins.crawler.libs.migrate_to_mysql import sc_most_played
-
-
-def ssh_connection():
-    cmd = "sshpass -p '{0}' ssh -D 9153  {1}@{2}".format(
-        SSH_PASS,
-        SSH_USER,
-        SSH_ADDRESS
-    )
-    subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
-    # t = os.system(cmd)
-    # print 'Done SSH %s' % t
 
 
 def spoofing():
@@ -135,14 +117,6 @@ def soundcloud_runner():
         "storytelling",
         "technology",
     ]
-
-    proxies = {
-        'http': 'socks5://localhost:9153',
-        'https': 'socks5://localhost:9153'
-    }
-    headers = {
-        'User-Agent': 'Maryam&Ali'
-    }
 
     for kind in kind_list:
         for genre in genres_list:
@@ -250,13 +224,6 @@ def soundcloud_update():
 
 
 def track_info(track_doc):
-    proxies = {
-        'http': 'socks5://localhost:9153',
-        'https': 'socks5://localhost:9153'
-    }
-    headers = {
-        'User-Agent': 'Maryam&Ali'
-    }
     try:
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID

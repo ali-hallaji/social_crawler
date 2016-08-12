@@ -11,8 +11,11 @@ CORE_PORT = 7085
 # tab of
 #   https://cloud.google.com/console
 # Please ensure that you have enabled the YouTube Data API for your project.
-DEVELOPER_KEY = "AIzaSyD9O5FIwU3V1teLw0UcssN8TxL7Zl15erA"
-DEVELOPER_KEY2 = "AIzaSyAV1WWrct68Fj4fIoGrb89nY5RwdUgU0Ak"
+DEVELOPER_KEYS = [
+    "AIzaSyD9O5FIwU3V1teLw0UcssN8TxL7Zl15erA",
+    "AIzaSyAk9OVtfAq8SCFjZwwo4R8JrYuLwOJ6erE",
+    "AIzaSyAV1WWrct68Fj4fIoGrb89nY5RwdUgU0Ak"
+]
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 SOUNDCLOUD_ID = '0f61912bac6ddba41024c18e4a7e032f'
@@ -30,7 +33,6 @@ minute_crawl = '30'
 batch_loop = 21
 delete_month = 6
 delete_video_count = 5000000
-api_key_update = DEVELOPER_KEY2
 
 # SoundCloud
 page_length = 200
@@ -95,9 +97,3 @@ path_apscheduler = '/var/log/core/{0}/apscheduler.log'.format(CORE_ID)
 max_bytes = 1000000
 backup_count = 10
 ########################################################################
-
-
-# SSH CONFIG ###########################################################
-SSH_PASS = 'ALI_11767324'
-SSH_USER = 'ali'
-SSH_ADDRESS = '88.198.86.106'
