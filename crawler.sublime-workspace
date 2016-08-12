@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"DE",
+				"DEVELOPER_KEYS	instance"
+			],
+			[
 				"new",
 				"new_video	statement"
 			],
@@ -510,44 +514,16 @@
 			[
 				"cle",
 				"cleaned_data"
-			],
-			[
-				"In",
-				"IntegerField	class"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "config/settings.py",
+			"file": "core/generals/scheduler.py",
 			"settings":
 			{
-				"buffer_size": 1146,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/manager/initialize_functions.py",
-			"settings":
-			{
-				"buffer_size": 2133,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "services/plugins/crawler/backup.py",
-			"settings":
-			{
-				"buffer_size": 638,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
-			"settings":
-			{
-				"buffer_size": 12778,
+				"buffer_size": 2387,
 				"line_ending": "Unix"
 			}
 		},
@@ -555,23 +531,7 @@
 			"file": "services/plugins/crawler/libs/func_tools.py",
 			"settings":
 			{
-				"buffer_size": 17326,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/generals/get_settings.py",
-			"settings":
-			{
-				"buffer_size": 541,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "core/db/__init__.py",
-			"settings":
-			{
-				"buffer_size": 522,
+				"buffer_size": 17264,
 				"line_ending": "Unix"
 			}
 		},
@@ -579,7 +539,15 @@
 			"file": "services/plugins/crawler/libs/soundcloud_func.py",
 			"settings":
 			{
-				"buffer_size": 11222,
+				"buffer_size": 10450,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/settings_local.py",
+			"settings":
+			{
+				"buffer_size": 3494,
 				"line_ending": "Unix"
 			}
 		}
@@ -661,9 +629,12 @@
 	"expanded_folders":
 	[
 		"/home/ali/Public/Projects/crawler/youtube_crawler",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/cache",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/config",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/core",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/core/db",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/core/generals",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/core/manager",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/requirments",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins",
@@ -672,15 +643,21 @@
 	],
 	"file_history":
 	[
+		"/home/ali/Public/Projects/crawler/youtube_crawler/config/settings.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/core/manager/initialize_functions.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/backup.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs/migrate_to_mysql.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/core/db/__init__.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs/soundcloud_func.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/core/generals/get_settings.py",
+		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs/func_tools.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/crawler.sublime-workspace",
 		"/home/ali/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/run/user/1000/gvfs/sftp:host=172.27.13.68,user=core01/usr/local/flight_manager01/flight_list_core/core/db/mongo_drivers.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/config/settings_local.py",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/libs/func_tools.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/start_soundcloud.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/update_soundcloud.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/manage.py",
-		"/home/ali/Public/Projects/crawler/youtube_crawler/core/db/__init__.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/core/generals/scheduler.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/services/plugins/crawler/cycle_update.py",
 		"/home/ali/Public/Projects/crawler/youtube_crawler/requirments/common.txt",
@@ -793,17 +770,11 @@
 		"/home/ali/Public/Projects/common/core/core_services/services/plugins/api/libs/tasks.py",
 		"/home/ali/Public/Projects/common/core/core_services/services/plugins/api/libs/__init__.py",
 		"/home/ali/Public/Projects/common/core/core_services/services/rpc_core/main_json_rpc.py",
-		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/get_job_by_id.py",
-		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/update_arrival_rpl.py",
-		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/update_departure_rpl.py",
-		"/home/ali/Public/Projects/common/core/core_services/core/threading_pool/core_thread.py",
-		"/home/ali/Public/Projects/common/core/core_services/services/plugins/entry/libs/__init__.py",
-		"/home/ali/Public/Projects/bank/maskan/core/query_handler.py",
-		"/home/ali/Public/Projects/bank/maskan/core/class_singleton.py"
+		"/home/ali/Public/Projects/common/core/core_services/services/plugins/jobs/get_job_by_id.py"
 	],
 	"find":
 	{
-		"height": 65.0
+		"height": 68.0
 	},
 	"find_in_files":
 	{
@@ -823,6 +794,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ssh_connection",
+			"ssh",
+			"api_",
 			"mon",
 			"can't be fetch",
 			"video",
@@ -947,10 +921,7 @@
 			"thesis",
 			"Thesis",
 			"thesis",
-			"Thesis",
-			"thesis",
-			"Thesis",
-			"thesis"
+			"Thesis"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -984,48 +955,16 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "config/settings.py",
+					"file": "core/generals/scheduler.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1146,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								385,
-								385
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "core/manager/initialize_functions.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2133,
+						"buffer_size": 2387,
 						"regions":
 						{
 						},
@@ -1038,7 +977,6 @@
 						],
 						"settings":
 						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
@@ -1047,200 +985,31 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1306.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "services/plugins/crawler/backup.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 638,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								218,
-								218
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "services/plugins/crawler/libs/migrate_to_mysql.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12778,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9067,
-								9067
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 7805.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "services/plugins/crawler/libs/func_tools.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17326,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4840,
-								4840
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3885.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "core/generals/get_settings.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								533,
-								533
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "core/db/__init__.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 522,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								299,
-								299
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 753.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "services/plugins/crawler/libs/soundcloud_func.py",
+					"buffer": 1,
+					"file": "services/plugins/crawler/libs/func_tools.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11222,
+						"buffer_size": 17264,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2665,
+								2665
 							]
 						],
 						"settings":
 						{
-							"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
@@ -1249,10 +1018,74 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2375.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "services/plugins/crawler/libs/soundcloud_func.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10450,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6218,
+								6218
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10154.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "config/settings_local.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3494,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								703,
+								703
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1260,7 +1093,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 35.0
 	},
 	"input":
 	{
@@ -1301,7 +1134,7 @@
 	"project": "crawler.sublime-project",
 	"replace":
 	{
-		"height": 60.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
