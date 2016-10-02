@@ -6,6 +6,7 @@ import json
 import requests
 import urllib
 import urlparse
+import random
 from twisted.internet import reactor
 
 from dateutil import parser
@@ -15,8 +16,7 @@ from pymongo import DESCENDING
 from pymongo.errors import DuplicateKeyError
 
 # YouTube Crawler Import
-from config.settings import DEVELOPER_KEY
-from config.settings import DEVELOPER_KEY2
+from config.settings import DEVELOPER_KEYS
 from config.settings import YOUTUBE_API_SERVICE_NAME
 from config.settings import YOUTUBE_API_VERSION
 from config.settings import batch_loop
@@ -25,28 +25,27 @@ from config.settings import batch_loop
 from config.settings import period_days
 from core import toLog
 from core.db import cursor
-from core.generals.get_settings import yt_settings
 from services.plugins.crawler.libs.migrate_to_mysql import yt_most_viewed
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
 from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
 
 
-def create_base_url(video_id, api_key):
+def create_base_url(video_id):
     base_url = "https://www.googleapis.com/youtube/v3/videos?id="
     base_url += video_id
-    base_url += "&key=" + api_key
+    base_url += "&key=" + random.choice(DEVELOPER_KEYS)
     base_url += "&part=statistics,snippet"
 
     return base_url
 
 
 def open_url_api(video_id):
-    base_url = create_base_url(video_id, DEVELOPER_KEY)
+    base_url = create_base_url(video_id)
     response = urllib.urlopen(base_url).read()
     data = json.loads(response)
 
     if ('error' in data) and data['error']['code'] == 403:
-        base_url = create_base_url(video_id, DEVELOPER_KEY2)
+        base_url = create_base_url(video_id)
         response = urllib.urlopen(base_url).read()
         data = json.loads(response)
 
@@ -57,7 +56,7 @@ def build_youtube_api():
     youtube = build(
         YOUTUBE_API_SERVICE_NAME,
         YOUTUBE_API_VERSION,
-        developerKey=DEVELOPER_KEY
+        developerKey=random.choice(DEVELOPER_KEYS)
     )
 
     return youtube
@@ -194,10 +193,11 @@ def get_video_info(video_id):
 
         data_log['reason'] = str(e)
         cursor.logs.insert(data_log)
+        return doc
 
 
 def today_yesterday_data(_id):
-    video_doc = cursor.refined_data.find_one(
+    video_db = cursor.refined_data.find_one(
         {
             'id': _id,
             'private': {
@@ -205,16 +205,19 @@ def today_yesterday_data(_id):
             }
         }
     )
-    video = get_video_info(_id)
+    new_video = get_video_info(_id)
 
-    if video and ('all_views' in video):
-        video['daily_views_yesterday'] = int(
-            video_doc.get('daily_views_today', 0)
+    if new_video and ('all_views' in new_video):
+        new_video = new_video.copy()
+        new_video['daily_views_yesterday'] = int(
+            video_db.get('daily_views_today', 0)
         )
-        today_views = video['all_views'] - int(video_doc.get('all_views', 0))
-        video['daily_views_today'] = today_views
+        today_views = new_video['all_views'] - int(
+            video_db.get('all_views', 0)
+        )
+        new_video['daily_views_today'] = today_views
 
-        return video
+        return new_video
 
 
 def start_updating_jobs():
