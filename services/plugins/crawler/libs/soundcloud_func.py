@@ -118,6 +118,14 @@ def soundcloud_runner():
         "technology",
     ]
 
+    proxies = {
+        'http': 'http://67033:vfvZcMDq2X@170.130.59.249:3128',
+        'https': 'https://67033:vfvZcMDq2X@170.130.59.249:3128'
+    }
+    headers = {
+        'User-Agent': 'Maryam&Ali'
+    }
+
     for kind in kind_list:
         for genre in genres_list:
             offset = 0
@@ -128,8 +136,8 @@ def soundcloud_runner():
                 url += "_id={0}&offset={1}&".format(SOUNDCLOUD_ID, offset)
                 url += "limit={0}&linked_partitioning=1".format(page_length)
                 time.sleep(0.15)
-                # data = requests.get(url, headers=headers, proxies=proxies)
-                data = requests.get(url)
+                data = requests.get(url, headers=headers, proxies=proxies)
+                # data = requests.get(url)
 
                 try:
                     loads_data = data.json()
@@ -224,11 +232,20 @@ def soundcloud_update():
 
 
 def track_info(track_doc):
+
+    proxies = {
+        'http': 'http://67033:vfvZcMDq2X@170.130.59.249:3128',
+        'https': 'https://67033:vfvZcMDq2X@170.130.59.249:3128'
+    }
+    headers = {
+        'User-Agent': 'Maryam&Ali'
+    }
+
     try:
         url = "https://api-v2.soundcloud.com/tracks/" + str(track_doc['id'])
         url += "?client_id=" + SOUNDCLOUD_ID
-        # track = requests.get(url, headers=headers, proxies=proxies)
-        track = requests.get(url)
+        track = requests.get(url, headers=headers, proxies=proxies)
+        # track = requests.get(url)
         track = track.json()
 
         if 'last_modified' in track:
