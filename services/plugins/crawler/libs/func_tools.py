@@ -26,8 +26,8 @@ from config.settings import period_days
 from core import toLog
 from core.db import cursor
 from services.plugins.crawler.libs.migrate_to_mysql import yt_most_viewed
-from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
-from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
+#from services.plugins.crawler.libs.soundcloud_func import soundcloud_runner
+#from services.plugins.crawler.libs.soundcloud_func import soundcloud_update
 
 
 def create_base_url(video_id):
@@ -192,7 +192,7 @@ def get_video_info(video_id):
             toLog(e, 'error')
 
         data_log['reason'] = str(e)
-        cursor.logs.insert(data_log)
+        # cursor.logs.insert(data_log)
         return doc
 
 
@@ -221,7 +221,7 @@ def today_yesterday_data(_id):
 
 
 def start_updating_jobs():
-    reactor.callInThread(soundcloud_update,)
+    #reactor.callInThread(soundcloud_update,)
 
     less_today = datetime.datetime.now().replace(hour=2, minute=30, second=0)
     _criteria = {
@@ -279,7 +279,7 @@ def execute_batch(_date, name, criteria):
 
 
 def bulk_jobs_from_dates():
-    reactor.callInThread(soundcloud_runner)
+    #reactor.callInThread(soundcloud_runner)
     # tuple_month_list = divide_datetime(period_years)
 
     now = datetime.datetime.now()
@@ -515,7 +515,7 @@ def delete_video():
 
     delete_id = cursor.refined_data.find(criteria, {'_id': 1})
     delete_id = delete_id.sort('all_views', DESCENDING)
-    delete_id = list(delete_id.skip(100000))
+    delete_id = list(delete_id.skip(70000))
 
     count = 0
     for _id in delete_id:

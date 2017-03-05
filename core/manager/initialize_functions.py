@@ -59,7 +59,7 @@ def update_crawl_data():
         hour=hour_update,
         minute=minute_update,
         args=[],
-        timezone=local_tz
+        timezone=local_tz 
     )
 
     # result = send_request('crawler.cycle_update', '')
@@ -75,7 +75,7 @@ def start_crawling():
         hour=hour_crawl,
         minute=minute_crawl,
         args=[],
-        timezone=local_tz
+        timezone=local_tz 
     )
 
     msg = "Start crawling."
